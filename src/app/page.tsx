@@ -266,7 +266,7 @@ function HeroSection() {
           <img
             src="/logo-solvvo.png"
             alt="Solvvo"
-            className="h-16 sm:h-20 md:h-24 w-auto object-contain mx-auto drop-shadow-2xl mb-6"
+            className="h-28 sm:h-36 md:h-44 lg:h-52 w-auto object-contain mx-auto drop-shadow-2xl mb-8"
           />
         </motion.div>
         <motion.div
