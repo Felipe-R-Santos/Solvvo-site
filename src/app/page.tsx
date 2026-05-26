@@ -512,22 +512,6 @@ function AboutSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/30 to-transparent" />
               </div>
-              {/* Floating badge */}
-              <motion.div
-                className="absolute -bottom-4 -right-2 sm:right-4 bg-[#111111] border border-emerald-500/20 rounded-xl px-4 py-3 glow-emerald"
-                animate={{ y: [-5, 5, -5] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                    <Award className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">ISO 9001</div>
-                    <div className="text-xs text-gray-500">Certificado</div>
-                  </div>
-                </div>
-              </motion.div>
             </div>
           </FadeInSection>
 
