@@ -129,7 +129,10 @@ const CONTATO = {
 // num site institucional passa a impressão de página abandonada. Agora só
 // aparece a rede que TEM endereço. Para publicar uma, cole a URL aqui.
 const REDES: { nome: 'LinkedIn' | 'Instagram' | 'YouTube'; url: string }[] = [
-  { nome: 'LinkedIn', url: '' },   // ex.: 'https://www.linkedin.com/company/solvvo'
+  // Sem o `?viewAsMember=true` do endereço copiado do navegador: aquilo é
+  // parâmetro de visualização de quem administra a página, não faz parte do
+  // endereço público.
+  { nome: 'LinkedIn', url: 'https://www.linkedin.com/company/solvvosolutions/' },
   { nome: 'Instagram', url: '' },
   { nome: 'YouTube', url: '' },
 ]
