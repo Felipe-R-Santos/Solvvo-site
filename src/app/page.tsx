@@ -295,7 +295,11 @@ function HeroSection() {
           <img
             src="/logo-solvvo.png"
             alt="Solvvo"
-            className="h-28 sm:h-36 md:h-44 lg:h-52 w-auto object-contain mx-auto drop-shadow-2xl mb-8"
+            // Alturas reduzidas em 30/07: o arquivo do logo tinha 77% de
+            // moldura transparente, então h-52 desenhava só ~48px de logo.
+            // Com a moldura cortada, a altura do CSS virou altura REAL —
+            // manter h-52 deixaria o logo com 208px e ~760px de largura.
+            className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mx-auto drop-shadow-2xl mb-8"
           />
         </motion.div>
         <motion.div

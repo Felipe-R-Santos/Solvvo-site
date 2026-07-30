@@ -41,8 +41,16 @@ export const metadata: Metadata = {
     "automação industrial",
   ],
   authors: [{ name: "Solvvo Solutions" }],
+  // O ícone da aba é QUADRADO (16x16, 32x32). Usar o logo deitado (3,6:1)
+  // fazia o navegador encolher tudo até caber na altura — sobrava um risco
+  // ilegível. O emblema é quadrado e foi feito para isso.
   icons: {
-    icon: "/logo-solvvo.png",
+    icon: [
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/emblema-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "Solvvo Solutions | Plataforma de Estudo de Aplicação Robotizada",
