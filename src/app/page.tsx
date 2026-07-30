@@ -107,10 +107,31 @@ function StaggerItem({ children, className = '' }: { children: React.ReactNode; 
 
 const navLinks = [
   { label: 'Início', href: '#inicio' },
-  { label: 'Serviços', href: '#servicos' },
+  { label: 'Plataforma', href: '#plataforma' },
+  { label: 'Soluções', href: '#servicos' },
+  { label: 'Células', href: '#celulas' },
+  { label: 'Aplicações', href: '#cases' },
   { label: 'Sobre', href: '#sobre' },
-  { label: 'Cases', href: '#cases' },
   { label: 'Contato', href: '#contato' },
+]
+
+// ── CONTATO — um só lugar para mudar (usado no form, no WhatsApp e no rodapé) ──
+const CONTATO = {
+  email: 'contato@solvvo.com.br',
+  // formato internacional, só dígitos: exigido pelo link do WhatsApp
+  whatsapp: '5554981535018',
+  telefoneVisivel: '(54) 9 8153-5018',
+  cidade: 'Caxias do Sul, RS - Brasil',
+}
+
+// ── REDES SOCIAIS ──────────────────────────────────────────────────────────
+// Antes os três ícones apontavam para href="#": clicar não fazia nada, o que
+// num site institucional passa a impressão de página abandonada. Agora só
+// aparece a rede que TEM endereço. Para publicar uma, cole a URL aqui.
+const REDES: { nome: 'LinkedIn' | 'Instagram' | 'YouTube'; url: string }[] = [
+  { nome: 'LinkedIn', url: '' },   // ex.: 'https://www.linkedin.com/company/solvvo'
+  { nome: 'Instagram', url: '' },
+  { nome: 'YouTube', url: '' },
 ]
 
 function Navbar() {
@@ -221,15 +242,23 @@ function HeroSection() {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background image with overlay */}
+      {/* FUNDO: render de célula com coluna e lança, do nosso acervo.
+          Tratado por scripts/preparar-imagens-celulas.py — fundo escurecido e
+          realces do piso puxados para baixo, senão o texto branco não lê.
+          18 MB / 9000 px no original -> 86 KB / 1920 px em WebP.
+          `object-center` porque a célula está no meio do quadro: em tela larga
+          o recorte tira topo e base, e é o que se pode perder. */}
       <div className="absolute inset-0">
         <img
-          src="/hero-bg.png"
+          src="/hero-celula.webp"
           alt=""
-          className="w-full h-full object-cover"
+          fetchPriority="high"
+          className="w-full h-full object-cover object-center"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-[#0a0a0a]/80 to-[#0a0a0a]" />
+        {/* Véu mais leve no topo (deixa a célula aparecer) e sólido embaixo,
+            onde ficam a headline e os botões. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/55 via-[#0a0a0a]/78 to-[#0a0a0a]" />
         <div className="absolute inset-0 grid-pattern" />
       </div>
 
@@ -239,10 +268,10 @@ function HeroSection() {
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-emerald-400 rounded-full opacity-30"
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + i * 10}%`,
-            }}
+            // `left`/`top` em MotionStyle: o tipo do framer-motion 12 não
+            // aceita as duas junto com `animate`, então a posição vai por
+            // variável CSS, que é tipada como string e não conflita.
+            style={{ insetInlineStart: `${20 + i * 15}%`, insetBlockStart: `${30 + i * 10}%` }}
             animate={{
               y: [-20, 20, -20],
               x: [-10, 10, -10],
@@ -276,7 +305,7 @@ function HeroSection() {
         >
           <Badge className="mb-6 px-4 py-1.5 text-sm font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/15 transition-colors">
             <Zap className="w-3.5 h-3.5 mr-1.5" />
-            Soluções em Indústria 4.0
+            Em breve — plataforma de simulação automática
           </Badge>
         </motion.div>
 
@@ -286,10 +315,10 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
         >
-          Transforme sua{' '}
-          <span className="gradient-text">Manufatura</span>
+          O estudo de aplicação{' '}
+          <span className="gradient-text">deixa de levar semanas</span>
           <br />
-          com Tecnologia Digital
+          e passa a caber numa sessão
         </motion.h1>
 
         <motion.p
@@ -298,7 +327,11 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
         >
-          Soluções avançadas em Scan 3D, Digital Twin e automação industrial para impulsionar a eficiência e inovação da sua empresa.
+          Plataforma de simulação automática para quem faz estudo de aplicação toda
+          semana: <span className="text-gray-300">integradoras</span> e{' '}
+          <span className="text-gray-300">indústrias que refazem layout o tempo todo</span>.
+          Robô, posicionador, estrutura, tempo de ciclo, ROI e payback — com a fonte de
+          cada número.
         </motion.p>
 
         <motion.div
@@ -309,9 +342,9 @@ function HeroSection() {
         >
           <blockquote className="relative border-l-2 border-emerald-500/40 pl-4 sm:pl-6">
             <p className="text-base sm:text-lg italic text-emerald-300/80 leading-relaxed">
-              "Em breve, as fábricas serão fábricas de fábricas..."
+              "Se o número não tem fonte, não é estudo — é chute com planilha bonita."
             </p>
-            <p className="text-sm text-gray-500 mt-2">— Felipe R. Santos, fundador da Solvvo</p>
+            <p className="text-sm text-gray-500 mt-2">O princípio de engenharia da Solvvo Solutions</p>
           </blockquote>
         </motion.div>
 
@@ -328,7 +361,7 @@ function HeroSection() {
               document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
             }}
           >
-            Solicitar Orçamento
+            Entrar na lista de espera
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
           <Button
@@ -336,10 +369,10 @@ function HeroSection() {
             variant="outline"
             className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300 font-semibold text-base px-8 py-6 h-auto transition-all"
             onClick={() => {
-              document.getElementById('servicos')?.scrollIntoView({ behavior: 'smooth' })
+              document.getElementById('plataforma')?.scrollIntoView({ behavior: 'smooth' })
             }}
           >
-            Conheça Nossos Serviços
+            Ver o que a plataforma faz
           </Button>
         </motion.div>
 
@@ -350,11 +383,15 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
         >
+          {/* Números MEDIDOS no acervo (motor/base-master.db, 30/07/2026).
+              Nada de "500+ projetos / 200+ clientes": número que não se
+              sustenta numa pergunta de engenheiro derruba o argumento
+              inteiro — e o argumento aqui é justamente procedência. */}
           {[
-            { value: '500+', label: 'Projetos' },
-            { value: '200+', label: 'Clientes' },
-            { value: '10+', label: 'Anos' },
-            { value: '99%', label: 'Precisão' },
+            { value: '526', label: 'Projetos de referência medidos' },
+            { value: '6.928', label: 'Componentes de catálogo' },
+            { value: '23', label: 'Arquiteturas de célula' },
+            { value: '72', label: 'Posicionadores catalogados' },
           ].map((stat, i) => (
             <div key={i} className="text-center">
               <div className="text-2xl sm:text-3xl font-bold gradient-text">{stat.value}</div>
@@ -379,34 +416,36 @@ function HeroSection() {
 
 /* ─────────── Services Section ─────────── */
 
+// Ordenado pelo que o cliente compra primeiro: o estudo abre a porta,
+// a célula é a entrega, o resto sustenta.
 const services = [
   {
-    icon: ScanLine,
-    title: 'Scan 3D',
-    description:
-      'Digitalização tridimensional de alta precisão para engenharia reversa, inspeção de qualidade e controle dimensional de peças e componentes industriais.',
-    features: ['Engenharia Reversa', 'Inspeção Dimensional', 'Modelo 3D'],
-  },
-  {
     icon: Layers,
-    title: 'Digital Twin',
+    title: 'Estudo de Aplicação',
     description:
-      'Criação de réplicas virtuais inteligentes de ativos físicos para monitoramento em tempo real, simulação preditiva e otimização de processos.',
-    features: ['Monitoramento em Tempo Real', 'Simulação', 'Predição'],
-  },
-  {
-    icon: Printer,
-    title: 'Manufatura Aditiva',
-    description:
-      'Serviços de prototipagem rápida e produção por impressão 3D em materiais avançados, reduzindo lead time e custos de desenvolvimento.',
-    features: ['Prototipagem Rápida', 'Impressão 3D', 'Peças Sob Medida'],
+      'A conta que decide se vale robotizar: robô e posicionador por payload e alcance, estrutura dimensionada, tempo de ciclo, produtividade, ROI e payback — com a fonte de cada número.',
+    features: ['Tempo de Ciclo', 'ROI e Payback', 'Procedência'],
   },
   {
     icon: Cpu,
-    title: 'Automação Industrial',
+    title: 'Especificação da Célula',
     description:
-      'Integração de IoT, sensores e sistemas de controle para fábricas inteligentes, aumentando produtividade e reduzindo paradas não planejadas.',
-    features: ['IoT Industrial', 'Fábrica Inteligente', 'Controle Avançado'],
+      'A definição técnica que vai para o fornecedor: robô, posicionador, berço, estrutura, proteções e segurança — dimensionados e justificados. Você compra sabendo exatamente o que pediu e por quê.',
+    features: ['Memorial técnico', 'Escopo para cotação', 'Critério de aceite'],
+  },
+  {
+    icon: ScanLine,
+    title: 'Engenharia Reversa e Scan 3D',
+    description:
+      'Digitalização tridimensional da peça e do galpão para levantar a geometria real quando não existe desenho — a base de qualquer estudo que se sustente.',
+    features: ['Peça sem Desenho', 'Inspeção Dimensional', 'Modelo 3D'],
+  },
+  {
+    icon: Printer,
+    title: 'Dispositivos e Fabricação',
+    description:
+      'Berços, gabaritos e dispositivos de fixação dimensionados para a peça, com fabricação e prototipagem rápida quando o prazo aperta.',
+    features: ['Berços e Gabaritos', 'Dispositivos', 'Prototipagem'],
   },
 ]
 
@@ -527,22 +566,40 @@ function AboutSection() {
               </h2>
               <div className="space-y-4 text-gray-400 leading-relaxed">
                 <p>
-                  A <span className="text-emerald-400 font-medium">Solvvo</span> é especialista em soluções de manufatura digital. Combinamos tecnologia de ponta com expertise industrial para ajudar empresas a transformar suas operações por meio de Scan 3D, Digital Twin e automação inteligente.
+                  A <span className="text-emerald-400 font-medium">Solvvo Solutions</span> faz o{' '}
+                  <span className="text-emerald-400 font-medium">estudo de aplicação</span> de
+                  células robotizadas e sistemas de automação — soldagem, manipulação,
+                  paletização e movimentação de materiais. Não vendemos equipamento e não
+                  representamos fabricante: nosso produto é a engenharia que diz se vale
+                  robotizar, com qual arranjo e em quanto tempo o investimento volta.
                 </p>
                 <p>
-                  Nossa missão é democratizar o acesso a tecnologias como Scan 3D, Digital Twin e impressão 3D, tornando-as acessíveis e aplicáveis para negócios de todos os portes. Acreditamos que a digitalização é o caminho para uma indústria mais eficiente, sustentável e competitiva.
+                  Essa independência é o ponto. Quem estuda a aplicação sem ter robô no
+                  estoque não tem motivo para superdimensionar. O estudo serve à decisão
+                  do cliente, não ao catálogo de ninguém — e é o mesmo documento que ele
+                  usa para cotar com qualquer integrador e comparar propostas no mesmo
+                  critério.
                 </p>
                 <p>
-                  Com uma equipe multidisciplinar de engenheiros, designers e especialistas em tecnologia, entregamos projetos com excelência e compromisso com resultados mensuráveis.
+                  Trabalhamos com um princípio simples e incomum no setor:{' '}
+                  <span className="text-emerald-400 font-medium">todo número tem de ter fonte</span>.
+                  Payload e alcance saem do catálogo do fabricante. Estrutura sai de cálculo
+                  declarado, com fator de segurança à vista. Ciclo sai do processo medido.
+                  Nada de estimativa que não se possa auditar.
+                </p>
+                <p>
+                  É esse método que estamos transformando em plataforma: o estudo de
+                  aplicação que hoje leva semanas de planilha, feito de ponta a ponta e
+                  rastreável linha por linha.
                 </p>
               </div>
 
               {/* Values */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
                 {[
-                  { icon: Target, label: 'Missão', text: 'Digitalizar a indústria brasileira' },
-                  { icon: Eye, label: 'Visão', text: 'Ser referência global em manufatura digital' },
-                  { icon: Shield, label: 'Valores', text: 'Inovação, excelência e confiança' },
+                  { icon: Target, label: 'Missão', text: 'Tornar a decisão de robotizar uma conta, não uma aposta' },
+                  { icon: Eye, label: 'Método', text: 'Cada número rastreável até catálogo, norma ou cálculo' },
+                  { icon: Shield, label: 'Independência', text: 'Não vendemos equipamento nem representamos fabricante' },
                 ].map((v, i) => {
                   const Icon = v.icon
                   return (
@@ -573,48 +630,47 @@ function Eye({ className }: { className?: string }) {
   )
 }
 
-/* ─────────── Cases Section ─────────── */
+/* ─────────── Aplicações ─────────── */
 
-const cases = [
+// ─────────────────────────────────────────────────────────────────────────────
+// APLICAÇÕES QUE ATENDEMOS
+//
+// REGRA DESTA SEÇÃO: nenhum resultado numérico sem procedência ao lado.
+// O site inteiro se sustenta em "todo número tem fonte" — um percentual solto
+// aqui embaixo seria o primeiro lugar onde um engenheiro pede a memória de
+// cálculo, e onde o argumento cairia.
+//
+// Por isso ela descreve a APLICAÇÃO e o que é entregue nela. Quando houver
+// caso com número medido e fonte, ele entra aqui com a procedência junto.
+// ─────────────────────────────────────────────────────────────────────────────
+const aplicacoes = [
   {
     icon: Car,
-    industry: 'Automotivo',
-    title: 'Inspeção de peças automotivas com Scan 3D',
-    description:
-      'Implementação de sistema de inspeção dimensional por Scan 3D para uma montadora de veículos, garantindo qualidade e rastreabilidade de componentes críticos.',
-    metrics: [
-      { label: 'Redução de defeitos', value: '73%' },
-      { label: 'Ganho de eficiência', value: '45%' },
-      { label: 'ROI atingido em', value: '8 meses' },
-    ],
-  },
-  {
-    icon: Plane,
-    industry: 'Aeroespacial',
-    title: 'Digital Twin para componentes aeroespaciais',
-    description:
-      'Desenvolvimento de Digital Twins para motores e turbinas, permitindo simulação preditiva e manutenção baseada em condição para operadora aérea.',
-    metrics: [
-      { label: 'Redução de downtime', value: '60%' },
-      { label: 'Economia anual', value: 'R$ 2.5M' },
-      { label: 'Precisão da previsão', value: '94%' },
-    ],
+    setor: 'Implementos e estruturas',
+    titulo: 'Soldagem robotizada de conjuntos soldados',
+    descricao:
+      'Chassis, travessas, caixas e reservatórios: peças grandes, com muitos cordões e posições de difícil acesso. A célula é definida pelo alcance útil e pela posição de soldagem, não pelo tamanho do robô.',
+    entregas: ['Arranjo da célula', 'Posicionador e berço', 'Alcance verificado'],
   },
   {
     icon: Fuel,
-    industry: 'Óleo & Gás',
-    title: 'Manufatura aditiva para peças de reposição',
-    description:
-      'Produção de peças sob demanda por manufatura aditiva para plataforma offshore, eliminando estoque e reduzindo tempo de parada para manutenção.',
-    metrics: [
-      { label: 'Redução de estoque', value: '80%' },
-      { label: 'Lead time reduzido', value: '90%' },
-      { label: 'Peças produzidas', value: '1.200+' },
-    ],
+    setor: 'Movimentação e paletização',
+    titulo: 'Manipulação e paletização de carga',
+    descricao:
+      'Carga e descarga de máquina, paletização de produto acabado e movimentação entre postos. O que decide o projeto é o payload no punho com a garra montada — e o ciclo, não o catálogo.',
+    entregas: ['Payload com garra', 'Tempo de ciclo', 'Peças por hora'],
+  },
+  {
+    icon: Plane,
+    setor: 'Engenharia de suporte',
+    titulo: 'Levantamento de peça e de planta sem desenho',
+    descricao:
+      'Quando não existe modelo 3D da peça nem planta confiável do galpão, o Scan 3D levanta a geometria real. É a base sem a qual nenhum estudo de aplicação se sustenta.',
+    entregas: ['Scan 3D', 'Engenharia reversa', 'Layout do galpão'],
   },
 ]
 
-function CasesSection() {
+function AplicacoesSection() {
   return (
     <section id="cases" className="relative py-24 sm:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/98 to-[#0a0a0a]" />
@@ -623,19 +679,21 @@ function CasesSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
           <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
-            Resultados comprovados
+            Onde atuamos
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Cases de <span className="gradient-text">Sucesso</span>
+            Aplicações que{' '}
+            <span className="gradient-text">atendemos</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Conheça alguns dos projetos que transformaram a operação de nossos clientes em diferentes setores industriais.
+            Cada aplicação tem a sua pergunta difícil. O estudo existe para respondê-la
+            antes de o equipamento ser comprado.
           </p>
         </FadeInSection>
 
         <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {cases.map((caseItem, i) => {
-            const Icon = caseItem.icon
+          {aplicacoes.map((ap, i) => {
+            const Icon = ap.icon
             return (
               <StaggerItem key={i}>
                 <Card className="group h-full bg-[#111111]/80 border-[rgba(16,185,129,0.1)] hover:border-emerald-500/30 transition-all duration-500 hover:shadow-xl hover:shadow-emerald-500/5 overflow-hidden">
@@ -645,24 +703,25 @@ function CasesSection() {
                         <Icon className="w-5 h-5 text-emerald-400" />
                       </div>
                       <Badge variant="outline" className="text-xs border-[rgba(16,185,129,0.15)] text-emerald-400/80 bg-emerald-500/5">
-                        {caseItem.industry}
+                        {ap.setor}
                       </Badge>
                     </div>
                     <CardTitle className="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors leading-snug">
-                      {caseItem.title}
+                      {ap.titulo}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex flex-col flex-1">
                     <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">
-                      {caseItem.description}
+                      {ap.descricao}
                     </p>
-                    {/* Metrics */}
-                    <div className="space-y-3">
-                      {caseItem.metrics.map((metric, j) => (
-                        <div key={j} className="flex items-center justify-between py-2 border-t border-[rgba(16,185,129,0.08)]">
-                          <span className="text-sm text-gray-500">{metric.label}</span>
-                          <span className="text-sm font-bold text-emerald-400">{metric.value}</span>
-                        </div>
+                    <div className="flex flex-wrap gap-2">
+                      {ap.entregas.map((e, j) => (
+                        <span
+                          key={j}
+                          className="text-xs px-2.5 py-1 rounded-md bg-emerald-500/5 border border-[rgba(16,185,129,0.15)] text-emerald-400/90"
+                        >
+                          {e}
+                        </span>
                       ))}
                     </div>
                   </CardContent>
@@ -678,76 +737,207 @@ function CasesSection() {
 
 /* ─────────── Founder Section ─────────── */
 
-function FounderSection() {
+/* ─────────── Plataforma (teaser) ─────────── */
+
+// O que a plataforma entrega, na ordem em que o estudo acontece.
+const etapasPlataforma = [
+  { titulo: 'Levantamento técnico', texto: 'Geometria da peça, processo, material, espessura e cordões.' },
+  { titulo: 'Seleção do robô', texto: 'Por payload NO PUNHO e alcance útil — não por preço de tabela.' },
+  { titulo: 'Posicionador e berço', texto: 'Tipo, capacidade e curso definidos pela peça, não pelo hábito.' },
+  { titulo: 'Estrutura dimensionada', texto: 'Flexão, flecha e torção com fórmula declarada e fator de segurança.' },
+  { titulo: 'Layout e 3D da célula', texto: 'Arranjo, área ocupada, alcance verificado e vistas geradas.' },
+  { titulo: 'Ciclo e produtividade', texto: 'Tempo de arco, movimentação e tempo morto — peças por hora.' },
+  { titulo: 'ROI e payback', texto: 'Retorno calculado sobre o ciclo real, não sobre o otimista.' },
+  { titulo: 'Orçamento com procedência', texto: 'Cada linha aponta para catálogo, norma ou cálculo.' },
+]
+
+// Números MEDIDOS no acervo em 30/07/2026 (motor/base-master.db).
+// Cada um é conferível — é este o argumento da plataforma.
+const numerosAcervo = [
+  { valor: '526', rotulo: 'projetos de referência', nota: 'peças medidas: 274 de soldagem e 64 de movimentação' },
+  { valor: '6.928', rotulo: 'componentes de catálogo', nota: 'SKUs com fabricante, modelo e procedência' },
+  { valor: '23', rotulo: 'arquiteturas de célula', nota: 'validadas e prontas para dimensionar' },
+  { valor: '72', rotulo: 'posicionadores', nota: 'lidos de catálogo de fabricante, payload por eixo' },
+]
+
+function PlataformaSection() {
   return (
-    <section className="relative py-24 sm:py-32 overflow-hidden">
+    <section id="plataforma" className="relative py-24 sm:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/98 to-[#0a0a0a]" />
       <div className="absolute inset-0 grid-pattern" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Photo */}
-          <FadeInSection>
-            <div className="relative max-w-md mx-auto lg:mx-0">
-              <div className="relative rounded-2xl overflow-hidden glow-emerald">
-                <img
-                  src="/felipe-foto.jpg"
-                  alt="Felipe R. Santos - Fundador da Solvvo"
-                  className="w-full h-auto object-cover rounded-2xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/40 to-transparent" />
-              </div>
-              {/* Floating card */}
-              <motion.div
-                className="absolute -bottom-4 -right-2 sm:right-4 bg-[#111111] border border-emerald-500/20 rounded-xl px-4 py-3 glow-emerald"
-                animate={{ y: [-5, 5, -5] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        <FadeInSection className="text-center mb-16">
+          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+            Em breve · por assinatura
+          </Badge>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+            Simulação automática para{' '}
+            <span className="gradient-text">estudos de aplicação</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+            Hoje o estudo de aplicação é artesanal: semanas de planilha, cada engenheiro
+            com o seu método e um resultado que ninguém consegue auditar. Quem faz um
+            estudo por ano convive com isso. Quem faz um por semana está perdendo
+            proposta. A plataforma faz esse estudo de ponta a ponta — e mostra de onde
+            veio cada número.
+          </p>
+        </FadeInSection>
+
+        {/* ── PARA QUEM É ────────────────────────────────────────────────────
+            O modelo é ASSINATURA MENSAL, então o valor está em quem REPETE o
+            estudo, não em quem faz uma vez. Por isso os perfis são separados
+            por FREQUÊNCIA — é ela que justifica pagar todo mês. */}
+        <FadeInSection className="mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              {
+                perfil: 'Integradoras de robótica',
+                dor: 'Cada proposta exige um estudo. O prazo de resposta decide quem ganha o pedido — e hoje ele depende do engenheiro mais ocupado da casa.',
+              },
+              {
+                perfil: 'Indústrias que remanejam layout',
+                dor: 'Mudou o mix, mudou a linha. A cada rearranjo, a conta de alcance, ciclo e capacidade precisa ser refeita do zero.',
+              },
+              {
+                perfil: 'Engenharia interna',
+                dor: 'Precisa comparar propostas de fornecedores diferentes no mesmo critério, com memória de cálculo que se possa auditar.',
+              },
+            ].map((p, i) => (
+              <div
+                key={i}
+                className="p-6 rounded-xl bg-[#111111]/60 border border-[rgba(16,185,129,0.1)]"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-emerald-400" />
+                <div className="text-sm font-semibold text-emerald-400 mb-2">{p.perfil}</div>
+                <div className="text-sm text-gray-500 leading-relaxed">{p.dor}</div>
+              </div>
+            ))}
+          </div>
+        </FadeInSection>
+
+        {/* Números do acervo */}
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+          {numerosAcervo.map((n, i) => (
+            <StaggerItem key={i}>
+              <div className="h-full p-6 rounded-xl bg-[#111111]/80 border border-[rgba(16,185,129,0.1)] hover:border-emerald-500/30 transition-colors">
+                <div className="text-3xl sm:text-4xl font-bold gradient-text">{n.valor}</div>
+                <div className="text-sm font-semibold text-white mt-2">{n.rotulo}</div>
+                <div className="text-xs text-gray-500 mt-2 leading-relaxed">{n.nota}</div>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* O que ela faz */}
+        <FadeInSection>
+          <div className="rounded-2xl bg-[#111111]/60 border border-[rgba(16,185,129,0.08)] p-6 sm:p-10">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+              Do desenho da peça ao payback, numa passada
+            </h3>
+            <p className="text-sm text-gray-500 mb-8">
+              As oito etapas que a plataforma executa — e que hoje viram semanas de planilha.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {etapasPlataforma.map((e, i) => (
+                <div key={i} className="relative pl-4 border-l-2 border-emerald-500/30">
+                  <div className="text-xs font-mono text-emerald-500/70 mb-1">
+                    {String(i + 1).padStart(2, '0')}
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">Fundador</div>
-                    <div className="text-xs text-gray-500">Solvvo</div>
-                  </div>
+                  <div className="text-sm font-semibold text-white">{e.titulo}</div>
+                  <div className="text-xs text-gray-500 mt-1 leading-relaxed">{e.texto}</div>
                 </div>
-              </motion.div>
+              ))}
             </div>
-          </FadeInSection>
 
-          {/* Text */}
-          <FadeInSection delay={0.2}>
-            <div>
-              <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
-                Quem somos
-              </Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6">
-                Conheça o{' '}
-                <span className="gradient-text">Fundador</span>
-              </h2>
-              <div className="space-y-4 text-gray-400 leading-relaxed">
-                <p>
-                  Felipe R. Santos é o fundador e CEO da <span className="text-emerald-400 font-medium">Solvvo</span>, empresa especialista em soluções de manufatura digital. Com visão inovadora e paixão por tecnologia, Felipe lidera a missão de transformar a indústria brasileira por meio de ferramentas como Scan 3D, Digital Twin e automação inteligente.
-                </p>
-                <p>
-                  Com experiência prática e conhecimento profundo do setor industrial, Felipe construiu a Solvvo com o objetivo de democratizar o acesso a tecnologias avançadas, tornando-as acessíveis para empresas de todos os portes e segmentos.
-                </p>
-              </div>
+            <Separator className="bg-[rgba(16,185,129,0.1)] my-8" />
 
-              {/* Quote */}
-              <div className="mt-8 p-6 rounded-xl bg-[#111111]/80 border border-emerald-500/10">
-                <blockquote className="relative border-l-2 border-emerald-500 pl-4">
-                  <p className="text-lg sm:text-xl italic text-emerald-300 leading-relaxed mb-2">
-                    "Em breve, as fábricas serão fábricas de fábricas..."
-                  </p>
-                  <p className="text-sm text-gray-500">Você está pronto para este momento?</p>
-                </blockquote>
-                <p className="text-sm text-emerald-400 mt-4 font-medium">— Felipe R. Santos</p>
-              </div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+              <p className="text-sm text-gray-400 max-w-xl leading-relaxed">
+                A plataforma ainda não está no ar e será oferecida por{' '}
+                <span className="text-gray-300">assinatura mensal</span>. Estamos validando
+                com caso real — peça real, ciclo real, payback real. Quem entrar na lista
+                de espera testa antes e ajuda a definir o que entra na primeira versão.
+              </p>
+              <Button
+                size="lg"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shrink-0 glow-emerald-strong transition-all"
+                onClick={() => {
+                  document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
+                Entrar na lista de espera
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             </div>
-          </FadeInSection>
-        </div>
+          </div>
+        </FadeInSection>
+      </div>
+    </section>
+  )
+}
+
+/* ─────────── Arquiteturas de célula (galeria) ─────────── */
+
+// Renders das células PADRÃO do nosso acervo. São geometria de referência:
+// nenhuma peça, nome ou dado de cliente aparece em nenhuma delas.
+const galeriaCelulas = [
+  { src: '/celulas/sw-cc1.webp', nome: 'Célula compacta', desc: 'Robô único e mesa fixa. Peça pequena a média, um operador carregando.' },
+  { src: '/celulas/sw-h.webp', nome: 'Célula H — duas estações', desc: 'O robô solda numa estação enquanto o operador carrega a outra.' },
+  { src: '/celulas/sw-col.webp', nome: 'Coluna com lança', desc: 'Alcance estendido para peça longa e berço de vão grande.' },
+  { src: '/celulas/sw-gan.webp', nome: 'Pórtico', desc: 'Cobertura de área ampla com a peça fixa no piso.' },
+  { src: '/celulas/sw-ferris.webp', nome: 'Carrossel', desc: 'Vários postos em rotação para ciclo contínuo.' },
+  { src: '/celulas/sw-tt.webp', nome: 'Mesa posicionadora', desc: 'A peça gira para manter a posição de soldagem ideal.' },
+]
+
+function CelulasSection() {
+  return (
+    <section id="celulas" className="relative py-24 sm:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/98 to-[#0a0a0a]" />
+      <div className="absolute inset-0 grid-pattern" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeInSection className="text-center mb-16">
+          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+            Acervo
+          </Badge>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+            Arquiteturas de{' '}
+            <span className="gradient-text">célula</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Seis das 23 arquiteturas que a plataforma dimensiona. A escolha não é estética:
+            ela sai da peça, do processo e do alcance exigido.
+          </p>
+        </FadeInSection>
+
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {galeriaCelulas.map((c, i) => (
+            <StaggerItem key={i}>
+              <div className="group h-full rounded-xl overflow-hidden bg-[#111111]/80 border border-[rgba(16,185,129,0.1)] hover:border-emerald-500/30 transition-all">
+                <div className="relative overflow-hidden bg-[#161817]">
+                  <img
+                    src={c.src}
+                    alt={`Arquitetura de célula robotizada: ${c.nome}`}
+                    loading="lazy"
+                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 to-transparent pointer-events-none" />
+                </div>
+                <div className="p-5">
+                  <div className="text-base font-semibold text-white">{c.nome}</div>
+                  <div className="text-sm text-gray-500 mt-1.5 leading-relaxed">{c.desc}</div>
+                </div>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        <FadeInSection className="mt-10">
+          <p className="text-xs text-gray-600 text-center max-w-2xl mx-auto leading-relaxed">
+            Imagens geradas do nosso acervo de células padrão. Geometria de referência —
+            nenhum projeto, peça ou dado de cliente é exibido.
+          </p>
+        </FadeInSection>
       </div>
     </section>
   )
@@ -765,18 +955,72 @@ function ContactSection() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // ───────────────────────────────────────────────────────────────────────────
+  // ⚠ CORRIGIDO EM 30/07/2026 — ANTES ESTE FORMULÁRIO NÃO ENVIAVA NADA.
+  //
+  // O código anterior era:  await new Promise(r => setTimeout(r, 1500))
+  // seguido de toast.success('Mensagem enviada com sucesso!'). Ou seja: o site
+  // ESPERAVA 1,5 s e MENTIA para o visitante. Todo pedido de orçamento feito
+  // pelo formulário desde a publicação foi perdido, sem deixar rastro.
+  //
+  // POR QUE WHATSAPP E NÃO UM POST PARA UMA API:
+  // o site está em hospedagem GRATUITA (sem servidor para receber POST e sem
+  // servidor de e-mail). Um endpoint próprio exigiria infraestrutura que ainda
+  // não existe. O link wa.me não depende de servidor nenhum, funciona em
+  // hospedagem estática, e no B2B industrial brasileiro o WhatsApp converte
+  // melhor que e-mail — a conversa começa no aparelho de quem atende.
+  // O e-mail fica como segunda via, para quem está no desktop sem WhatsApp.
+  //
+  // QUANDO TIVER SERVIDOR: trocar por um POST para /api/contato (ou ligar um
+  // Web3Forms/Formspree, que são grátis e não exigem backend) e manter o
+  // WhatsApp como atalho. A lista de campos já está pronta para isso.
+  // ───────────────────────────────────────────────────────────────────────────
+  const montarMensagem = () => {
+    const l = [
+      'Olá! Vim pelo site da Solvvo Solutions.',
+      '',
+      `Nome: ${formData.name}`,
+      `E-mail: ${formData.email}`,
+    ]
+    if (formData.phone) l.push(`Telefone: ${formData.phone}`)
+    if (formData.service) l.push(`Interesse: ${formData.service}`)
+    if (formData.message) l.push('', 'Mensagem:', formData.message)
+    return l.join('\n')
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
 
-    // Simulate submission
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    // validação mínima: sem isto o WhatsApp abre com mensagem vazia
+    if (!formData.name.trim() || !formData.email.trim()) {
+      toast.error('Preencha nome e e-mail para continuar.')
+      return
+    }
+
+    setIsSubmitting(true)
+    const texto = montarMensagem()
+    const url = `https://wa.me/${CONTATO.whatsapp}?text=${encodeURIComponent(texto)}`
+
+    // abre numa aba nova; se o navegador bloquear o popup, navega na mesma aba
+    const aba = window.open(url, '_blank', 'noopener,noreferrer')
+    if (!aba) window.location.href = url
 
     setIsSubmitting(false)
-    toast.success('Mensagem enviada com sucesso!', {
-      description: 'Entraremos em contato em até 24 horas úteis.',
+    toast.success('Abrindo o WhatsApp com seus dados…', {
+      description: 'Se não abrir, use o botão de e-mail abaixo — respondemos em até 24 h úteis.',
     })
-    setFormData({ name: '', email: '', phone: '', service: '', message: '' })
+  }
+
+  // Segunda via, sem servidor: abre o cliente de e-mail já preenchido.
+  const enviarPorEmail = () => {
+    if (!formData.name.trim() || !formData.email.trim()) {
+      toast.error('Preencha nome e e-mail para continuar.')
+      return
+    }
+    const assunto = `Contato pelo site — ${formData.name}${formData.service ? ` (${formData.service})` : ''}`
+    window.location.href =
+      `mailto:${CONTATO.email}?subject=${encodeURIComponent(assunto)}`
+      + `&body=${encodeURIComponent(montarMensagem())}`
   }
 
   return (
@@ -815,7 +1059,12 @@ function ContactSection() {
                   </div>
                   <div>
                     <div className="text-sm font-medium text-white">E-mail</div>
-                    <div className="text-sm text-gray-400">contato@solvvo.com.br</div>
+                    <a
+                      href={`mailto:${CONTATO.email}`}
+                      className="text-sm text-gray-400 hover:text-emerald-400 transition-colors"
+                    >
+                      {CONTATO.email}
+                    </a>
                   </div>
                 </div>
 
@@ -825,7 +1074,14 @@ function ContactSection() {
                   </div>
                   <div>
                     <div className="text-sm font-medium text-white">Telefone</div>
-                    <div className="text-sm text-gray-400">(54) 9 8153-5018</div>
+                    <a
+                      href={`https://wa.me/${CONTATO.whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-gray-400 hover:text-emerald-400 transition-colors"
+                    >
+                      {CONTATO.telefoneVisivel} · WhatsApp
+                    </a>
                   </div>
                 </div>
 
@@ -840,31 +1096,32 @@ function ContactSection() {
                 </div>
               </div>
 
-              <Separator className="bg-[rgba(16,185,129,0.1)]" />
-
-              {/* Social Links */}
-              <div>
-                <div className="text-sm font-medium text-white mb-3">Redes Sociais</div>
-                <div className="flex gap-3">
-                  {[
-                    { icon: Linkedin, label: 'LinkedIn' },
-                    { icon: Instagram, label: 'Instagram' },
-                    { icon: Youtube, label: 'YouTube' },
-                  ].map((social, i) => {
-                    const Icon = social.icon
-                    return (
-                      <a
-                        key={i}
-                        href="#"
-                        aria-label={social.label}
-                        className="w-10 h-10 rounded-lg bg-[#111111] border border-[rgba(16,185,129,0.1)] flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all"
-                      >
-                        <Icon className="w-4 h-4" />
-                      </a>
-                    )
-                  })}
-                </div>
-              </div>
+              {REDES.some((r) => r.url) && (
+                <>
+                  <Separator className="bg-[rgba(16,185,129,0.1)]" />
+                  <div>
+                    <div className="text-sm font-medium text-white mb-3">Redes Sociais</div>
+                    <div className="flex gap-3">
+                      {REDES.filter((r) => r.url).map((r) => {
+                        const Icon = r.nome === 'LinkedIn' ? Linkedin
+                          : r.nome === 'Instagram' ? Instagram : Youtube
+                        return (
+                          <a
+                            key={r.nome}
+                            href={r.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={r.nome}
+                            className="w-10 h-10 rounded-lg bg-[#111111] border border-[rgba(16,185,129,0.1)] flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all"
+                          >
+                            <Icon className="w-4 h-4" />
+                          </a>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </FadeInSection>
 
@@ -981,11 +1238,26 @@ function ContactSection() {
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
-                      Enviar Mensagem
+                      Enviar pelo WhatsApp
                       <ArrowRight className="w-4 h-4" />
                     </span>
                   )}
                 </Button>
+
+                {/* Segunda via para quem está no desktop sem WhatsApp.
+                    type="button" para NÃO disparar o submit do formulário. */}
+                <button
+                  type="button"
+                  onClick={enviarPorEmail}
+                  className="w-full mt-3 text-sm text-gray-400 hover:text-emerald-400 underline underline-offset-4 decoration-emerald-500/30 transition-colors"
+                >
+                  Prefiro enviar por e-mail
+                </button>
+
+                <p className="text-xs text-gray-600 mt-4 text-center leading-relaxed">
+                  Resposta em até 24 horas úteis. Seus dados vão direto para a nossa
+                  equipe — não usamos para mais nada.
+                </p>
               </Card>
             </form>
           </FadeInSection>
@@ -1013,20 +1285,20 @@ function Footer() {
               />
             </a>
             <p className="text-sm text-gray-500 leading-relaxed max-w-xs">
-              Soluções avançadas em manufatura digital para impulsionar a transformação industrial do seu negócio.
+              Estudo de aplicação para células robotizadas e sistemas de automação.
+              Engenharia independente, com procedência em cada número.
             </p>
             <div className="flex gap-3 mt-5">
-              {[
-                { icon: Linkedin, label: 'LinkedIn' },
-                { icon: Instagram, label: 'Instagram' },
-                { icon: Youtube, label: 'YouTube' },
-              ].map((social, i) => {
-                const Icon = social.icon
+              {REDES.filter((r) => r.url).map((r) => {
+                const Icon = r.nome === 'LinkedIn' ? Linkedin
+                  : r.nome === 'Instagram' ? Instagram : Youtube
                 return (
                   <a
-                    key={i}
-                    href="#"
-                    aria-label={social.label}
+                    key={r.nome}
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={r.nome}
                     className="w-8 h-8 rounded-md bg-[#111111] border border-[rgba(16,185,129,0.08)] flex items-center justify-center text-gray-500 hover:text-emerald-400 hover:border-emerald-500/30 transition-all"
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -1063,7 +1335,7 @@ function Footer() {
             <ul className="space-y-2.5">
               {[
                 { label: 'Sobre Nós', href: '#sobre' },
-                { label: 'Cases de Sucesso', href: '#cases' },
+                { label: 'Aplicações', href: '#cases' },
                 { label: 'Contato', href: '#contato' },
                 { label: 'Blog', href: '#' },
               ].map((link, i) => (
@@ -1126,13 +1398,20 @@ function Footer() {
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
+      {/* Degradê da marca (verde -> laranja) atravessando a página inteira.
+          Fica acima dos fundos de seção e abaixo do conteúdo — ver a regra
+          .brand-ambient em globals.css, que explica o porquê do z-index. */}
+      <div className="brand-ambient" aria-hidden="true" />
+      {/* Faixa de assinatura no topo, como no rodapé das peças de post. */}
+      <div className="brand-bar fixed top-0 left-0 right-0 z-50" aria-hidden="true" />
       <Navbar />
       <main className="flex-1">
         <HeroSection />
+        <PlataformaSection />
         <ServicesSection />
+        <CelulasSection />
+        <AplicacoesSection />
         <AboutSection />
-        <CasesSection />
-        <FounderSection />
         <ContactSection />
       </main>
       <Footer />

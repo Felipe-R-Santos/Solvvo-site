@@ -13,29 +13,53 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// SEO/compartilhamento: o título e a descrição são o que aparece no Google e
+// no card do LinkedIn/WhatsApp quando alguém cola o link. Alinhados ao novo
+// foco (estudo de aplicação + plataforma), com as palavras que o cliente
+// realmente busca — "célula robotizada", "payback", "solda robotizada".
 export const metadata: Metadata = {
-  title: "Solvvo | Soluções em Manufatura Digital",
+  // metadataBase: sem isto o Next avisa no build e as imagens de Open Graph
+  // saem com URL relativa — o LinkedIn e o WhatsApp NÃO conseguem montar o
+  // card com miniatura, que é justamente o que gera clique.
+  // ⚠ TROCAR pelo domínio real quando sair da hospedagem gratuita.
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.solvvo.com.br"
+  ),
+  title: "Solvvo Solutions | Plataforma de Estudo de Aplicação Robotizada",
   description:
-    "Transforme sua manufatura com tecnologia digital. Scan 3D, Digital Twin, Manufatura Aditiva e Automação Industrial. Soluções de ponta para indústria 4.0.",
+    "Plataforma de simulação automática para estudo de aplicação de células robotizadas: robô, posicionador, estrutura, tempo de ciclo, ROI e payback — com a fonte de cada número. Para integradoras e indústrias que refazem layout o tempo todo.",
   keywords: [
-    "Scan 3D",
-    "Digital Twin",
-    "Manufatura Digital",
-    "Manufatura Aditiva",
-    "Automação Industrial",
-    "Indústria 4.0",
-    "Engenharia Reversa",
-    "Impressão 3D",
+    "estudo de aplicação",
+    "célula robotizada",
+    "simulação de célula robotizada",
+    "software para integradora de robótica",
+    "dimensionamento de célula de solda",
+    "tempo de ciclo robô",
+    "payback automação",
+    "layout de manufatura",
+    "solda robotizada",
+    "automação industrial",
   ],
-  authors: [{ name: "Solvvo" }],
+  authors: [{ name: "Solvvo Solutions" }],
   icons: {
     icon: "/logo-solvvo.png",
   },
   openGraph: {
-    title: "Solvvo | Soluções em Manufatura Digital",
+    title: "Solvvo Solutions | Plataforma de Estudo de Aplicação Robotizada",
     description:
-      "Transforme sua manufatura com tecnologia digital. Scan 3D, Digital Twin, Manufatura Aditiva e Automação Industrial.",
+      "Em breve: assinatura da plataforma que faz o estudo de aplicação de ponta a ponta — robô, posicionador, estrutura, ciclo, ROI e payback, com a fonte de cada número.",
     type: "website",
+    locale: "pt_BR",
+    siteName: "Solvvo Solutions",
+    images: [{ url: "/celulas/sw-cc1.webp", width: 1200, height: 900,
+               alt: "Célula robotizada de soldagem — arquitetura compacta" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Solvvo Solutions | Plataforma de Estudo de Aplicação Robotizada",
+    description:
+      "O estudo de aplicação que leva semanas, feito de ponta a ponta e auditável linha por linha. Em breve por assinatura.",
+    images: ["/celulas/sw-cc1.webp"],
   },
 };
 

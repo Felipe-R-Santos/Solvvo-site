@@ -154,6 +154,59 @@ html {
   background-size: 60px 60px;
 }
 
+/* ───────────────────────────────────────────────────────────────────────────
+   DEGRADÊ DA MARCA NO FUNDO DO SITE  (30/07/2026)
+
+   É o mesmo degradê das peças de post: verde #34F000 -> laranja #FF6B35
+   difusos sobre o cinza escuro. Cores amostradas do deck oficial, não
+   escolhidas no olho.
+
+   POR QUE UM OVERLAY FIXO E NÃO `background` no body:
+   cada <section> do site desenha o próprio fundo OPACO
+   (`absolute inset-0 bg-gradient-to-b from-[#0a0a0a] ...`). Um degradê no
+   body ficaria atrás desses fundos e não apareceria em lugar nenhum.
+   Este overlay é `fixed` com z-index 5: acima dos fundos de seção (z auto)
+   e abaixo do conteúdo (que é `relative z-10`). Assim o degradê atravessa
+   a página inteira, sem precisar mexer em nenhuma seção.
+
+   `mix-blend-mode: screen` faz ele CLAREAR o que está atrás em vez de
+   cobrir — é o que dá o ar de luz ambiente em vez de mancha colorida.
+   `pointer-events: none` para nunca roubar clique.
+
+   Alphas baixos de propósito (0.10–0.14): o site é escuro e o texto é
+   branco; passar disso lava a leitura, que foi o erro da 1ª versão da peça.
+   ─────────────────────────────────────────────────────────────────────── */
+.brand-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    /* laranja: canto inferior direito */
+    radial-gradient(55rem 38rem at 88% 84%, rgba(255, 107, 53, 0.14), transparent 62%),
+    /* verde da marca: canto inferior esquerdo */
+    radial-gradient(48rem 32rem at 10% 90%, rgba(52, 240, 0, 0.11), transparent 60%),
+    /* verde-esmeralda do site: brilho de topo, amarra com o accent atual */
+    radial-gradient(64rem 40rem at 52% -8%, rgba(16, 185, 129, 0.08), transparent 66%);
+}
+
+/* Em tela pequena o degradê fica desproporcional (os raios são fixos em rem):
+   encolhe e clareia menos, senão vira mancha no meio do texto no celular. */
+@media (max-width: 640px) {
+  .brand-ambient {
+    background:
+      radial-gradient(26rem 20rem at 92% 88%, rgba(255, 107, 53, 0.12), transparent 62%),
+      radial-gradient(24rem 18rem at 6% 92%, rgba(52, 240, 0, 0.09), transparent 60%);
+  }
+}
+
+/* Faixa de assinatura verde -> laranja, a mesma do rodapé das peças. */
+.brand-bar {
+  height: 3px;
+  background: linear-gradient(90deg, #ff6b35 0%, #34f000 100%);
+}
+
 /* Noise texture overlay */
 .noise-overlay::after {
   content: '';
