@@ -263,6 +263,91 @@ dizer que o site não armazena nada.
 
 ---
 
+## Renders de célula da geração 2026
+
+Felipe forneceu três renders novos em 05/08/2026, confirmados como **células
+padrão, não layout de cliente** — a verificação que o `LEIA-ME.md` exige.
+
+| Arquivo de origem | Slug gerado | O que mostra |
+|---|---|---|
+| `Celulas Solvvo H2000.png` | `cel-h-duas-estacoes` | célula H de duas estações, sem dispositivo montado |
+| `Celulas Solvvo H2000 com berco.png` | `cel-h-com-berco` | a mesma célula H, com os berços montados, e figura humana |
+| `Celulas Solvvo coluna e trilho.png` | `cel-coluna-trilho` | coluna e lança sobre trilho, dois posicionadores de cabeçote |
+
+São duas arquiteturas e um par, não três arquiteturas: os dois primeiros são a
+mesma célula com e sem o dispositivo de fixação.
+
+### Usos aprovados
+
+- **`cel-coluna-trilho` → fundo do herói**, pelo tratamento `preparar_hero()`.
+  É a mesma arquitetura que gerou o herói atual, em render melhor e mais aberto.
+- **`cel-h-com-berco` → seção Sobre**, no lugar da `sw-gan.webp`. Ela ilustra o
+  parágrafo escrito na Fase 1 que separa a independência (robô, posicionador,
+  periférico) do berço e do gabarito, projetados sob medida: a imagem mostra o
+  berço montado na célula.
+- **`cel-h-duas-estacoes` + `cel-h-com-berco` → card "Dispositivos e
+  Fabricação"**. A mesma célula com e sem o dispositivo dispensa legenda
+  explicativa.
+- **`cel-h-com-berco` → card social (Open Graph)**.
+
+### Uso RECUSADO, e por quê
+
+Eu havia proposto pôr `cel-h-duas-estacoes` e `cel-coluna-trilho` lado a lado
+para ilustrar o item 02 da Fase 5, "três cenários comparados". **Felipe recusou,
+com razão.**
+
+O item 02 é *três cenários comparados para o mesmo problema*. As duas
+arquiteturas atendem peças diferentes — lado a lado elas ilustram **catálogo**,
+não comparação, e ensinam a coisa errada sobre o que o pré-estudo entrega. Um
+comprador atento nota a diferença.
+
+**Decisão:** naquele ponto entra **uma imagem só**, com legenda dizendo que é
+uma das alternativas avaliadas. A comparação de verdade é a tabela — arquitetura,
+ciclo, peças por hora, investimento, payback.
+
+**Pendência futura:** quando existirem duas arquiteturas renderizadas **para a
+mesma peça**, a imagem dupla passa a valer e o item 02 pode receber o par.
+
+### As seis da galeria foram regeradas — e isso NÃO é a troca de render
+
+Ao rodar o script, as seis imagens antigas também foram regeradas. **Mantidas,
+por decisão de Felipe**, e é importante não confundir isso com a frente
+paralela descrita logo abaixo.
+
+O que mudou nelas foi só o fundo: `#171717` → `#232323`. O valor antigo estava
+calibrado para o `#0a0a0a` que a Fase 2 aposentou. Reverter deixaria seis
+imagens de uma paleta morta dentro de cartões `--sv-surface` — apareceriam como
+retângulo escuro dentro de retângulo menos escuro.
+
+**É correção de alinhamento com a paleta. O render é o mesmo.** A troca dos
+renders continua sendo a frente paralela abaixo.
+
+### Frente paralela — regeneração da galeria
+
+As seis imagens da galeria são de uma geração anterior e ficam visivelmente
+atrás destas três. Regenerá-las no padrão novo é trabalho de Felipe no
+KUKA.Sim, **não deste repositório, e não pode travar as Fases 4 a 8.**
+
+Por ora: as três novas nos lugares de destaque, a galeria antiga como está.
+
+### Alteração de escopo da Fase 5, autorizada
+
+A Fase 5 do brief dizia "usar as fotos de célula já existentes em
+`public/celulas/`. Não buscar, gerar nem substituir imagem nenhuma". Essa linha
+existia para impedir que eu saísse procurando ou gerando imagem por conta
+própria. **Felipe autorizou a exceção em 05/08/2026** e forneceu ele mesmo os
+arquivos — a regra continua valendo para mim, o que mudou é a origem do
+material. A linha do `BRIEF.txt` foi atualizada para não virar divergência
+silenciosa.
+
+### Onde vivem os originais
+
+Os PNG têm ~10 MB cada e **ficam fora do repositório**. Um deles no histórico do
+git ficaria lá para sempre. O `.gitignore` barra `Celulas Solvvo *.png`, e o
+script aceita `SOLVVO_RENDERS` apontando para a pasta onde eles estiverem.
+
+---
+
 ## Critério de agrupamento de commit
 
 O brief manda commits pequenos, um por fase, e proíbe misturar fase de conteúdo

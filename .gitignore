@@ -58,3 +58,18 @@ _backup-antes-ajuste/
 # lockfile do bun: o deploy no Vercel usa npm (package-lock.json).
 # Manter os dois versionados faz o Vercel escolher o instalador errado.
 bun.lock
+
+# Renders de origem das células (10 MB cada). O site versiona só o WebP gerado
+# por scripts/preparar-imagens-celulas.py — um PNG destes no histórico do git
+# fica lá para sempre. Guarde os originais fora do repositório e aponte
+# SOLVVO_RENDERS para a pasta deles.
+Celulas Solvvo *.png
+Celulas Solvvo *.pdf
+# Qualquer render, prancha ou modelo solto na raiz. Um PDF de 49 MB entrou por
+# engano num `git add -A` em 05/08/2026 e teve de ser removido do commit antes
+# do push — no histórico, ele seria irreversível.
+/*.pdf
+/*.step
+/*.stp
+/*.STEP
+/*.STP

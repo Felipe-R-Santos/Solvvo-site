@@ -418,8 +418,20 @@ FASE 5 — NOVA PÁGINA /estudo-de-aplicacao
 Rota própria, URL própria, para enviar em e-mail e proposta. Usar os componentes
 existentes, já no sistema das Fases 2 e 3.
 
-IMAGENS: usar as fotos de célula já existentes em public/celulas/.
-Não buscar, gerar nem substituir imagem nenhuma.
+IMAGENS: usar as que já estão em public/celulas/. Não buscar nem gerar imagem
+por conta própria — se faltar material, pergunte a Felipe.
+
+ATUALIZADO EM 05/08/2026: Felipe forneceu três renders novos (célula H com e
+sem berço, e coluna e lança sobre trilho), confirmados como células padrão.
+Eles entram nos lugares de destaque. A regra acima continua valendo: o que
+mudou é que o material veio de Felipe, não de uma busca minha. Ver DECISOES.md.
+
+NA SEÇÃO 2, ITEM 02 ("três cenários comparados"), USE UMA IMAGEM SÓ, com
+legenda dizendo que é uma das alternativas avaliadas. Duas arquiteturas
+diferentes lado a lado ilustram CATÁLOGO, não comparação — elas atendem peças
+diferentes, e a comparação do pré-estudo é entre arranjos para a MESMA peça.
+A comparação de verdade é a tabela: arquitetura, ciclo, peças/hora,
+investimento, payback.
 
 --- SEÇÃO 1 — ABERTURA ---
 
