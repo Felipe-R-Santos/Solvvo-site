@@ -205,6 +205,18 @@ html {
   background-image: url('/hero-celula-papel.webp');
 }
 
+/* Render de célula dentro de conteúdo, também com uma versão por tema. Mesma
+   razão do herói e mesma técnica: só a imagem da regra que vence é baixada. */
+.sv-img-celula-h {
+  background-image: url('/celulas/cel-h-duas-estacoes-carvao.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+[data-theme="light"] .sv-img-celula-h {
+  background-image: url('/celulas/cel-h-duas-estacoes-papel.webp');
+}
+
 /* Barra de rolagem */
 ::-webkit-scrollbar {
   width: 8px;

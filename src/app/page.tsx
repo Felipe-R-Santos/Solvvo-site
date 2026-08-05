@@ -6,6 +6,8 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { Carimbo } from '@/components/carimbo'
+import { CONTATO } from '@/lib/contato'
+import { PRAZO_PRE_ESTUDO, PRECO_PRE_ESTUDO } from '@/lib/valores'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -112,15 +114,6 @@ const navLinks = [
   { label: 'Contato', href: '#contato' },
 ]
 
-// ── CONTATO — um só lugar para mudar (usado no form, no WhatsApp e no rodapé) ──
-const CONTATO = {
-  email: 'contato@solvvo.com.br',
-  // formato internacional, só dígitos: exigido pelo link do WhatsApp
-  whatsapp: '5554981535018',
-  telefoneVisivel: '(54) 9 8153-5018',
-  cidade: 'Caxias do Sul, RS - Brasil',
-}
-
 // ── SERVIÇOS — uma lista só, para o rodapé e para o formulário ─────────────
 // Antes existiam DUAS listas ("Scan 3D, Digital Twin, Manufatura Aditiva,
 // Automação Industrial"), uma no rodapé e outra no select de contato, ambas
@@ -138,16 +131,6 @@ const SERVICOS = [
 // O rodapé mostra os quatro principais; o formulário oferece todos mais "Outro".
 const SERVICOS_RODAPE = SERVICOS.slice(0, 4)
 const SERVICOS_FORMULARIO = [...SERVICOS, 'Outro']
-
-// ── VALORES COMERCIAIS — um lugar só ───────────────────────────────────────
-// Definidos por Felipe e registrados na seção 3 do BRIEF.txt. Para mudar
-// qualquer um, edite AQUI: eles aparecem no herói, no bloco do pré-estudo, na
-// tabela de níveis de entrega e nos metadados. Espalhados pelo JSX, mudaria um
-// e esqueceria os outros — e preço divergente na mesma página derruba a venda.
-// A Fase 5 acrescenta aqui o prazo e o preço do estudo completo e os valores da
-// assinatura, quando a página que os usa existir.
-const PRAZO_PRE_ESTUDO = '5'
-const PRECO_PRE_ESTUDO = 'R$ 1.900'
 
 // ── FAIXA DE CREDIBILIDADE DO HERÓI ────────────────────────────────────────
 // ⚠ REGRA DE ROTULAGEM, NÃO NEGOCIÁVEL: o primeiro é "acervo de referência".

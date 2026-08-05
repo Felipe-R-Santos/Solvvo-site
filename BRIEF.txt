@@ -369,6 +369,21 @@ Nenhum texto muda nesta fase. Muda como o texto se apresenta.
      legenda em monoespaçada abaixo. Sem cantos muito arredondados: raio máximo
      4px. Sem sombra.
 
+3.6.1  TEXTO SOBRE IMAGEM — NÍVEL MÍNIMO --sv-text-2
+     Todo texto que fique POR CIMA de imagem usa no mínimo --sv-text-2. O
+     --sv-text-3 é para legenda sobre fundo chapado, e não sobrevive sobre
+     render: medido no herói, a etiqueta dava 3,36:1 no tema escuro (sobre a
+     lança laranja) e 2,14:1 no claro, e a atribuição da citação dava 4,34:1 e
+     4,33:1 — todos abaixo dos 4,5:1 exigidos.
+
+     ⚠ A AUDITORIA DE CONTRASTE NORMAL NÃO PEGA ISSO. Ela mede o texto contra o
+     fundo declarado no CSS, e sobre uma imagem esse fundo é a cor da página —
+     os quatro cenários davam zero falha enquanto o herói reprovava. Para
+     verificar de verdade é preciso amostrar os pixels do render por canvas e
+     compor o véu por cima.
+
+     Vale para a Fase 5 e para a Fase 6, que também põem texto sobre render.
+
 3.7  TESTE DE ACEITE DA FASE
      Nenhum gradiente, glow ou sombra decorativa restante. Um único acento por
      tela. A página lida em ambos os temas sem perda de contraste.
