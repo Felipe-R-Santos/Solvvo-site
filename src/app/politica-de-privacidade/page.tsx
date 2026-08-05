@@ -28,6 +28,17 @@ export const metadata: Metadata = {
   title: 'Política de Privacidade | Solvvo Solutions',
   description:
     'Como a Solvvo Solutions trata os dados pessoais informados no site: o que é coletado, para que serve e como exercer seus direitos previstos na LGPD.',
+  // Sem este bloco, a página herda o og:title do layout raiz e o card social
+  // dela anuncia o pré-estudo — quem recebe o link da política vê a oferta
+  // comercial, que é o oposto do que a página comunica.
+  openGraph: {
+    title: 'Política de Privacidade | Solvvo Solutions',
+    description:
+      'O que o site coleta, para que serve e como exercer seus direitos previstos na LGPD.',
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'Solvvo Solutions',
+  },
 }
 
 const ATUALIZADO_EM = '5 de agosto de 2026'

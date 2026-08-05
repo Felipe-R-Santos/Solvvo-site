@@ -24,6 +24,31 @@ import { CHAVE_TEMA } from '@/lib/tema'
 // mesma coisa que o script anti-flash escreve. Uma fonte só.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Cores da barra de endereço, iguais ao --sv-bg de cada tema.
+const COR_BARRA = { dark: '#1A1A1A', light: '#F4F2ED' } as const
+
+/**
+ * Faz a barra do navegador acompanhar o tema ESCOLHIDO, e não o do sistema.
+ *
+ * O layout declara dois <meta name="theme-color"> com media query, e eles
+ * resolvem o primeiro carregamento. Mas a media segue a preferência do SISTEMA:
+ * quem está com o sistema no escuro e escolhe o tema claro ficaria com a barra
+ * de endereço escura sobre página clara — visível e feio no celular.
+ *
+ * A solução é inserir uma terceira meta SEM media, que por isso vence as duas
+ * declaradas, e reescrevê-la a cada troca.
+ */
+function sincronizarBarraDoNavegador(tema: 'dark' | 'light') {
+  let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"][data-sv]')
+  if (!meta) {
+    meta = document.createElement('meta')
+    meta.name = 'theme-color'
+    meta.dataset.sv = '1'
+    document.head.appendChild(meta)
+  }
+  meta.content = COR_BARRA[tema]
+}
+
 export function ThemeToggle({ className = '' }: { className?: string }) {
   function alternarTema() {
     const raiz = document.documentElement
@@ -35,6 +60,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       // Navegação privativa pode bloquear o armazenamento. A troca vale para
       // esta sessão mesmo assim; só não sobrevive ao recarregamento.
     }
+    sincronizarBarraDoNavegador(novo)
   }
 
   return (
