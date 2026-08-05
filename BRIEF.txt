@@ -1,0 +1,668 @@
+================================================================================
+BRIEF ÚNICO — SITE SOLVVO SOLUTIONS
+Versão 3.0 — CONTEÚDO + IDENTIDADE VISUAL
+SUBSTITUI INTEGRALMENTE QUALQUER BRIEF ANTERIOR
+================================================================================
+
+Repositório .... site institucional solvvo.com.br
+Autoridade ..... Felipe (fundador). Nenhuma outra fonte.
+Escopo ......... conteúdo, sistema de temas, linguagem visual e uma página
+                 nova. NÃO é refatoração de arquitetura.
+
+
+--------------------------------------------------------------------------------
+ATENÇÃO — LEIA ANTES DE QUALQUER COISA
+--------------------------------------------------------------------------------
+
+Se houver no repositório, no histórico da conversa ou em qualquer arquivo um
+brief anterior sobre este site: DESCONSIDERE-O POR COMPLETO. Não tente
+reconciliar os dois. Não siga instrução que esteja lá e não esteja aqui.
+
+ESTE ARQUIVO É A ÚNICA FONTE DA VERDADE PARA ESTE TRABALHO.
+
+Se algo aqui conflitar com o que você encontrar no código: PARE E PERGUNTE.
+
+As decisões tomadas sobre os conflitos levantados na Fase 0 estão registradas
+em DECISOES.md, com a justificativa de cada uma, e já foram aplicadas ao texto
+abaixo.
+
+
+================================================================================
+1. COMO TRABALHAR NESTE PROJETO
+================================================================================
+
+1.1  Não altere framework, estrutura de pastas nem biblioteca de UI. O sistema
+     de cores MUDA (Fase 2), mas dentro do que já existe: Tailwind + shadcn
+     continuam.
+
+1.2  Nada de biblioteca nova. Única exceção autorizada: uma fonte monoespaçada
+     via next/font (seção Fase 3).
+
+1.3  NÃO INVENTE NÚMERO NENHUM. Preço, prazo, quantidade, percentual, nome de
+     cliente, depoimento: se não estiver escrito neste brief, pergunte. Nunca
+     preencha com exemplo plausível.
+
+1.4  Trabalhe em fases, na ordem. Ao terminar cada fase: PARE, mostre o diff,
+     aguarde aprovação. Conteúdo e identidade visual são fases separadas e
+     commits separados — nunca no mesmo commit.
+
+1.5  Antes de criar componente, função, classe ou variável: PROCURE POR
+     SINÔNIMOS no projeto. Regra duplicada diverge em silêncio.
+
+1.6  Commits pequenos, um por fase, mensagem descritiva em português.
+
+
+================================================================================
+2. CONTEXTO E OBJETIVO
+================================================================================
+
+2.1  O PROBLEMA DE CONTEÚDO
+O site tem como elemento principal uma lista de espera para uma plataforma SaaS
+que ainda não está no ar. O serviço vendável hoje — a engenharia do estudo de
+aplicação — aparece enterrado como um card entre quatro.
+
+OBJETIVO: inverter. O site passa a vender o PRÉ-ESTUDO DE VIABILIDADE —
+entregável rápido, escopo fechado, preço fechado — como produto principal. A
+plataforma continua na página, como bloco secundário de lista de espera.
+
+2.2  O PROBLEMA DE IDENTIDADE
+O visual atual (preto quase absoluto, verde esmeralda, texto em gradiente, glow)
+é a estética de startup de software dos últimos anos. Comunica "empresa de
+tecnologia".
+
+A Solvvo não vende software. Vende CRITÉRIO DE ENGENHARIA, para gerente
+comercial de integradora e engenheiro de processo de indústria. Para esse
+público o visual atual gera dissonância: parece marketing, e a tese defendida é
+o contrário de marketing.
+
+Há um problema prático junto: fundo quase preto com glow é péssimo para o
+melhor ativo visual da empresa — desenho técnico, prancha 2D, still de
+simulação, foto de célula. O site esconde o que mais convence.
+
+NOVA DIREÇÃO: FOLHA DE DESENHO TÉCNICO. Grade fina, monoespaçado nos números,
+réguas, margens generosas, carimbo com revisão e data. É a linguagem visual do
+documento que o cliente recebe — e argumenta sozinha a favor de "todo número tem
+fonte".
+
+2.3  TESE COMERCIAL, uma só
+Integradoras e revendas levam de 20 a 30 dias para devolver um pré-estudo ao
+cliente final, e nesse prazo a oportunidade morre. A Solvvo devolve em dias.
+
+REGRA EDITORIAL: prazo e preço aparecem cedo e explícitos. Se um vendedor de
+integradora abrir a página, ele precisa saber em quantos dias e por quanto ANTES
+de rolar a tela.
+
+
+================================================================================
+3. VALORES FIXADOS
+================================================================================
+
+    PRAZO_PRE_ESTUDO ............ 5 dias úteis
+    PRECO_PRE_ESTUDO ............ R$ 1.900
+    PRAZO_ESTUDO_COMPLETO ....... 10 dias úteis
+    PRECO_ESTUDO_COMPLETO ....... a partir de R$ 9.800
+    PRECO_ASSINATURA ............ R$ 3.400 /mês
+    QTD_PRE_ESTUDOS_ASSINATURA .. 2 por mês
+
+Valores definidos por Felipe. Nenhuma fase está mais bloqueada por eles.
+Se algum precisar mudar, edite AQUI — não no texto das fases.
+
+
+================================================================================
+FASE 0 — RECONHECIMENTO (sem editar nada)                          [CONCLUÍDA]
+================================================================================
+
+Antes de tocar em qualquer arquivo, produza um relatório curto respondendo:
+
+  a) Framework, versão e forma de build.
+  b) Onde vive o conteúdo da home: componentes, MDX, CMS, JSON?
+  c) Quais componentes existem hoje (herói, cards de serviço, bloco de
+     estatísticas, formulário, rodapé) e em que arquivo/linha.
+  d) Como é o roteamento — dá para criar /estudo-de-aplicacao sem mexer em
+     config?
+  e) Onde estão os metadados de SEO e Open Graph, e se a página pode exportar
+     metadata própria.
+  f) Para onde o formulário de contato envia hoje.
+  g) Se existe algum mecanismo funcionando de captura de e-mail.
+  h) INVENTÁRIO DE COR: liste TODA ocorrência de hex literal e de classe de cor
+     (emerald-*, #0a0a0a, #111111, rgba de glow) com arquivo e linha. Liste
+     também as classes utilitárias próprias: gradient-text, grid-pattern,
+     glow-emerald, glow-emerald-strong, brand-ambient, brand-bar — onde estão
+     definidas e onde são usadas.
+  i) Onde ficam as fontes hoje, e se next/font já é usado.
+
+Entregue como lista. NÃO proponha melhorias nesta fase. NÃO edite nada.
+
+
+================================================================================
+FASE 1 — CORREÇÕES DE CREDIBILIDADE
+================================================================================
+(baixo risco, alto impacto, independente de tudo o mais)
+
+1.1  REMOVER O BLOCO DE ESTATÍSTICAS DA HOME
+     Os quatro números (526 projetos de referência, 6.928 componentes,
+     23 arquiteturas, 72 posicionadores) aparecem duas vezes e são contagens de
+     banco de dados interno apresentadas como currículo. Um comprador lê "526
+     projetos" como "526 clientes atendidos", o que não é verdade. Numa empresa
+     cujo lema é que todo número tem fonte, isso é risco alto.
+
+     Ação: remover a barra de stats do herói. Os números de acervo podem
+     permanecer DENTRO do bloco da plataforma, sob rótulo explícito "Nosso
+     acervo técnico" — nunca como resultado comercial.
+
+     DECISÃO C4: o número 526 sai do site INTEIRO. No bloco da plataforma ficam
+     apenas 6.928 componentes, 23 arquiteturas e 72 posicionadores. "526
+     projetos de referência" ao lado de "31 projetos reais em STEP" (Fase 4) é
+     contradição visível na mesma página.
+
+1.2  CORRIGIR A SEÇÃO DE CÉLULAS
+     "Seis das 23 arquiteturas que a plataforma dimensiona" atribui capacidade a
+     algo que não existe. Substituir por:
+     "Seis das 23 arquiteturas do nosso acervo, usadas como base de
+     dimensionamento."
+
+1.3  CORRIGIR O RODAPÉ
+     Lista serviços que não são os da empresa (Scan 3D, Digital Twin, Manufatura
+     Aditiva, Automação Industrial). Substituir por:
+       . Pré-estudo de viabilidade
+       . Estudo de aplicação completo
+       . Especificação de célula
+       . Engenharia reversa e Scan 3D
+
+1.4  CORRIGIR O SELECT DE SERVIÇO DO FORMULÁRIO
+     Mesma lista errada do rodapé. Nova lista:
+       Pré-estudo de viabilidade | Estudo de aplicação completo |
+       Especificação de célula | Engenharia reversa e Scan 3D |
+       Dispositivos e gabaritos | Outro
+
+1.5  LINKS MORTOS
+     . Blog aponta para "#"           -> REMOVER o link.
+     . Termos de Uso aponta para "#"  -> REMOVER o link. Não existe plataforma,
+       login nem transação; página vazia só para tapar link é pior que link
+       nenhum.
+     . Política de Privacidade "#"    -> CRIAR a rota com conteúdo real. O site
+       coleta dado pessoal em formulário (LGPD). Sem texto jurídico, criar com
+       conteúdo mínimo e SINALIZAR a Felipe que precisa de revisão.
+
+1.6  IMAGEM DE OPEN GRAPH
+     O layout declara 1200 x 900; o arquivo real é 1200 x 675. Corrigir a
+     declaração. Afeta como o link aparece no WhatsApp e no LinkedIn, que é por
+     onde a divulgação vai acontecer.
+
+1.7  COERÊNCIA DA INDEPENDÊNCIA
+     O card "Dispositivos e Fabricação" (berços, gabaritos, prototipagem)
+     conflita com "não vendemos equipamento". Ajustar o texto de Sobre: a
+     independência vale para ROBÔ, POSICIONADOR E PERIFÉRICOS DE AUTOMAÇÃO —
+     dispositivo de fixação sob medida não é catálogo de fabricante.
+
+1.8  BUILD COM ERRO DE TIPO IGNORADO
+     Se typescript.ignoreBuildErrors estiver ativo, o site sobe para produção
+     quebrado sem aviso. Com rota e formulário novos entrando, é um jeito de
+     derrubar a página de vendas sem perceber.
+     Ação: desligar e corrigir o que aparecer. Volume grande: REPORTE ANTES.
+
+
+================================================================================
+FASE 2 — SISTEMA DE TEMAS E TOKENS
+================================================================================
+
+Fundação técnica de toda a mudança visual. Nenhum texto muda nesta fase.
+
+2.1  PROBLEMA
+As cores estão como hex literal espalhado pelo JSX (#0a0a0a, #111111,
+rgba de glow, emerald-400/500/600). Com hex literal é impossível ter dois
+temas, e qualquer ajuste vira caça ao longo do arquivo.
+
+2.2  PALETA — dois temas, valores fixos, não negociáveis
+
+    TEMA ESCURO (padrão) — "carvão"
+      --sv-bg          #1A1A1A   página (o carvão institucional Solvvo,
+                                 NÃO o #0a0a0a atual)
+      --sv-surface     #232321   cartão / bloco elevado
+      --sv-line        #35342F   régua e borda
+      --sv-grid        #262523   grade técnica de fundo
+      --sv-text        #F0EEE8   texto principal
+      --sv-text-2      #A5A199   texto secundário
+      --sv-text-3      #6E6B64   legenda, carimbo, unidade
+      --sv-accent      #FF6B35   acento único (laranja do deck oficial)
+      --sv-accent-ink  #1A1A1A   texto sobre o acento
+
+    TEMA CLARO — "papel"
+      --sv-bg          #F4F2ED
+      --sv-surface     #FAF9F6
+      --sv-line        #D8D4C9
+      --sv-grid        #E4E0D5
+      --sv-text        #1A1A1A
+      --sv-text-2      #5A5852
+      --sv-text-3      #8A8880
+      --sv-accent      #C2410C   mesmo matiz, escurecido para contraste
+      --sv-accent-ink  #FAF9F6
+
+    O acento é um só, e é de sinalização industrial. Usado em: CTA primário,
+    um número de destaque por bloco, estado de foco. NUNCA em texto corrido,
+    nunca em área grande, nunca dois acentos na mesma tela.
+
+    O verde #34F000 fica EXCLUSIVAMENTE na brand-bar. Em nenhum outro lugar.
+
+2.3  IMPLEMENTAÇÃO
+     . Declarar as variáveis em globals.css: :root com o tema escuro, e
+       [data-theme="light"] sobrescrevendo.
+     . Expor as variáveis ao Tailwind v4 via @theme, para virarem classes
+       utilitárias.
+     . SUBSTITUIR toda ocorrência de hex literal e de emerald-* pelas novas
+       variáveis, usando o inventário da Fase 0 item (h).
+     . Nenhum hex literal pode sobrar no JSX ao fim desta fase.
+
+     ESCALA DE CINZA — 97 ocorrências que o brief original não listava. Elas
+     não seguem troca de tema (text-gray-500 sobre #F4F2ED fica ilegível) e
+     entram nesta fase junto com os hex:
+       text-white ................................ --sv-text
+       text-gray-300, text-gray-400 .............. --sv-text-2
+       text-gray-500, text-gray-600 .............. --sv-text-3
+       bg-white/5, bg-black/50 ................... --sv-surface
+       border-white/30 ........................... --sv-line
+
+     ÊNFASE EM TEXTO CORRIDO (page.tsx 576, 577, 592, 818): passa a ser
+     --sv-text com peso 500. Ênfase é tipográfica, não cromática.
+
+2.4  BOTÃO DE TEMA
+     . Padrão: ESCURO.
+     . Na primeira visita, respeitar prefers-color-scheme; sem preferência
+       declarada, escuro.
+     . Escolha do usuário persiste em localStorage.
+     . Botão no menu, ícone sol/lua, com aria-label.
+     . ANTI-FLASH obrigatório: script inline no <head> do layout raiz, ANTES da
+       pintura, lendo localStorage e aplicando data-theme no <html>. Sem isso a
+       página pisca branco a cada carregamento — inaceitável num site que será
+       aberto à noite.
+
+2.5  TESTE DE ACEITE DA FASE
+     Alternar o tema com o botão muda a página inteira sem recarregar, sem
+     nenhum elemento ficando ilegível, e recarregar mantém a escolha sem flash.
+
+
+================================================================================
+FASE 3 — LINGUAGEM VISUAL: FOLHA TÉCNICA
+================================================================================
+
+Nenhum texto muda nesta fase. Muda como o texto se apresenta.
+
+3.1  REMOVER
+     . gradient-text — texto em gradiente sai. Título é cor sólida.
+     . glow-emerald e glow-emerald-strong — todo brilho sai.
+     . Qualquer sombra decorativa, blur ou neon.
+     . grid-pattern na forma atual (ver 3.3).
+     . brand-ambient (DECISÃO C1) — a luz ambiente em mix-blend-mode: screen
+       cobre a tela inteira e tinge toda foto de célula e todo desenho técnico
+       da página. A brand-bar de 3px no topo PERMANECE.
+     . Partículas flutuantes do herói (page.tsx:273).
+     . Classes mortas do globals.css, sem nenhum uso no projeto:
+       gradient-border, noise-overlay, pulse-emerald, animate-float.
+     . src/hooks/use-mobile.ts — useIsMobile não é importada por ninguém.
+       Sobra do scaffold do shadcn, e carrega o único erro de ESLint do
+       projeto. Apagar no MESMO commit das classes mortas acima.
+
+     Justificativa: gradiente e glow são os dois marcadores mais fortes de
+     "landing page de startup". São exatamente o sinal errado.
+
+3.2  TIPOGRAFIA
+     . Corpo e títulos: manter a sans atual (Geist).
+     . NOVA: IBM Plex Mono via next/font. Única dependência nova autorizada
+       neste brief.
+     . DECISÃO C2 — SUBSTITUIR, NÃO SOMAR: Geist_Mono sai, IBM_Plex_Mono entra,
+       e a variável CSS passa a se chamar --font-mono. Deixar
+       --font-geist-mono apontando para Plex é a armadilha de sinônimo da
+       regra 1.5.
+     . A monoespaçada é usada em: números, unidades, etiquetas acima de título,
+       código de seção, carimbo do rodapé, rótulos de tabela. NUNCA em texto
+       corrido.
+     . Peso máximo 500. Nada de 600 ou 700 — peso pesado lê como marketing.
+     . Etiquetas em monoespaçada levam letter-spacing 0.08em a 0.1em.
+
+3.3  GRADE TÉCNICA
+     . Substituir o grid-pattern atual por grade de folha de desenho: linhas de
+       1px em --sv-grid, módulo de 32px, opacidade baixa, cobrindo apenas o
+       herói e o bloco da plataforma. Não a página inteira.
+     . Réguas: separadores de seção viram linha de 1px em --sv-line, com
+       respiro generoso acima e abaixo. Nada de divisória grossa ou colorida.
+
+3.4  CARIMBO
+     Acrescentar ao rodapé uma faixa fina, monoespaçada, 10 a 11px, em
+     --sv-text-3, no padrão de carimbo de prancha:
+
+       SOLVVO SOLUTIONS · CAXIAS DO SUL RS          REV. 02 · 2026
+
+     Esquerda e direita, alinhados nas bordas, separados do resto por régua.
+
+3.5  BLOCOS DE NÚMERO
+     Todo número de destaque na página segue o padrão: valor em monoespaçada
+     18 a 22px em --sv-text, e logo abaixo o rótulo em 11px em --sv-text-3,
+     descrevendo COM PRECISÃO o que o número é.
+
+3.6  IMAGENS
+     As imagens de arquitetura de célula ganham moldura de 1px em --sv-line e
+     legenda em monoespaçada abaixo. Sem cantos muito arredondados: raio máximo
+     4px. Sem sombra.
+
+3.7  TESTE DE ACEITE DA FASE
+     Nenhum gradiente, glow ou sombra decorativa restante. Um único acento por
+     tela. A página lida em ambos os temas sem perda de contraste.
+
+
+================================================================================
+FASE 4 — NOVO HERÓI
+================================================================================
+
+Manter a estrutura de layout. Trocar conteúdo e aplicar Fases 2 e 3.
+
+ETIQUETA ACIMA DO TÍTULO (monoespaçada, caixa alta, letter-spacing)
+    ENGENHARIA INDEPENDENTE DE APLICAÇÃO ROBOTIZADA
+
+TÍTULO (H1, cor sólida, sem gradiente)
+    O pré-estudo que decide a venda, pronto em 5 dias úteis
+
+SUBTÍTULO
+    Seu cliente pediu um número e a resposta leva um mês. Nesse prazo a
+    oportunidade esfria. A Solvvo devolve arquitetura de célula, tempo de ciclo
+    estimado e faixa de investimento em 5 dias úteis, por R$ 1.900 — escopo
+    fechado, sem surpresa no orçamento.
+
+CITAÇÃO (manter a atual, funciona)
+    "Se o número não tem fonte, não é estudo — é chute com planilha bonita."
+
+CTA PRIMÁRIO ....... Solicitar pré-estudo          -> /estudo-de-aplicacao
+                     (fundo --sv-accent, texto --sv-accent-ink)
+CTA SECUNDÁRIO ..... Ver o que entra no pré-estudo -> âncora da seção de escopo
+                     (contorno 1px --sv-line, fundo transparente)
+
+FAIXA DE CREDIBILIDADE abaixo dos CTAs — três blocos de número no padrão 3.5,
+separados do resto por régua:
+
+    31   projetos reais em STEP no acervo de referência
+    17   células medidas em simulação
+     0   equipamentos vendidos ou representados
+
+ATENÇÃO — REGRA DE ROTULAGEM, não negociável:
+O rótulo do primeiro item é "acervo de referência". NUNCA escrever "projetos
+entregues", "clientes atendidos", "obras realizadas" ou equivalente. São
+arquivos de projeto do acervo técnico, e essa distinção é o que separa esta
+faixa dos números que a Fase 1 mandou remover.
+
+O terceiro número (zero equipamentos) é a independência transformada em
+métrica. Manter exatamente como está escrito.
+
+
+================================================================================
+FASE 5 — NOVA PÁGINA /estudo-de-aplicacao
+================================================================================
+
+Rota própria, URL própria, para enviar em e-mail e proposta. Usar os componentes
+existentes, já no sistema das Fases 2 e 3.
+
+IMAGENS: usar as fotos de célula já existentes em public/celulas/.
+Não buscar, gerar nem substituir imagem nenhuma.
+
+--- SEÇÃO 1 — ABERTURA ---
+
+H1: Pré-estudo de viabilidade robotizada em 5 dias úteis
+
+    Toda integradora tem o mesmo gargalo: o engenheiro de aplicação. Cinco
+    vendedores gerando oito estudos por mês caem na mesa de uma pessoa só, e o
+    que era resposta de dois dias vira resposta de um mês. Enquanto isso o
+    cliente final decide sem o número — ou decide não fazer.
+
+    O pré-estudo da Solvvo existe para tapar esse buraco. Escopo fechado, prazo
+    fechado, preço fechado. Você continua dono da venda e da execução; nós
+    entregamos a engenharia que sustenta a proposta.
+
+--- SEÇÃO 2 — O QUE VOCÊ RECEBE ---
+(lista numerada; número em monoespaçada no padrão 3.5)
+
+ 01 VEREDITO DE VIABILIDADE
+    Viável, viável com ressalvas ou não recomendado — com a justificativa
+    técnica que sustenta a resposta.
+
+ 02 TRÊS CENÁRIOS COMPARADOS
+    O arranjo mais simples que atende, o que atende crescimento de produção, e o
+    de menor investimento. Lado a lado, no mesmo critério, com as limitações de
+    cada um declaradas.
+
+ 03 ARQUITETURA DE CÉLULA RECOMENDADA
+    Qual dos arranjos padrão atende a peça, e por que os outros foram
+    descartados.
+
+ 04 ROBÔ E POSICIONADOR CANDIDATOS
+    Selecionados por payload no punho com ferramenta montada e por momento
+    admissível no eixo do posicionador — não por carga nominal de catálogo.
+
+ 05 TEMPO DE CICLO COM MEMÓRIA ABERTA
+    Tempo de arco, reposicionamento, rotação de posicionador, carga e descarga e
+    tempo morto, cada parcela à vista. Peças por hora e por turno.
+
+ 06 FAIXA DE INVESTIMENTO COM PROCEDÊNCIA
+    Mínimo e máximo, com a origem de cada linha e o grau de firmeza do preço.
+    Item sem preço confirmado não entra no total: aparece como pendência a
+    cotar.
+
+ 07 RETORNO CALCULADO E TESTADO
+    Custo por peça hoje e depois, payback em meses, e o payback recalculado com
+    volume 30% menor e investimento 20% maior.
+
+ 08 RISCOS E PENDÊNCIAS TÉCNICAS
+    O que precisa ser resolvido antes de avançar. Nenhum estudo honesto tem essa
+    lista vazia.
+
+ 09 VISTAS 3D DO ARRANJO
+    Imagens do layout proposto, prontas para colar na sua proposta.
+
+NOTA DE LIMITE (incluir literalmente; caixa com contorno 1px --sv-line, sem
+fundo colorido):
+    O pré-estudo não é projeto executivo nem simulação validada. Ele existe
+    para decidir se vale avançar e com que ordem de grandeza de investimento.
+    Quando a decisão for sim, o estudo completo entra com simulação, ciclo
+    medido e memorial de cálculo.
+
+--- SEÇÃO 3 — O QUE PRECISAMOS DE VOCÊ ---
+
+    Quanto melhor a entrada, mais firme o número. O mínimo para começar:
+
+    . Desenho ou modelo 3D da peça — ou fotos com medidas principais, se não
+      existir desenho
+    . Material, espessura e, no caso de solda, comprimento e posição dos cordões
+    . Volume de produção pretendido e regime de turnos
+    . Planta ou fotos da área disponível
+
+    Não tem desenho da peça nem planta confiável do galpão? O Scan 3D levanta a
+    geometria real e vira a base do estudo.
+
+--- SEÇÃO 4 — NÍVEIS DE ENTREGA ---
+(grid do Tailwind no padrão dos cards; em mobile empilha, não rola)
+
+                    PRÉ-ESTUDO         ESTUDO COMPLETO      ESPECIFICAÇÃO
+                                                            EXECUTIVA
+  Para que          decidir se vale    sustentar a          comprar e receber
+                                       proposta assinada
+  Entrega           veredito, três     simulação, ciclo     memorial técnico,
+                    cenários, ciclo    medido, layout,      escopo de cotação,
+                    estimado, faixa    seleção justificada, critério de aceite
+                    de investimento    ROI e payback
+  Prazo             5 dias úteis       10 dias úteis        sob demanda
+  Investimento      R$ 1.900           a partir de          sob consulta
+                                       R$ 9.800
+
+--- SEÇÃO 5 — ASSINATURA PARA INTEGRADORAS ---
+
+    PARA QUEM PRECISA DE PRÉ-ESTUDO TODA SEMANA
+
+    Integradoras e revendas que geram estudo em volume têm plano mensal:
+    R$ 3.400 com 2 pré-estudos inclusos, prioridade de fila e reunião técnica
+    semanal. Estudos adicionais entram com desconto.
+    É engenharia de aplicação sob demanda, sem o custo fixo de um engenheiro
+    dedicado.
+
+CTA: Falar sobre o plano mensal
+
+--- SEÇÃO 6 — FORMULÁRIO DE SOLICITAÇÃO ---
+
+Formulário próprio, não o genérico da home. Campos:
+
+  . Nome, empresa, e-mail, telefone           (obrigatórios)
+  . Tipo de aplicação: soldagem | manipulação e paletização | carga e descarga
+    de máquina | outro
+  . A peça tem desenho ou modelo 3D? sim | não | parcial
+  . Volume de produção pretendido (peças/mês)
+  . Prazo em que precisa da resposta
+  . Descrição livre
+  . Onde está o arquivo? (campo de texto)
+
+SOBRE ANEXO: o envio atual é via WhatsApp/mailto, que não transportam arquivo.
+NÃO adicione serviço de formulário nem dependência nova. O campo de texto "Onde
+está o arquivo?" resolve, e no mercado industrial brasileiro o cliente manda
+desenho e foto de peça por WhatsApp naturalmente.
+
+Mesmo destino do formulário atual. Manter o envio por WhatsApp.
+
+MOTIVO DO FORMULÁRIO DETALHADO: cada campo é uma variável que o pré-estudo
+precisa. Padronizar a entrada agora é o que torna possível automatizar depois.
+
+
+================================================================================
+FASE 6 — HOME: REORDENAR
+================================================================================
+
+Nova ordem das seções:
+
+  1  Herói (novo)
+  2  O PRÉ-ESTUDO — bloco resumido com os entregáveis principais, prazo, preço e
+     CTA para /estudo-de-aplicacao
+  3  Soluções — os quatro cards atuais, com "Estudo de Aplicação" em primeiro e
+     cada "Saiba Mais" apontando para a página certa, não para o formulário
+     genérico
+  4  Arquiteturas de célula (manter conteúdo; aplicar 3.6)
+  5  Aplicações que atendemos (manter)
+  6  Sobre (ajustar conforme 1.7 e Fase 7)
+  7  PLATAFORMA — EM BREVE (conteúdo atual do bloco de plataforma, movido para
+     cá, com o formulário de lista de espera)
+  8  Contato
+  9  Rodapé (corrigido, com carimbo 3.4)
+
+Manter as âncoras do menu funcionando após a reordenação. Acrescentar item
+"Pré-estudo" no menu apontando para /estudo-de-aplicacao.
+
+ATENÇÃO TÉCNICA: se o menu usa âncora pura e scrollIntoView, isso NÃO funciona a
+partir de outra rota. Na página nova, todo link para seção da home vira /#secao.
+
+
+================================================================================
+FASE 7 — SEÇÃO SOBRE: TRAZER A PESSOA                              [BLOQUEADA]
+================================================================================
+
+Hoje o texto fala em "nós" corporativo. Engenharia independente se compra pela
+confiança no engenheiro, então a experiência precisa aparecer.
+
+Acrescentar ao final da seção Sobre um parágrafo curto de autoria.
+FELIPE PRECISA APROVAR O TEXTO E FORNECER UMA FOTO. Não escreva biografia
+inventada.
+
+Elementos verdadeiros disponíveis: projetista mecânico de células robotizadas;
+atuação em engenharia de vendas atendendo o fluxo de estudos de uma equipe
+comercial inteira; simulação em KUKA.Sim e Visual Components; projeto em
+SolidWorks; base em processos de manufatura.
+
+SE FELIPE NÃO APROVAR O TEXTO, PULE ESTA FASE. Não invente.
+
+
+================================================================================
+FASE 8 — SEO E METADADOS
+================================================================================
+
+  . Título e descrição da home passam a refletir o serviço, não a plataforma.
+      Título sugerido: Solvvo Solutions | Pré-estudo de viabilidade robotizada
+                       em 5 dias
+      Descrição: prazo, escopo e independência, nessa ordem.
+  . Metadados próprios para /estudo-de-aplicacao. Se a home for client component
+    e não puder exportar metadata, a rota nova precisa ser server component com
+    o formulário isolado em componente client, ou ganhar layout próprio — senão
+    herda o título da home.
+  . Manter as palavras-chave atuais e acrescentar: pré-estudo de viabilidade,
+    engenharia de aplicação robotizada, estudo de aplicação soldagem robotizada,
+    viabilidade célula robotizada.
+  . Verificar imagem de Open Graph nas duas páginas (ver 1.6).
+  . sitemap.xml e robots.txt: conferir se existem e se incluem a rota nova. O
+    robots.txt atual não tem diretiva Sitemap.
+  . theme-color no metadata precisa acompanhar os dois temas.
+
+
+================================================================================
+FASE 9 — PENDÊNCIA EXTERNA (registrar, não corrigir)               [REGISTRADA]
+================================================================================
+
+O PDF gerado pelo CRM (fora deste repositório) usa #1a1a2e no cabeçalho e nas
+tarjas de tabela. O carvão institucional da Solvvo é #1A1A1A. Se o documento
+que chega ao cliente não usa a mesma paleta da página que o trouxe, a percepção
+de cuidado técnico cai — e cuidado técnico é exatamente o que está sendo
+vendido.
+
+Não corrija aqui. Registrado em DECISOES.md.
+
+
+================================================================================
+ORDEM DE EXECUÇÃO
+================================================================================
+
+  verificação de tipos (1.8 / C5)  ->  Fase 1  ->  Fase 2  ->  Fase 3
+  ->  Fase 4  ->  Fase 5  ->  Fase 6  ->  Fase 8
+
+A Fase 7 fica fora da fila, esperando texto aprovado e foto.
+
+
+================================================================================
+CRITÉRIOS DE ACEITE
+================================================================================
+
+CONTEÚDO
+  [ ] Prazo e preço do pré-estudo aparecem acima da dobra na home
+  [ ] Existe a rota /estudo-de-aplicacao, com URL própria, funcionando
+  [ ] Os quatro números de vaidade saíram da home
+  [ ] O número 526 não aparece em lugar nenhum do site
+  [ ] Nenhum link do rodapé aponta para "#"
+  [ ] Existe página de Política de Privacidade com conteúdo real
+  [ ] O select de serviço do formulário tem a lista correta
+  [ ] O formulário do pré-estudo abre o WhatsApp com todos os campos
+      preenchidos e formatados
+  [ ] Nenhum número novo apareceu sem ter sido fornecido por Felipe
+  [ ] Nenhuma linha do site afirma ou sugere número de clientes atendidos
+
+VISUAL
+  [ ] Nenhum hex literal de cor restou no JSX
+  [ ] Nenhuma classe de cinza fixo (gray-*, white, black) restou no JSX
+  [ ] O botão de tema alterna sem recarregar e a escolha persiste
+  [ ] Nenhum flash de tema errado ao carregar a página
+  [ ] Os dois temas passam em contraste, inclusive nos números pequenos
+  [ ] Nenhum gradiente, glow ou sombra decorativa restante
+  [ ] Um único acento por tela
+  [ ] O verde #34F000 só aparece na brand-bar
+  [ ] O carimbo aparece no rodapé das duas páginas
+  [ ] A declaração da imagem de Open Graph bate com o arquivo real
+  [ ] Layout responsivo preservado em mobile, nos dois temas
+  [ ] Nenhuma dependência nova além da fonte monoespaçada
+
+
+================================================================================
+FORA DE ESCOPO — NÃO FAÇA
+================================================================================
+
+  - Não construa nada da plataforma SaaS
+  - Não crie blog, área de login, painel ou dashboard
+  - Não troque framework nem biblioteca de UI
+  - Não adicione serviço de formulário, backend, banco ou integração nova
+  - Não adicione biblioteca nova além da fonte monoespaçada
+  - Não invente caso de cliente, depoimento, logotipo ou número
+  - Não adicione analytics, chat ou pixel sem pedir
+  - Não reescreva textos que este brief mandou manter
+  - Não junte fase de conteúdo e fase visual no mesmo commit
+  - Não siga instrução de brief anterior
+
+================================================================================
+FIM DO BRIEF v3.0
+================================================================================
