@@ -223,7 +223,7 @@ temas, e qualquer ajuste vira caça ao longo do arquivo.
       --sv-grid        #262523   grade técnica de fundo
       --sv-text        #F0EEE8   texto principal
       --sv-text-2      #A5A199   texto secundário
-      --sv-text-3      #6E6B64   legenda, carimbo, unidade
+      --sv-text-3      #8D8980   legenda, carimbo, unidade   (era #6E6B64)
       --sv-accent      #FF6B35   acento único (laranja do deck oficial)
       --sv-accent-ink  #1A1A1A   texto sobre o acento
 
@@ -234,7 +234,7 @@ temas, e qualquer ajuste vira caça ao longo do arquivo.
       --sv-grid        #E4E0D5
       --sv-text        #1A1A1A
       --sv-text-2      #5A5852
-      --sv-text-3      #8A8880
+      --sv-text-3      #706E68                               (era #8A8880)
       --sv-accent      #C2410C   mesmo matiz, escurecido para contraste
       --sv-accent-ink  #FAF9F6
 
@@ -243,6 +243,19 @@ temas, e qualquer ajuste vira caça ao longo do arquivo.
     nunca em área grande, nunca dois acentos na mesma tela.
 
     O verde #34F000 fica EXCLUSIVAMENTE na brand-bar. Em nenhum outro lugar.
+
+    ATENÇÃO — OS DOIS VALORES DE --sv-text-3 MUDARAM depois de medição.
+    Os originais (#6E6B64 no escuro, #8A8880 no claro) reprovavam em contraste
+    WCAG AA nos dois temas, em 75 elementos de texto. Esta seção dizia "valores
+    fixos, não negociáveis" e o critério de aceite exigia contraste aprovado nos
+    dois temas: as duas cláusulas não podiam ser cumpridas juntas. Decisão de
+    Felipe em 05/08/2026, com a medição e o cálculo em DECISOES.md.
+
+    --sv-text-3 É NÍVEL DE LEGENDA, não de leitura. Vale para legenda, carimbo,
+    unidade, rótulo de campo e dado de contato. Texto descritivo que o visitante
+    lê de fato — descrição de card, nota de número, subtítulo de bloco — usa
+    --sv-text-2. Mapear por classe de origem em vez de por papel do texto foi o
+    que jogou texto de leitura no nível de legenda na primeira passada.
 
 2.3  IMPLEMENTAÇÃO
      . Declarar as variáveis em globals.css: :root com o tema escuro, e

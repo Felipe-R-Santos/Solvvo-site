@@ -129,6 +129,63 @@ Mais três destinos vindos do inventário da Fase 0:
 
 ---
 
+## `--sv-text-3` — a paleta mudou, e por quê
+
+**Se você chegou aqui porque auditou o site e achou um valor diferente do que o
+brief original trazia: é aqui que está a explicação.**
+
+O brief v3.0 declarava a paleta com **"valores fixos, não negociáveis"**. Dois
+valores mudaram mesmo assim, por decisão de Felipe em 05/08/2026:
+
+| Tema | Brief original | Em vigor |
+|---|---|---|
+| escuro | `#6E6B64` | **`#8D8980`** |
+| claro | `#8A8880` | **`#706E68`** |
+
+**Motivo: reprovação de contraste medida, não preferência estética.**
+
+Auditoria de contraste WCAG feita sobre a página inteira (182 elementos de texto
+no desktop, 175 no mobile), nos dois temas e nas duas larguras. Resultado
+idêntico nos quatro cenários: **75 falhas, todas no `--sv-text-3`**. Nenhuma
+falha em `--sv-text` ou `--sv-text-2`.
+
+| Tema | Valor original | Sobre `--sv-bg` | Sobre `--sv-surface` | Exigido |
+|---|---|---|---|---|
+| escuro | `#6E6B64` | 3,27:1 | 2,96:1 | 4,5:1 |
+| claro | `#8A8880` | 3,17:1 | 3,37:1 | 4,5:1 |
+
+A WCAG AA exige 4,5:1 para texto abaixo de 24px. Dos 75 casos, 63 estavam entre
+12 e 14px.
+
+**A contradição era do próprio brief:** a Fase 2.2 dizia "não negociáveis" e o
+critério de aceite exigia "os dois temas passam em contraste, inclusive nos
+números pequenos". Não havia como cumprir as duas.
+
+Os valores novos são o **menor ajuste** que satisfaz 4,5:1 nos dois fundos de
+cada tema, preservando o matiz quente da paleta — não uma cor escolhida no olho:
+
+| Tema | Novo | Sobre `--sv-bg` | Sobre `--sv-surface` |
+|---|---|---|---|
+| escuro | `#8D8980` | 5,00:1 | 4,52:1 |
+| claro | `#706E68` | 4,54:1 | 4,82:1 |
+
+### Correção junto: mapear por papel, não por classe de origem
+
+O mapeamento inicial mandou `text-gray-500` e `text-gray-600` para `--sv-text-3`
+em bloco. Mas `gray-500` no código antigo cobria coisas de peso muito diferente,
+e isso jogou **texto descritivo de leitura** no nível de legenda: a dor dos três
+perfis da plataforma, as notas dos números do acervo, as descrições das oito
+etapas, as descrições das arquiteturas de célula e os textos dos cards de valor.
+
+Esses passaram para `--sv-text-2`. **`--sv-text-3` fica restrito ao que o brief
+define:** legenda, carimbo, unidade — mais rótulo de campo, placeholder e dado
+de contato do rodapé.
+
+Regra para quem mexer daqui em diante: **o nível do texto vem do papel dele na
+página, não da classe que ele tinha antes.**
+
+---
+
 ## Código morto — `src/hooks/use-mobile.ts`
 
 **Decisão:** apagar o arquivo na **Fase 3**, no mesmo commit de remoção das
@@ -139,6 +196,17 @@ nome aparece é a própria declaração. É sobra do scaffold do shadcn. Ela car
 o único erro de ESLint do projeto (`react-hooks/set-state-in-effect`, linha 14),
 que nunca derrubou deploy nenhum porque o `next build` não roda ESLint. Mesma
 natureza das classes CSS sem consumidor: remoção de código morto, um commit só.
+
+**`tailwind.config.ts` sai no mesmo commit.** O Tailwind v4 só carrega esse
+arquivo com uma diretiva `@config` no CSS, que não existe — quem define o tema é
+o bloco `@theme` do `globals.css`. O arquivo está no repositório desde o
+scaffold, sem efeito nenhum, e induz a erro quem for procurar onde as cores
+moram.
+
+**Ficam de fora:** os dois `text-white` das variantes `destructive` de
+`ui/badge.tsx` e `ui/button.tsx`. `variant="destructive"` não é usado em lugar
+nenhum do site, e branco sobre vermelho de erro está correto nos dois temas —
+vermelho de erro não muda com o tema. Não vale gastar diff.
 
 ---
 

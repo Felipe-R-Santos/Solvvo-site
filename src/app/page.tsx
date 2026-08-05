@@ -635,7 +635,7 @@ function AboutSection() {
                       <Icon className="w-5 h-5 text-sv-text-2 mt-0.5 shrink-0" />
                       <div>
                         <div className="text-sm font-semibold text-sv-text">{v.label}</div>
-                        <div className="text-xs text-sv-text-3 mt-0.5">{v.text}</div>
+                        <div className="text-xs text-sv-text-2 mt-0.5">{v.text}</div>
                       </div>
                     </div>
                   )
@@ -846,7 +846,7 @@ function PlataformaSection() {
                 className="p-6 rounded-xl bg-sv-surface/60 border border-sv-line"
               >
                 <div className="text-sm font-semibold text-sv-text-2 mb-2">{p.perfil}</div>
-                <div className="text-sm text-sv-text-3 leading-relaxed">{p.dor}</div>
+                <div className="text-sm text-sv-text-2 leading-relaxed">{p.dor}</div>
               </div>
             ))}
           </div>
@@ -857,7 +857,7 @@ function PlataformaSection() {
             exatamente o que a remoção da barra do herói corrigiu. */}
         <FadeInSection className="mb-6">
           <h3 className="text-lg font-bold text-sv-text">Nosso acervo técnico</h3>
-          <p className="text-sm text-sv-text-3 mt-1.5 max-w-2xl leading-relaxed">
+          <p className="text-sm text-sv-text-2 mt-1.5 max-w-2xl leading-relaxed">
             O que a plataforma consulta para dimensionar. São contagens do nosso
             banco técnico interno — não são clientes atendidos nem projetos
             entregues.
@@ -870,7 +870,7 @@ function PlataformaSection() {
               <div className="h-full p-6 rounded-xl bg-sv-surface/80 border border-sv-line hover:border-sv-text-3 transition-colors">
                 <div className="text-3xl sm:text-4xl font-bold gradient-text">{n.valor}</div>
                 <div className="text-sm font-semibold text-sv-text mt-2">{n.rotulo}</div>
-                <div className="text-xs text-sv-text-3 mt-2 leading-relaxed">{n.nota}</div>
+                <div className="text-xs text-sv-text-2 mt-2 leading-relaxed">{n.nota}</div>
               </div>
             </StaggerItem>
           ))}
@@ -882,7 +882,7 @@ function PlataformaSection() {
             <h3 className="text-xl sm:text-2xl font-bold text-sv-text mb-2">
               Do desenho da peça ao payback, numa passada
             </h3>
-            <p className="text-sm text-sv-text-3 mb-8">
+            <p className="text-sm text-sv-text-2 mb-8">
               As oito etapas que a plataforma executa — e que hoje viram semanas de planilha.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -892,7 +892,7 @@ function PlataformaSection() {
                     {String(i + 1).padStart(2, '0')}
                   </div>
                   <div className="text-sm font-semibold text-sv-text">{e.titulo}</div>
-                  <div className="text-xs text-sv-text-3 mt-1 leading-relaxed">{e.texto}</div>
+                  <div className="text-xs text-sv-text-2 mt-1 leading-relaxed">{e.texto}</div>
                 </div>
               ))}
             </div>
@@ -974,7 +974,7 @@ function CelulasSection() {
                 </div>
                 <div className="p-5">
                   <div className="text-base font-semibold text-sv-text">{c.nome}</div>
-                  <div className="text-sm text-sv-text-3 mt-1.5 leading-relaxed">{c.desc}</div>
+                  <div className="text-sm text-sv-text-2 mt-1.5 leading-relaxed">{c.desc}</div>
                 </div>
               </div>
             </StaggerItem>
@@ -1300,7 +1300,7 @@ function ContactSection() {
                   Prefiro enviar por e-mail
                 </button>
 
-                <p className="text-xs text-sv-text-3 mt-4 text-center leading-relaxed">
+                <p className="text-xs text-sv-text-2 mt-4 text-center leading-relaxed">
                   Resposta em até 24 horas úteis. Seus dados vão direto para a nossa
                   equipe — não usamos para mais nada.
                 </p>
@@ -1330,7 +1330,7 @@ function Footer() {
                 className="h-8 w-auto object-contain drop-shadow-lg"
               />
             </a>
-            <p className="text-sm text-sv-text-3 leading-relaxed max-w-xs">
+            <p className="text-sm text-sv-text-2 leading-relaxed max-w-xs">
               Estudo de aplicação para células robotizadas e sistemas de automação.
               Engenharia independente, com procedência em cada número.
             </p>

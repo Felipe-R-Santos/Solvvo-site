@@ -87,7 +87,11 @@
   --sv-grid: #262523;
   --sv-text: #F0EEE8;
   --sv-text-2: #A5A199;
-  --sv-text-3: #6E6B64;
+  /* Era #6E6B64 no brief. Medido: 3,27:1 sobre --sv-bg e 2,96:1 sobre
+     --sv-surface, abaixo dos 4,5:1 que a WCAG AA exige para texto com menos de
+     24px. Este é o menor clareamento que passa nos dois fundos preservando o
+     matiz quente — 5,00:1 e 4,52:1. Ver DECISOES.md. */
+  --sv-text-3: #8D8980;
   --sv-accent: #FF6B35;
   --sv-accent-ink: #1A1A1A;
 
@@ -138,7 +142,9 @@
   --sv-grid: #E4E0D5;
   --sv-text: #1A1A1A;
   --sv-text-2: #5A5852;
-  --sv-text-3: #8A8880;
+  /* Era #8A8880 no brief. Medido: 3,17:1 e 3,37:1, mesma reprovação do tema
+     escuro. Escurecido o mínimo para passar nos dois fundos — 4,54:1 e 4,82:1. */
+  --sv-text-3: #706E68;
   --sv-accent: #C2410C;
   --sv-accent-ink: #FAF9F6;
 }
