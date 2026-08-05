@@ -37,7 +37,24 @@ const TIPOS_APLICACAO = [
   'Outro',
 ]
 
-const TEM_DESENHO = ['Sim', 'Não', 'Parcial']
+// Cinco opções, e não "sim / não / parcial". Cada uma leva a um caminho de
+// trabalho DIFERENTE: 3D completo entra direto; 2D e 3D parcial exigem
+// modelagem; desenho desatualizado exige conferência em campo; sem desenho
+// aciona Scan 3D. "Parcial" obrigava uma conversa a cada pedido, e resposta que
+// sempre gera pergunta não é entrada padronizada.
+const TEM_DESENHO = [
+  'Modelo 3D completo',
+  'Apenas desenho 2D',
+  '3D de algumas peças do conjunto',
+  'Existe desenho, mas desatualizado',
+  'Não existe desenho',
+]
+
+// A entrega 05 promete peças por hora E POR TURNO. Sem o regime, o número não é
+// calculável: pedir volume em peças/mês e prometer peças/turno sem perguntar
+// quantos turnos é buraco de conta. "Ainda não definido" existe para não travar
+// quem ainda não decidiu — melhor a resposta honesta que um chute.
+const TURNOS = ['1 turno', '2 turnos', '3 turnos', 'Ainda não definido']
 
 type Campos = {
   nome: string
@@ -46,7 +63,10 @@ type Campos = {
   telefone: string
   aplicacao: string
   desenho: string
+  material: string
+  espessura: string
   volume: string
+  turnos: string
   prazo: string
   descricao: string
   arquivo: string
@@ -54,8 +74,8 @@ type Campos = {
 
 const VAZIO: Campos = {
   nome: '', empresa: '', email: '', telefone: '',
-  aplicacao: '', desenho: '', volume: '', prazo: '',
-  descricao: '', arquivo: '',
+  aplicacao: '', desenho: '', material: '', espessura: '',
+  volume: '', turnos: '', prazo: '', descricao: '', arquivo: '',
 }
 
 export function FormularioPreEstudo() {
@@ -86,8 +106,13 @@ export function FormularioPreEstudo() {
       '',
       '*Aplicação*',
       `Tipo: ${dados.aplicacao}`,
-      `Peça tem desenho ou modelo 3D: ${dados.desenho}`,
+      '',
+      '*Peça*',
+      `Desenho ou modelo 3D: ${dados.desenho}`,
     ]
+    if (dados.material) l.push(`Material: ${dados.material}`)
+    if (dados.espessura) l.push(`Espessura: ${dados.espessura}`)
+    l.push('', '*Produção*', `Regime: ${dados.turnos}`)
     if (dados.volume) l.push(`Volume pretendido: ${dados.volume} peças/mês`)
     if (dados.prazo) l.push(`Precisa da resposta em: ${dados.prazo}`)
     if (dados.arquivo) l.push('', '*Arquivos*', dados.arquivo)
@@ -103,6 +128,11 @@ export function FormularioPreEstudo() {
       ['telefone', 'telefone'],
       ['aplicacao', 'tipo de aplicação'],
       ['desenho', 'se a peça tem desenho'],
+      // Turnos é obrigatório porque tem a saída honesta "ainda não definido":
+      // ninguém fica travado, e ninguém some com a variável sem querer.
+      // Material e espessura ficam opcionais — são texto livre, e exigir texto
+      // livre só faz o visitante escrever qualquer coisa para passar.
+      ['turnos', 'regime de turnos'],
     ]
     return obrigatorios.filter(([c]) => !dados[c].trim()).map(([, r]) => r)
   }
@@ -208,12 +238,45 @@ export function FormularioPreEstudo() {
         </div>
 
         <div className="space-y-2">
+          <Label htmlFor="material" className="text-sm text-sv-text-2">Material</Label>
+          <Input id="material" value={dados.material}
+            onChange={(e) => set('material')(e.target.value)}
+            placeholder="ex.: aço ASTM A36, inox 304" className={campo} />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="espessura" className="text-sm text-sv-text-2">Espessura</Label>
+          <Input id="espessura" value={dados.espessura}
+            onChange={(e) => set('espessura')(e.target.value)}
+            placeholder="ex.: 6,35 mm" className={campo} />
+        </div>
+
+        <div className="space-y-2">
           <Label htmlFor="volume" className="text-sm text-sv-text-2">
             Volume de produção pretendido
           </Label>
           <Input id="volume" inputMode="numeric" value={dados.volume}
             onChange={(e) => set('volume')(e.target.value)}
             placeholder="peças por mês" className={campo} />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="turnos" className="text-sm text-sv-text-2">
+            Regime de turnos *
+          </Label>
+          <Select value={dados.turnos} onValueChange={set('turnos')}>
+            <SelectTrigger id="turnos"
+              className="w-full bg-sv-bg border-sv-line text-sv-text focus:ring-sv-accent/20 focus:ring-offset-0 [&_svg]:text-sv-text-3">
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent className="bg-sv-surface border-sv-line">
+              {TURNOS.map((t) => (
+                <SelectItem key={t} value={t}
+                  className="text-sv-text-2 focus:text-sv-text focus:bg-sv-bg">
+                  {t}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div className="space-y-2">
           <Label htmlFor="prazo" className="text-sm text-sv-text-2">
@@ -248,7 +311,7 @@ export function FormularioPreEstudo() {
         </Label>
         <Textarea id="descricao" rows={5} value={dados.descricao}
           onChange={(e) => set('descricao')(e.target.value)}
-          placeholder="Material, espessura, cordões de solda, área disponível, turnos — quanto mais entrada, mais firme o número."
+          placeholder="Cordões de solda (comprimento e posição), área disponível no galpão, pé-direito, o que mais ajudar a fechar o número."
           className={`${campo} resize-none`} />
       </div>
 

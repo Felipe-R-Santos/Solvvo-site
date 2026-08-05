@@ -561,11 +561,40 @@ Formulário próprio, não o genérico da home. Campos:
   . Nome, empresa, e-mail, telefone           (obrigatórios)
   . Tipo de aplicação: soldagem | manipulação e paletização | carga e descarga
     de máquina | outro
-  . A peça tem desenho ou modelo 3D? sim | não | parcial
+  . A peça tem desenho ou modelo 3D?
+      Modelo 3D completo | Apenas desenho 2D | 3D de algumas peças do conjunto |
+      Existe desenho, mas desatualizado | Não existe desenho
+  . Material (texto curto)
+  . Espessura (texto curto)
   . Volume de produção pretendido (peças/mês)
+  . Regime de turnos: 1 turno | 2 turnos | 3 turnos | ainda não definido
   . Prazo em que precisa da resposta
   . Descrição livre
   . Onde está o arquivo? (campo de texto)
+
+LISTA FECHADA. Não acrescente campo além destes.
+
+ATUALIZADO EM 05/08/2026 — quatro mudanças, todas por lacuna de DADO e não de
+usabilidade. A lista original não cobria a entrada mínima que a própria Seção 3
+declara necessária:
+
+  REGIME DE TURNOS, acrescentado. A entrega 05 promete peças por hora E POR
+  TURNO. Sem o regime, o número não é calculável — pedir volume em peças/mês e
+  prometer peças/turno sem perguntar quantos turnos é buraco de conta. A opção
+  "ainda não definido" existe para não travar quem ainda não decidiu.
+
+  "PARCIAL" DESDOBRADO EM QUATRO. A resposta antiga obrigava uma conversa por
+  pedido, porque cada leitura leva a um trabalho diferente: modelo 3D completo
+  entra direto; desenho 2D e 3D de algumas peças exigem modelagem; desenho
+  desatualizado exige conferência em campo; sem desenho aciona Scan 3D. Uma
+  opção que sempre gera pergunta não é entrada padronizada.
+
+  MATERIAL E ESPESSURA, acrescentados como campos próprios. Estão na Seção 3
+  como entrada mínima e dependiam de o visitante lembrar de escrevê-los na
+  descrição livre.
+
+  ÁREA DISPONÍVEL fica na descrição livre de propósito: é a menos padronizável
+  das quatro entradas da Seção 3.
 
 SOBRE ANEXO: o envio atual é via WhatsApp/mailto, que não transportam arquivo.
 NÃO adicione serviço de formulário nem dependência nova. O campo de texto "Onde
