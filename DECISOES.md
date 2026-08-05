@@ -472,6 +472,63 @@ empresa para efeito de LGPD sem publicar isso. **Não reponha o complemento.**
 
 ---
 
+## Procedimento de auditoria — as três checagens obrigatórias
+
+Toda fase que mexa em layout roda **as três**, nos dois temas e nas duas
+larguras (375px e 1272px), nas três páginas. Cada uma existe porque a anterior
+deixou passar um defeito real.
+
+### 1. Contraste WCAG contra o fundo declarado no CSS
+
+A checagem base: para cada elemento com texto, compõe o alfa contra a pilha de
+ancestrais e compara com 4,5:1 (ou 3:1 para texto grande).
+
+### 2. Contraste contra os PIXELS da imagem
+
+A checagem 1 mede o texto contra o fundo **declarado**, e sobre uma imagem esse
+fundo é a cor da página — ela não enxerga o render. Foi assim que o herói
+reprovava em quatro cenários "limpos": subtítulo a 3,49:1 e etiqueta a 2,14:1 no
+tema claro, com a auditoria dando zero falha.
+
+Para valer, é preciso desenhar a imagem num canvas, mapear o `cover`, compor o
+véu por cima e amostrar os pixels reais sob cada bloco de texto.
+
+### 3. Sobreposição com elemento fixo ou grudado
+
+**Origem: a regressão do logo do herói, 05/08/2026.** Ao cortar o `pt-20` para
+`pt-4` no mobile, para o CTA caber acima da dobra, o conteúdo do herói entrou na
+faixa dos 64px da navbar `fixed`. Ficaram dois logos da Solvvo empilhados no
+topo. **As quatro auditorias passaram limpas** porque mediam a posição de cada
+elemento isoladamente e nunca comparavam com a barra fixa por cima. Só apareceu
+no celular de verdade.
+
+A checagem faz duas coisas:
+
+- **No topo da página**, cruza a caixa de cada elemento com conteúdo contra a
+  área pintada por qualquer `position: fixed` ou `sticky`.
+- **Para cada âncora `#id`**, rola até o alvo e verifica se o primeiro conteúdo
+  dele fica encoberto pela barra — o clássico do menu fixo que come o título da
+  seção de destino.
+
+Dois detalhes que a implementação precisa ter, e que custaram erro na primeira
+versão:
+
+- Barra **transparente** não encobre nada; o que encobre são os filhos dela.
+  Comparar contra a caixa do `<header>` sem olhar o fundo dá falso positivo.
+- Fundo em **gradiente** não aparece em `backgroundColor`. A `brand-bar` usa
+  `linear-gradient` e escapava inteira da checagem até o teste passar a olhar
+  também `backgroundImage`.
+
+### Regra que vale para as três: desligue as transições antes de medir
+
+`getComputedStyle` devolve o valor **em trânsito**, não o final. Numa aba que
+não compõe quadros, a transição nunca avança e o valor fica travado no inicial —
+foi assim que uma medição acusou 1,03:1 numa etiqueta que na verdade tem 9,97:1.
+Injete `transition: none !important` e `animation: none !important` antes de
+qualquer leitura, e `scroll-behavior: auto` antes de qualquer rolagem.
+
+---
+
 ## Rótulo de link descreve o que acontece ao clicar
 
 Os quatro cards de solução tinham o mesmo "Saiba Mais" apontando para o

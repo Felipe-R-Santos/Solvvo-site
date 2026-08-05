@@ -298,7 +298,7 @@ function HeroSection() {
           landing page, não elemento de folha técnica — e ficava por cima
           justamente do render que o herói existe para mostrar. */}
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-4 sm:pt-20">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -311,7 +311,7 @@ function HeroSection() {
             // moldura transparente, então h-52 desenhava só ~48px de logo.
             // Com a moldura cortada, a altura do CSS virou altura REAL —
             // manter h-52 deixaria o logo com 208px e ~760px de largura.
-            className="h-11 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mx-auto mb-3 sm:mb-8"
+            className="hidden sm:block h-20 md:h-24 lg:h-28 w-auto object-contain mx-auto mb-8"
           />
         </motion.div>
         <motion.div
