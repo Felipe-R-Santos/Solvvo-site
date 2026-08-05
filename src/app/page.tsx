@@ -49,7 +49,6 @@ import {
   Plane,
   Fuel,
   ArrowUpRight,
-  Zap,
   Shield,
   BarChart3,
 } from 'lucide-react'
@@ -143,6 +142,27 @@ const SERVICOS = [
 // O rodapé mostra os quatro principais; o formulário oferece todos mais "Outro".
 const SERVICOS_RODAPE = SERVICOS.slice(0, 4)
 const SERVICOS_FORMULARIO = [...SERVICOS, 'Outro']
+
+// ── VALORES COMERCIAIS — um lugar só ───────────────────────────────────────
+// Definidos por Felipe e registrados na seção 3 do BRIEF.txt. Para mudar
+// qualquer um, edite AQUI: eles aparecem no herói, no bloco do pré-estudo, na
+// tabela de níveis de entrega e nos metadados. Espalhados pelo JSX, mudaria um
+// e esqueceria os outros — e preço divergente na mesma página derruba a venda.
+// A Fase 5 acrescenta aqui o prazo e o preço do estudo completo e os valores da
+// assinatura, quando a página que os usa existir.
+const PRAZO_PRE_ESTUDO = '5'
+const PRECO_PRE_ESTUDO = 'R$ 1.900'
+
+// ── FAIXA DE CREDIBILIDADE DO HERÓI ────────────────────────────────────────
+// ⚠ REGRA DE ROTULAGEM, NÃO NEGOCIÁVEL: o primeiro é "acervo de referência".
+// São arquivos de projeto do acervo técnico. NUNCA reescrever para "projetos
+// entregues", "clientes atendidos" ou "obras realizadas" — é exatamente essa
+// distinção que separa esta faixa do placar de vaidade removido na Fase 1.
+const CREDIBILIDADE = [
+  { valor: '31', rotulo: 'projetos reais em STEP no acervo de referência' },
+  { valor: '17', rotulo: 'células medidas em simulação' },
+  { valor: '0', rotulo: 'equipamentos vendidos ou representados' },
+]
 
 // ── REDES SOCIAIS ──────────────────────────────────────────────────────────
 // Antes os três ícones apontavam para href="#": clicar não fazia nada, o que
@@ -277,14 +297,12 @@ function HeroSection() {
           18 MB / 9000 px no original -> 86 KB / 1920 px em WebP.
           `object-center` porque a célula está no meio do quadro: em tela larga
           o recorte tira topo e base, e é o que se pode perder. */}
+      {/* O render é decorativo (não carrega informação que o texto já não diga),
+          por isso vai como background-image e não como <img>. Ver a regra
+          .sv-heroi-fundo em globals.css: são DUAS versões, uma por tema, e o
+          motivo está lá escrito. */}
       <div className="absolute inset-0">
-        <img
-          src="/hero-celula.webp"
-          alt=""
-          fetchPriority="high"
-          className="w-full h-full object-cover object-center"
-          aria-hidden="true"
-        />
+        <div className="absolute inset-0 sv-heroi-fundo" aria-hidden="true" />
         {/* Véu mais leve no topo (deixa a célula aparecer) e sólido embaixo,
             onde ficam a headline e os botões. */}
         <div className="absolute inset-0 bg-gradient-to-b from-sv-bg/55 via-sv-bg/78 to-sv-bg" />
@@ -296,7 +314,7 @@ function HeroSection() {
           landing page, não elemento de folha técnica — e ficava por cima
           justamente do render que o herói existe para mostrar. */}
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-20">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-4 sm:pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -309,7 +327,7 @@ function HeroSection() {
             // moldura transparente, então h-52 desenhava só ~48px de logo.
             // Com a moldura cortada, a altura do CSS virou altura REAL —
             // manter h-52 deixaria o logo com 208px e ~760px de largura.
-            className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mx-auto mb-8"
+            className="h-11 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mx-auto mb-3 sm:mb-8"
           />
         </motion.div>
         <motion.div
@@ -317,39 +335,44 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
         >
-          <Badge className="mb-6 px-4 py-1.5 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
-            <Zap className="w-3.5 h-3.5 mr-1.5" />
-            Em breve — plataforma de simulação automática
+          {/* Etiqueta em --sv-text, e não no --sv-text-3 das outras etiquetas do
+              site: esta fica SOBRE A IMAGEM. Medido no nível 3, dava 3,36:1 no
+              tema escuro (sobre a lança laranja) e 2,14:1 no claro. */}
+          <Badge className="mb-3 sm:mb-6 px-4 py-1.5 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text border-sv-line">
+            Engenharia independente de aplicação robotizada
           </Badge>
         </motion.div>
 
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-4 sm:mb-6"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
         >
-          O estudo de aplicação{' '}
-          <span>deixa de levar semanas</span>
-          <br />
-          e passa a caber numa sessão
+          O pré-estudo que decide a venda,
+          <br className="hidden sm:block" />{' '}
+          pronto em {PRAZO_PRE_ESTUDO} dias úteis
         </motion.h1>
 
+        {/* O prazo e o preço aparecem AQUI, no subtítulo, e não mais abaixo:
+            a regra editorial do brief é que um vendedor de integradora saiba em
+            quantos dias e por quanto ANTES de rolar a tela. */}
         <motion.p
-          className="text-lg sm:text-xl text-sv-text-2 max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-lg sm:text-xl text-sv-text-2 max-w-2xl mx-auto mb-5 sm:mb-10 leading-relaxed"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
         >
-          Plataforma de simulação automática para quem faz estudo de aplicação toda
-          semana: <span className="text-sv-text-2">integradoras</span> e{' '}
-          <span className="text-sv-text-2">indústrias que refazem layout o tempo todo</span>.
-          Robô, posicionador, estrutura, tempo de ciclo, ROI e payback — com a fonte de
-          cada número.
+          Seu cliente pediu um número e a resposta leva um mês. Nesse prazo a
+          oportunidade esfria. A Solvvo devolve arquitetura de célula, tempo de ciclo
+          estimado e faixa de investimento em{' '}
+          <span className="text-sv-text font-medium">{PRAZO_PRE_ESTUDO} dias úteis</span>, por{' '}
+          <span className="text-sv-text font-medium">{PRECO_PRE_ESTUDO}</span> — escopo
+          fechado, sem surpresa no orçamento.
         </motion.p>
 
         <motion.div
-          className="max-w-3xl mx-auto mb-10"
+          className="max-w-3xl mx-auto mb-4 sm:mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: 'easeOut' }}
@@ -358,7 +381,10 @@ function HeroSection() {
             <p className="text-base sm:text-lg italic text-sv-text-2 leading-relaxed">
               "Se o número não tem fonte, não é estudo — é chute com planilha bonita."
             </p>
-            <p className="text-sm text-sv-text-3 mt-2">O princípio de engenharia da Solvvo Solutions</p>
+            {/* Em --sv-text-2, não no --sv-text-3 das outras atribuições: esta
+                fica sobre a imagem, e no nível 3 media 4,34:1 no tema escuro e
+                4,33:1 no claro — abaixo dos 4,5:1. Mesma razão da etiqueta. */}
+            <p className="text-sm text-sv-text-2 mt-2">O princípio de engenharia da Solvvo Solutions</p>
           </blockquote>
         </motion.div>
 
@@ -368,26 +394,60 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.45, ease: 'easeOut' }}
         >
+          {/* CTA primário é LINK, não botão com scrollIntoView: ele leva para
+              outra rota, e link de verdade abre em aba nova, aparece no menu de
+              contexto e é seguido por robô de busca. `asChild` faz o Button
+              emprestar o estilo à âncora em vez de renderizar um <button>. */}
           <Button
+            asChild
             size="lg"
             className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold text-base px-8 py-6 h-auto transition-all"
-            onClick={() => {
-              document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
-            }}
           >
-            Entrar na lista de espera
-            <ArrowRight className="w-5 h-5 ml-2" />
+            <a href="/estudo-de-aplicacao">
+              Solicitar pré-estudo
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </a>
           </Button>
           <Button
+            asChild
             size="lg"
             variant="outline"
-            className="border-sv-line text-sv-text-2 hover:bg-sv-surface hover:text-sv-text font-semibold text-base px-8 py-6 h-auto transition-all"
-            onClick={() => {
-              document.getElementById('plataforma')?.scrollIntoView({ behavior: 'smooth' })
-            }}
+            className="bg-transparent border-sv-line text-sv-text-2 hover:bg-sv-surface hover:text-sv-text font-semibold text-base px-8 py-6 h-auto transition-all"
           >
-            Ver o que a plataforma faz
+            <a href="#pre-estudo">Ver o que entra no pré-estudo</a>
           </Button>
+        </motion.div>
+
+        {/* ── FAIXA DE CREDIBILIDADE ──────────────────────────────────────
+            Substitui a barra de estatísticas que a Fase 1 removeu, e a
+            diferença entre as duas é o rótulo, não o número.
+
+            "acervo de referência" NÃO É "projetos entregues". São arquivos de
+            projeto do acervo técnico, e essa distinção é a única coisa que
+            separa esta faixa do placar de vaidade que saiu daqui. Nunca
+            reescrever para "projetos entregues", "clientes atendidos" ou
+            "obras realizadas".
+
+            O terceiro número é a independência transformada em métrica: zero
+            equipamentos vendidos é o que o concorrente não consegue escrever. */}
+        <motion.div
+          className="mt-10 sm:mt-14 pt-8 border-t border-sv-line max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6">
+            {CREDIBILIDADE.map((c, i) => (
+              <div key={i} className="text-center sm:text-left">
+                <div className="font-mono text-[22px] font-medium leading-none text-sv-text">
+                  {c.valor}
+                </div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3 mt-2 leading-relaxed">
+                  {c.rotulo}
+                </div>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* A barra de estatísticas que ficava aqui foi REMOVIDA em 05/08/2026.

@@ -136,47 +136,77 @@ def marca_dagua(im):
 HERO_ORIGEM = os.path.join(RENDERS_NOVOS, "Celulas Solvvo coluna e trilho.png")
 HERO_LARGURA = 1920
 
+# O herói sangra na página, então casa com --sv-bg de cada tema, não com o
+# cartão. São DUAS versões por razão de contraste MEDIDO — ver o comentário
+# extenso em preparar_hero() e o registro em DECISOES.md.
+FUNDO_HERO_CARVAO = (0x1A, 0x1A, 0x1A)
+FUNDO_HERO_PAPEL  = (0xF4, 0xF2, 0xED)
 
-def preparar_hero(origem=None, destino="hero-celula.webp"):
-    """Trata o render para servir de fundo ATRÁS DE TEXTO BRANCO.
 
-    Três passos, e cada um resolve um problema medido:
+def preparar_hero(tema="carvao"):
+    """Trata o render para servir de fundo ATRÁS DE TEXTO.
 
-    1. FLOOD FILL do fundo cinza-claro (222,222,222) -> escuro da marca.
-       Testado contra a alternativa de só escurecer tudo por multiply: aquela
-       versão ficou cinza-lama, perdeu o laranja e ainda deixava o fundo bem
-       mais claro que o #0a0a0a do site — emenda visível no topo da página.
+    ⚠ SÃO DUAS VERSÕES, E NÃO UMA. Não "simplifique" para um arquivo só.
 
-    2. PUXA SÓ OS REALCES. O piso do render é quase branco. Escurecer a imagem
-       inteira mata a cor; então a máscara age apenas acima de luminância 90,
-       o que derruba o piso para cinza médio e não toca robô nem posicionador.
-       Sem isto, texto branco em cima do piso fica ilegível.
+    O motivo é contraste medido, não gosto. Amostrando os pixels reais do render
+    por baixo de cada bloco de texto do herói (144 amostras por elemento,
+    compondo o véu por cima), a versão carvão usada no tema claro dava:
+    subtítulo 3,49:1, citação 4,28:1 e etiqueta 2,14:1 — contra os 4,5:1 que a
+    WCAG AA exige. A causa é direta: o tratamento carvão PUXA OS REALCES PARA
+    BAIXO para que texto claro leia; no tema claro o véu é claro sobre imagem
+    escura, dá cinza médio, e aí é o texto ESCURO que some.
 
-    3. DEVOLVE SATURAÇÃO (+30%). Os passos 1 e 2 lavam um pouco a cor; isto
+    Os dois tratamentos são espelhados:
+
+    CARVÃO — fundo escuro, texto claro por cima.
+      1. FLOOD FILL do fundo cinza-claro (222,222,222) -> carvão da marca.
+         Testado contra escurecer tudo por multiply: aquela versão ficou
+         cinza-lama, perdeu o laranja e deixava emenda visível no topo.
+      2. PUXA OS REALCES. O piso do render é quase branco. Escurecer a imagem
+         inteira mata a cor; a máscara age só acima de luminância 90, o que
+         derruba o piso e não toca robô nem posicionador.
+
+    PAPEL — fundo claro, texto escuro por cima. O espelho: a máscara age só
+      ABAIXO de luminância 200 e levanta as sombras em direção ao papel. A
+      cerca e os painéis escuros é que precisavam subir, não o piso.
+
+    3. DEVOLVE SATURAÇÃO em ambos: os passos anteriores lavam a cor, e isto
        recupera o laranja da lança e o verde das grades, que são a marca.
     """
-    origem = origem or HERO_ORIGEM
-    if not os.path.exists(origem):
-        print(f"AVISO: nao achei o render do hero: {origem}")
-        return
-    im = Image.open(origem).convert("RGB")
+    if not os.path.exists(HERO_ORIGEM):
+        print(f"AVISO: nao achei o render do hero: {HERO_ORIGEM}")
+        return None
+    papel = tema == "papel"
+    fundo = FUNDO_HERO_PAPEL if papel else FUNDO_HERO_CARVAO
+
+    im = Image.open(HERO_ORIGEM).convert("RGB")
     im = im.resize((HERO_LARGURA, int(HERO_LARGURA * im.height / im.width)), Image.LANCZOS)
 
     for canto in [(0, 0), (im.width - 1, 0), (0, im.height - 1), (im.width - 1, im.height - 1)]:
         try:
-            ImageDraw.floodfill(im, canto, FUNDO_HERO, thresh=40)
+            ImageDraw.floodfill(im, canto, fundo, thresh=40)
         except Exception:
             pass
 
-    mascara = im.convert("L").point(lambda p: 0 if p < 90 else int((p - 90) * 255 / 165))
-    escuro = Image.new("RGB", im.size, FUNDO_HERO)
-    im = Image.composite(Image.blend(im, escuro, 0.80), im, mascara)
+    if papel:
+        # levanta as SOMBRAS: 255 onde é escuro, 0 onde já é claro
+        mascara = im.convert("L").point(lambda p: 0 if p > 200 else int((200 - p) * 255 / 200))
+        forca = 0.86
+    else:
+        # derruba os REALCES: 255 onde é claro, 0 onde já é escuro
+        mascara = im.convert("L").point(lambda p: 0 if p < 90 else int((p - 90) * 255 / 165))
+        forca = 0.80
+
+    chapado = Image.new("RGB", im.size, fundo)
+    im = Image.composite(Image.blend(im, chapado, forca), im, mascara)
     im = ImageEnhance.Color(im).enhance(1.30)
 
+    destino = f"hero-celula-{tema}.webp"
     dst = os.path.join(SAIDA, "..", destino)
     im.save(dst, "WEBP", quality=80, method=6)
-    kb = os.path.getsize(dst) // 1024
-    print(f"gerado: {destino}  ({im.width}x{im.height}, {kb} KB)")
+    tam = os.path.getsize(dst)
+    print(f"gerado: {destino}  ({im.width}x{im.height}, {tam // 1024} KB)")
+    return (dst, tam)
 
 
 def _caixa_do_conteudo(im, folga=0.03):
@@ -294,7 +324,7 @@ def preparar_og():
 
 def main():
     os.makedirs(SAIDA, exist_ok=True)
-    preparar_hero()
+    hero = [x for x in (preparar_hero("carvao"), preparar_hero("papel")) if x]
     novas = preparar_novas()
     og = preparar_og()
     feitos = []
@@ -311,7 +341,7 @@ def main():
         im.save(dst, "WEBP", quality=82, method=6)
         feitos.append((dst, os.path.getsize(dst)))
         print(f"gerado: {os.path.basename(dst)}  ({os.path.getsize(dst)//1024} KB)")
-    feitos += novas + og
+    feitos += hero + novas + og
     print(f"\n{len(feitos)} imagens em {SAIDA}")
     print(f"peso total: {sum(s for _, s in feitos)//1024} KB")
 

@@ -348,6 +348,67 @@ script aceita `SOLVVO_RENDERS` apontando para a pasta onde eles estiverem.
 
 ---
 
+## O herói tem DUAS imagens, uma por tema — não unifique
+
+**Se você está aqui pensando em "simplificar" `hero-celula-carvao.webp` e
+`hero-celula-papel.webp` num arquivo só: não. É contraste medido.**
+
+O `preparar_hero()` derruba os realces do render para que texto claro leia sobre
+fundo escuro. No tema claro o véu é claro sobre imagem escura, o resultado é
+cinza médio, e aí é o texto **escuro** que some. Medição por amostragem dos
+pixels reais do render, 144 pontos por elemento, compondo o véu por cima:
+
+| Elemento do herói | Carvão no tema claro (antes) | Papel no tema claro (agora) |
+|---|---|---|
+| etiqueta | **2,14:1** | 11,09:1 |
+| subtítulo | **3,49:1** | 12,67:1 |
+| citação | **4,28:1** | 5,29:1 |
+| H1 | 7,14:1 | 11,38:1 |
+
+Os dois tratamentos são espelhados: o carvão puxa os realces para baixo, o papel
+levanta as sombras. Estão lado a lado em `preparar_hero()`, com o porquê escrito.
+
+**A auditoria de contraste normal NÃO pega isso.** Ela mede o texto contra o
+fundo declarado no CSS, e sobre o herói o fundo declarado é a cor da página —
+ela não enxerga a imagem. Foi por isso que os quatro cenários deram zero falha
+enquanto o herói reprovava. Para verificar, use a amostragem por canvas.
+
+### Texto sobre imagem não usa `--sv-text-3`
+
+Dois elementos do herói subiram de nível por medição, e não por estética:
+
+- **etiqueta**: `--sv-text-3` → `--sv-text`. No nível 3 dava 3,36:1 no escuro,
+  sobre a lança laranja, e 2,14:1 no claro.
+- **atribuição da citação**: `--sv-text-3` → `--sv-text-2`. Dava 4,34:1 no
+  escuro e 4,33:1 no claro, logo abaixo dos 4,5:1.
+
+Regra que fica: **sobre imagem, o nível mínimo é `--sv-text-2`.** O nível 3
+serve para legenda sobre fundo chapado.
+
+---
+
+## Espaçamento do herói no mobile — exceção registrada
+
+O brief manda "manter a estrutura de layout" no Fase 4. **Felipe abriu exceção
+para o espaçamento em 05/08/2026**, e a razão é conversão medida.
+
+Com o `pt-20` fixo, em 375 × 667 — altura útil de muito Android depois da barra
+do navegador — o CTA primário caía **129px abaixo da dobra**. Quem chega pelo
+WhatsApp lia o prazo e o preço e não conseguia clicar.
+
+Ajustado só o espaçamento no mobile (padding do topo, altura do logo e margens
+entre blocos; nada muda a partir do breakpoint `sm`). Resultado medido:
+
+| | 375 × 667 | 375 × 812 |
+|---|---|---|
+| H1 com o prazo | ✓ | ✓ |
+| Subtítulo com o preço | ✓ | ✓ |
+| CTA primário | ✓ 39px de folga | ✓ 184px de folga |
+
+A exceção vale para **espaçamento**, não para redesenhar a seção.
+
+---
+
 ## Critério de agrupamento de commit
 
 O brief manda commits pequenos, um por fase, e proíbe misturar fase de conteúdo

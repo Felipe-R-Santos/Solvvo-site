@@ -181,6 +181,30 @@ html {
   display: none;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   FUNDO DO HERÓI — uma versão por tema.
+
+   ⚠ NÃO UNIFIQUE EM UM ARQUIVO SÓ. É contraste medido, não gosto: com a versão
+   carvão no tema claro, o subtítulo dava 3,49:1, a citação 4,28:1 e a etiqueta
+   2,14:1 sobre os pixels reais do render, contra os 4,5:1 da WCAG AA. O
+   tratamento carvão derruba os realces para texto claro ler; no tema claro isso
+   vira cinza médio e some o texto escuro. Ver scripts/preparar-imagens-celulas.py
+   e DECISOES.md.
+
+   É `background-image` e não duas tags <img> porque o navegador só baixa a
+   imagem da regra que vence — com duas <img> ele baixaria as duas, 155 KB, e
+   metade jogada fora no elemento que mais pesa no carregamento da página.
+   ───────────────────────────────────────────────────────────────────────── */
+.sv-heroi-fundo {
+  background-image: url('/hero-celula-carvao.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+[data-theme="light"] .sv-heroi-fundo {
+  background-image: url('/hero-celula-papel.webp');
+}
+
 /* Barra de rolagem */
 ::-webkit-scrollbar {
   width: 8px;
