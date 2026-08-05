@@ -335,7 +335,13 @@ Nenhum texto muda nesta fase. Muda como o texto se apresenta.
      . A monoespaçada é usada em: números, unidades, etiquetas acima de título,
        código de seção, carimbo do rodapé, rótulos de tabela. NUNCA em texto
        corrido.
-     . Peso máximo 500. Nada de 600 ou 700 — peso pesado lê como marketing.
+     . PESO MÁXIMO 500 EM TODO O SITE, e não só na monoespaçada. Nada de 600,
+       700 ou 800 — peso pesado lê como marketing, e isso vale sobretudo para
+       os títulos, que são onde ele mais aparece.
+       (A redação anterior deste item ficava entre dois pontos sobre a
+       monoespaçada e dava a entender que a regra era só dela. Não era. Título
+       em font-extrabold é marcador de landing page, exatamente o que esta fase
+       existe para remover. Corrigido em 05/08/2026 por Felipe.)
      . Etiquetas em monoespaçada levam letter-spacing 0.08em a 0.1em.
 
 3.3  GRADE TÉCNICA

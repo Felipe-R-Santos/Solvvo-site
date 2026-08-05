@@ -35,7 +35,7 @@ const ATUALIZADO_EM = '5 de agosto de 2026'
 function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
     <section className="mt-10">
-      <h2 className="text-xl sm:text-2xl font-bold text-sv-text mb-3">{titulo}</h2>
+      <h2 className="text-xl sm:text-2xl font-medium text-sv-text mb-3">{titulo}</h2>
       <div className="space-y-3 text-sv-text-2 leading-relaxed">{children}</div>
     </section>
   )
@@ -61,7 +61,7 @@ export default function PoliticaDePrivacidade() {
 
       <main className="flex-1">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-sv-text">
+          <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-sv-text">
             Política de Privacidade
           </h1>
           <p className="text-sm text-sv-text-3 mt-3">

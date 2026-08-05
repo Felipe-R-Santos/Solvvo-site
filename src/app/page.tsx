@@ -42,15 +42,11 @@ import {
   Instagram,
   Youtube,
   CheckCircle2,
-  TrendingUp,
   Target,
-  Award,
   Car,
   Plane,
   Fuel,
-  ArrowUpRight,
   Shield,
-  BarChart3,
 } from 'lucide-react'
 
 /* ─────────── Animation helpers ─────────── */
@@ -220,7 +216,7 @@ function Navbar() {
             onClick={() => {
               document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
             }}
-            className="ml-3 bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold"
+            className="ml-3 bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-medium"
           >
             Orçamento
             <ArrowRight className="w-4 h-4 ml-1" />
@@ -263,7 +259,7 @@ function Navbar() {
               <Separator className="my-3 bg-sv-line" />
               <SheetClose asChild>
                 <Button
-                  className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold w-full"
+                  className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-medium w-full"
                   onClick={() => {
                     setTimeout(() => {
                       document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
@@ -344,7 +340,7 @@ function HeroSection() {
         </motion.div>
 
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-4 sm:mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium leading-tight tracking-tight mb-4 sm:mb-6"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
@@ -401,7 +397,7 @@ function HeroSection() {
           <Button
             asChild
             size="lg"
-            className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold text-base px-8 py-6 h-auto transition-all"
+            className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-medium text-base px-8 py-6 h-auto transition-all"
           >
             <a href="/estudo-de-aplicacao">
               Solicitar pré-estudo
@@ -412,7 +408,7 @@ function HeroSection() {
             asChild
             size="lg"
             variant="outline"
-            className="bg-transparent border-sv-line text-sv-text-2 hover:bg-sv-surface hover:text-sv-text font-semibold text-base px-8 py-6 h-auto transition-all"
+            className="bg-transparent border-sv-line text-sv-text-2 hover:bg-sv-surface hover:text-sv-text font-medium text-base px-8 py-6 h-auto transition-all"
           >
             <a href="#pre-estudo">Ver o que entra no pré-estudo</a>
           </Button>
@@ -528,7 +524,7 @@ function ServicesSection() {
           <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             O que fazemos
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">
             Nossas <span>Soluções</span>
           </h2>
           <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
@@ -550,7 +546,7 @@ function ServicesSection() {
                         <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-sv-text-2" />
                       </div>
                       <div>
-                        <CardTitle className="text-xl sm:text-2xl font-bold text-sv-text group-hover:text-sv-text transition-colors">
+                        <CardTitle className="text-xl sm:text-2xl font-medium text-sv-text group-hover:text-sv-text transition-colors">
                           {service.title}
                         </CardTitle>
                       </div>
@@ -628,7 +624,7 @@ function AboutSection() {
               <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
                 Sobre nós
               </Badge>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-6">
                 Sobre a{' '}
                 <span>Solvvo</span>
               </h2>
@@ -684,7 +680,7 @@ function AboutSection() {
                     <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-sv-surface/50 border border-sv-line">
                       <Icon className="w-5 h-5 text-sv-text-2 mt-0.5 shrink-0" />
                       <div>
-                        <div className="text-sm font-semibold text-sv-text">{v.label}</div>
+                        <div className="text-sm font-medium text-sv-text">{v.label}</div>
                         <div className="text-xs text-sv-text-2 mt-0.5">{v.text}</div>
                       </div>
                     </div>
@@ -758,7 +754,7 @@ function AplicacoesSection() {
           <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             Onde atuamos
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">
             Aplicações que{' '}
             <span>atendemos</span>
           </h2>
@@ -783,7 +779,7 @@ function AplicacoesSection() {
                         {ap.setor}
                       </Badge>
                     </div>
-                    <CardTitle className="text-lg font-bold text-sv-text group-hover:text-sv-text transition-colors leading-snug">
+                    <CardTitle className="text-lg font-medium text-sv-text group-hover:text-sv-text transition-colors leading-snug">
                       {ap.titulo}
                     </CardTitle>
                   </CardHeader>
@@ -857,7 +853,7 @@ function PlataformaSection() {
           <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             Em breve · por assinatura
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">
             Simulação automática para{' '}
             <span>estudos de aplicação</span>
           </h2>
@@ -894,7 +890,7 @@ function PlataformaSection() {
                 key={i}
                 className="p-6 rounded-xl bg-sv-surface/60 border border-sv-line"
               >
-                <div className="text-sm font-semibold text-sv-text-2 mb-2">{p.perfil}</div>
+                <div className="text-sm font-medium text-sv-text-2 mb-2">{p.perfil}</div>
                 <div className="text-sm text-sv-text-2 leading-relaxed">{p.dor}</div>
               </div>
             ))}
@@ -905,7 +901,7 @@ function PlataformaSection() {
             Sem este cabeçalho o bloco vira placar de vaidade, que é
             exatamente o que a remoção da barra do herói corrigiu. */}
         <FadeInSection className="mb-6">
-          <h3 className="text-lg font-bold text-sv-text">Nosso acervo técnico</h3>
+          <h3 className="text-lg font-medium text-sv-text">Nosso acervo técnico</h3>
           <p className="text-sm text-sv-text-2 mt-1.5 max-w-2xl leading-relaxed">
             O que a plataforma consulta para dimensionar. São contagens do nosso
             banco técnico interno — não são clientes atendidos nem projetos
@@ -937,7 +933,7 @@ function PlataformaSection() {
         {/* O que ela faz */}
         <FadeInSection>
           <div className="rounded-2xl bg-sv-surface/60 border border-sv-line p-6 sm:p-10">
-            <h3 className="text-xl sm:text-2xl font-bold text-sv-text mb-2">
+            <h3 className="text-xl sm:text-2xl font-medium text-sv-text mb-2">
               Do desenho da peça ao payback, numa passada
             </h3>
             <p className="text-sm text-sv-text-2 mb-8">
@@ -949,7 +945,7 @@ function PlataformaSection() {
                   <div className="text-xs font-mono text-sv-text-3 mb-1">
                     {String(i + 1).padStart(2, '0')}
                   </div>
-                  <div className="text-sm font-semibold text-sv-text">{e.titulo}</div>
+                  <div className="text-sm font-medium text-sv-text">{e.titulo}</div>
                   <div className="text-xs text-sv-text-2 mt-1 leading-relaxed">{e.texto}</div>
                 </div>
               ))}
@@ -966,7 +962,7 @@ function PlataformaSection() {
               </p>
               <Button
                 size="lg"
-                className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold shrink-0 transition-all"
+                className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-medium shrink-0 transition-all"
                 onClick={() => {
                   document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
                 }}
@@ -1005,7 +1001,7 @@ function CelulasSection() {
           <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             Acervo
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">
             Arquiteturas de{' '}
             <span>célula</span>
           </h2>
@@ -1035,7 +1031,7 @@ function CelulasSection() {
                   <div className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3">
                     {String(i + 1).padStart(2, '0')} · Arquitetura
                   </div>
-                  <div className="text-base font-semibold text-sv-text mt-1.5">{c.nome}</div>
+                  <div className="text-base font-medium text-sv-text mt-1.5">{c.nome}</div>
                   <div className="text-sm text-sv-text-2 mt-1.5 leading-relaxed">{c.desc}</div>
                 </figcaption>
               </figure>
@@ -1143,7 +1139,7 @@ function ContactSection() {
           <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             Fale conosco
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4">
             Entre em <span>Contato</span>
           </h2>
           <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
@@ -1156,7 +1152,7 @@ function ContactSection() {
           <FadeInSection className="lg:col-span-2" delay={0.1}>
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-sv-text mb-4">Informações de Contato</h3>
+                <h3 className="text-xl font-medium text-sv-text mb-4">Informações de Contato</h3>
                 <p className="text-sv-text-2 text-sm leading-relaxed">
                   Entre em contato conosco para discutir como podemos ajudar sua empresa a implementar soluções de manufatura digital.
                 </p>
@@ -1332,7 +1328,7 @@ function ContactSection() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full mt-6 bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold py-6 text-base transition-all"
+                  className="w-full mt-6 bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-medium py-6 text-base transition-all"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
@@ -1416,7 +1412,7 @@ function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold text-sv-text uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-medium text-sv-text uppercase tracking-wider mb-4">
               Serviços
             </h4>
             <ul className="space-y-2.5">
@@ -1435,7 +1431,7 @@ function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-sm font-semibold text-sv-text uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-medium text-sv-text uppercase tracking-wider mb-4">
               Empresa
             </h4>
             <ul className="space-y-2.5">
@@ -1459,7 +1455,7 @@ function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold text-sv-text uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-medium text-sv-text uppercase tracking-wider mb-4">
               Contato
             </h4>
             <ul className="space-y-3">
