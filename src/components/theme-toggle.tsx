@@ -14,8 +14,9 @@ import { CHAVE_TEMA } from '@/lib/tema'
 //    reclamaria de divergência de hidratação a cada carregamento.
 //
 // 2. Ler o DOM dentro de um useEffect para depois chamar setState é
-//    exatamente o padrão que o ESLint acusa em react-hooks/set-state-in-effect
-//    (é o único erro de lint que o projeto tem hoje, em use-mobile.ts).
+//    exatamente o padrão que o ESLint acusa em react-hooks/set-state-in-effect.
+//    Era o único erro de lint do projeto, no use-mobile.ts que a Fase 3 apagou;
+//    não faz sentido reintroduzi-lo aqui.
 //
 // Solução: os dois ícones são renderizados sempre, e o CSS esconde o que não
 // vale para o tema corrente — ver as regras .sv-tema-sol / .sv-tema-lua em
