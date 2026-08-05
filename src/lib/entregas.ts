@@ -42,7 +42,10 @@ export const ENTREGAS = [
   },
   {
     titulo: 'Riscos e pendências técnicas',
-    texto: 'O que precisa ser resolvido antes de avançar. Nenhum estudo honesto tem essa lista vazia.',
+    // A frase sobre acessibilidade de tocha é o diferencial mais forte da
+    // empresa, e até 05/08/2026 vivia só na seção institucional — que pouca
+    // gente lê. Aqui ela aparece onde o comprador avalia o entregável.
+    texto: 'O que precisa ser resolvido antes de avançar. Nenhum estudo honesto tem essa lista vazia. Acessibilidade de tocha verificada por quem já soldou: é onde célula de solda falha, e é o que raramente aparece num estudo feito por quem nunca segurou uma.',
   },
   {
     titulo: 'Vistas 3D do arranjo',

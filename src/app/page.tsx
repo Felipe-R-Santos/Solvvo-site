@@ -676,26 +676,20 @@ function AboutSection() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* IMAGEM DO SOBRE — trocada em 05/08/2026.
-              Era about-img.png: stock genérico de IA, com holograma azul néon
-              sobre um tablet. Não mostrava trabalho da empresa e era o oposto
-              da direção de folha técnica.
-              Agora é um render do acervo. Entre os seis disponíveis, o pórtico
-              é o que mostra a CÉLULA INTEIRA no quadro — estrutura, robô, peça,
-              cerca, posto do operador e a figura humana que dá a escala. Os
-              outros ou cortam nas bordas ou deixam a célula pequena demais, e
-              esta é seção institucional, não galeria técnica. */}
+          {/* IMAGEM DO SOBRE — trocada duas vezes em 05/08/2026.
+              Primeiro saiu o about-img.png, stock genérico de IA com holograma
+              azul néon sobre um tablet. Agora entra a célula H com os berços
+              montados, do acervo: ela ilustra o parágrafo abaixo que separa a
+              independência (robô, posicionador, periférico) do dispositivo de
+              fixação projetado sob medida — o berço aparece montado na peça. */}
           <FadeInSection>
             <figure className="relative">
               <div className="rounded border border-sv-line overflow-hidden bg-sv-surface">
-                <img
-                  src="/celulas/sw-gan.webp"
-                  alt="Render de célula robotizada em pórtico: robô suspenso na estrutura, peça posicionada no piso, cercas de proteção e posto do operador"
-                  className="w-full h-auto object-cover"
-                />
+                <div className="sv-img-celula-berco w-full aspect-[1600/1467]" role="img"
+                  aria-label="Render de célula robotizada em H com dois berços de fixação montados nos posicionadores, cerca de proteção, fonte de solda e operador ao lado" />
               </div>
               <figcaption className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3 mt-3">
-                Arquitetura em pórtico · render do acervo Solvvo
+                Célula H com berços montados · render do acervo Solvvo
               </figcaption>
             </figure>
           </FadeInSection>
@@ -772,6 +766,71 @@ function AboutSection() {
             </div>
           </FadeInSection>
         </div>
+
+        {/* ── QUEM FAZ O ESTUDO ────────────────────────────────────────────
+            Engenharia independente se compra pela confiança no engenheiro, e
+            até aqui a seção falava em "nós" corporativo.
+
+            TEXTO APROVADO POR FELIPE, PALAVRA POR PALAVRA. Não reescreva, não
+            resuma e não acrescente nada em volta: o brief proíbe biografia
+            inventada, e o que dá peso a este bloco é justamente ser verificável.
+
+            O retrato é preto e branco de propósito — ver DECISOES.md. */}
+        <FadeInSection className="mt-20 pt-12 border-t border-sv-line">
+          <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-10 lg:gap-14 items-start">
+            <figure>
+              <div className="rounded border border-sv-line overflow-hidden bg-sv-surface">
+                <img
+                  src="/felipe-retrato.webp"
+                  alt="Felipe Renan Santos, homem de barba e óculos, sentado com a mão apoiada no queixo, olhando para a câmera"
+                  loading="lazy"
+                  width={900}
+                  height={1125}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <figcaption className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3 mt-3">
+                Felipe Renan Santos
+              </figcaption>
+            </figure>
+
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-medium tracking-tight text-sv-text">
+                Quem faz o estudo
+              </h3>
+              <div className="mt-6 space-y-5 text-sv-text-2 leading-relaxed">
+                <p>
+                  A Solvvo é dirigida por{' '}
+                  <span className="text-sv-text font-medium">Felipe Renan Santos</span>,
+                  projetista mecânico desde 2012, com cinco anos dedicados a células
+                  robotizadas.
+                </p>
+                <p>
+                  Antes de projetar, soldou. E a vontade de projetar nasceu exatamente
+                  daí: dos dispositivos que chegavam à bancada como se ninguém que os
+                  tivesse desenhado jamais houvesse segurado uma tocha e tentado alcançar
+                  a junta. O acesso não existia. O ângulo não fechava. A peça estava fixa
+                  numa posição que obrigava a soldar em situação ruim.
+                </p>
+                <p>
+                  Foi por não se conformar com isso que passou a projetar os próprios
+                  dispositivos — e é por isso que hoje um estudo da Solvvo verifica
+                  acessibilidade de tocha antes de escolher robô. Célula de solda não
+                  falha por falta de alcance do braço; falha porque a tocha não chega na
+                  junta com o ângulo certo, e isso só aparece quando alguém já esteve do
+                  outro lado da máscara.
+                </p>
+                <p>
+                  A ordem importa: catorze anos de projeto mecânico sustentando cinco de
+                  robótica, e antes disso a solda. Quem chega à célula pela automação
+                  escolhe o robô e acerta o orçamento. Quem chega pela peça e pelo
+                  processo entende primeiro o que precisa ser fixado, posicionado e
+                  alcançado — e só depois decide o que vai fazer isso.
+                </p>
+              </div>
+            </div>
+          </div>
+        </FadeInSection>
       </div>
     </section>
   )

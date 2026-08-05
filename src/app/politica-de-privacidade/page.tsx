@@ -11,17 +11,17 @@ import { Carimbo } from '@/components/carimbo'
 // para o cliente de e-mail. Isso é raro e é bom — a maior parte das políticas
 // por aí descreve coleta que este site não faz.
 //
-// ⚠ ESTA PÁGINA NÃO VAI AO AR SEM OS QUATRO CAMPOS ABAIXO (decisão de Felipe,
-//   05/08/2026). Ela já está linkada no rodapé, então o `git push` publica.
-//   PENDENTE — Felipe envia antes da publicação:
-//     [ ] razão social completa
-//     [ ] CNPJ
-//     [ ] endereço completo (hoje só consta a cidade)
-//     [ ] prazo de retenção das conversas e dos e-mails recebidos
-//   RESOLVIDO:
-//     [x] encarregado de dados (DPO) — é o próprio Felipe, sem estrutura
-//         separada. Falta só publicar o contato dele na seção de direitos.
-// Nada disso foi inventado nem preenchido com exemplo plausível.
+// DADOS COMPLETADOS EM 05/08/2026 por Felipe: CNPJ, endereço, prazo de retenção
+// e encarregado. A página estava travada sem eles e agora pode ir ao ar.
+//
+// A RAZÃO SOCIAL NÃO CONSTA, E É DE PROPÓSITO: a alteração do nome empresarial
+// para Solvvo está em andamento com o contador, e publicar o nome antigo agora
+// significaria trocá-lo em pouco tempo. O CNPJ é o identificador juridicamente
+// estável e não muda com a alteração. Revisitar quando o contrato social novo
+// sair.
+//
+// E-MAIL: `contato@` é o único canal publicado. A ficha cadastral tem outros
+// endereços; nenhum deles entra aqui.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
@@ -89,7 +89,12 @@ export default function PoliticaDePrivacidade() {
           <Secao titulo="Quem é o controlador dos dados">
             <p>
               <span className="text-sv-text font-medium">Solvvo Solutions</span>,
-              sediada em Caxias do Sul, Rio Grande do Sul, Brasil.
+              inscrita no CNPJ 45.939.613/0001-27, com sede na Rua Madre Bárbara,
+              806, sala 464, Bairro Diamantino, Caxias do Sul/RS, CEP 95055-041.
+            </p>
+            <p>
+              O encarregado pelo tratamento de dados pessoais é{' '}
+              <span className="text-sv-text font-medium">Felipe Renan Santos</span>.
             </p>
             <p>
               Para qualquer assunto relacionado aos seus dados pessoais, fale
@@ -163,10 +168,14 @@ export default function PoliticaDePrivacidade() {
 
           <Secao titulo="Por quanto tempo guardamos">
             <p>
-              Sua mensagem fica onde ela chegou: na conversa de WhatsApp ou na
-              caixa de e-mail da empresa, pelo tempo necessário ao atendimento e
-              ao histórico comercial. Você pode pedir a exclusão a qualquer
-              momento pelos contatos acima.
+              Conversas de WhatsApp e e-mails de contato comercial são guardados
+              por{' '}
+              <span className="text-sv-text font-medium">24 meses</span>, contados
+              do último contato. Depois disso são eliminados.
+            </p>
+            <p>
+              Você pode pedir a exclusão antes desse prazo, a qualquer momento,
+              pelos contatos acima.
             </p>
           </Secao>
 

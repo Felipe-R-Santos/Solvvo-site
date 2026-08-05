@@ -283,6 +283,58 @@ def preparar_novas():
     return feitos
 
 
+# ── RETRATO DA SEÇÃO SOBRE ──────────────────────────────────────────────────
+# Tratamento SEPARADO dos renders, e é importante entender por quê:
+#
+#   . NÃO passa por trocar_fundo() nem por _fundo_para(). Aqueles fazem flood
+#     fill do fundo a partir dos cantos, o que só funciona em render com fundo
+#     chapado. Numa FOTOGRAFIA o fundo tem gradiente, grão e sombra contínua —
+#     o flood fill vaza para dentro da imagem e destrói o retrato.
+#   . NÃO passa por preparar_hero(). Aquele derruba realces ou levanta sombras
+#     para o texto ler por cima; aqui não há texto por cima.
+#   . NÃO ganha marca d'água. É pessoa, não peça de catálogo.
+#
+# O corte é 4:5 do PEITO PARA CIMA. A original é vertical de corpo inteiro
+# (~2,7:1); numa coluna estreita, corpo inteiro deixa o rosto pequeno demais, e
+# nesta seção é o rosto que faz o trabalho.
+#
+# Fica em PRETO E BRANCO, uma versão só, servindo os dois temas. Ver DECISOES.md.
+RETRATO_ORIGEM = os.environ.get(
+    "SOLVVO_RETRATO",
+    os.path.join(os.path.expanduser("~"), "OneDrive", "Imagens",
+                 "Felipe - Dia dos Pais 202510651.jpg"),
+)
+RETRATO_LARGURA = 900          # 900x1125, já em 4:5
+
+# Janela do corte em FRAÇÃO da imagem original, medida sobre a foto: sobra de
+# cabeça no topo, corte na altura do tronco embaixo. A proporção da janela já é
+# 4:5 exata (0,468 de 4000 = 1872 px; 0,390 de 6000 = 2340 px).
+# Deslocada para a direita do centro geométrico porque o rosto está descentrado
+# na composição — centralizar no meio da foto deixaria o rosto na borda.
+RETRATO_CAIXA = (0.326, 0.110, 0.794, 0.500)
+
+
+def preparar_retrato():
+    if not os.path.exists(RETRATO_ORIGEM):
+        print(f"AVISO: nao achei o retrato: {RETRATO_ORIGEM} — pulando")
+        return []
+    im = Image.open(RETRATO_ORIGEM).convert("RGB")
+    w, h = im.size
+    x0, y0, x1, y1 = RETRATO_CAIXA
+    cx = im.crop((int(x0 * w), int(y0 * h), int(x1 * w), int(y1 * h)))
+    cx = cx.resize((RETRATO_LARGURA, RETRATO_LARGURA * 5 // 4), Image.LANCZOS)
+
+    # A original já é preto e branco; o convert garante que nenhum resíduo de
+    # cor sobreviva ao reencode.
+    cx = cx.convert("L").convert("RGB")
+
+    dst = os.path.join(SITE, "public", "felipe-retrato.webp")
+    cx.save(dst, "WEBP", quality=84, method=6)
+    print(f"gerado: felipe-retrato.webp  ({cx.width}x{cx.height}, "
+          f"{os.path.getsize(dst) // 1024} KB)")
+    return [(dst, os.path.getsize(dst))]
+
+
 def preparar_og():
     """Card social, 1200x630.
 
@@ -327,6 +379,7 @@ def main():
     hero = [x for x in (preparar_hero("carvao"), preparar_hero("papel")) if x]
     novas = preparar_novas()
     og = preparar_og()
+    retrato = preparar_retrato()
     feitos = []
     for slug, _rotulo in ESCOLHIDAS:
         src = os.path.join(FONTE, f"{slug}-iso.png")
@@ -341,7 +394,7 @@ def main():
         im.save(dst, "WEBP", quality=82, method=6)
         feitos.append((dst, os.path.getsize(dst)))
         print(f"gerado: {os.path.basename(dst)}  ({os.path.getsize(dst)//1024} KB)")
-    feitos += hero + novas + og
+    feitos += hero + novas + og + retrato
     print(f"\n{len(feitos)} imagens em {SAIDA}")
     print(f"peso total: {sum(s for _, s in feitos)//1024} KB")
 

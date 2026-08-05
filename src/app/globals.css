@@ -217,6 +217,16 @@ html {
   background-image: url('/celulas/cel-h-duas-estacoes-papel.webp');
 }
 
+.sv-img-celula-berco {
+  background-image: url('/celulas/cel-h-com-berco-carvao.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+[data-theme="light"] .sv-img-celula-berco {
+  background-image: url('/celulas/cel-h-com-berco-papel.webp');
+}
+
 /* Barra de rolagem */
 ::-webkit-scrollbar {
   width: 8px;

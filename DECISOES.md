@@ -409,6 +409,64 @@ A exceção vale para **espaçamento**, não para redesenhar a seção.
 
 ---
 
+## Fase 7 — o retrato é preto e branco, e só há uma versão
+
+**Decisão:** o retrato de Felipe fica em preto e branco, num arquivo só, servindo
+os dois temas.
+
+**Por quê:** dá sobriedade à seção institucional e a separa das imagens técnicas
+coloridas da mesma página — os renders de célula têm laranja de robô e verde de
+cerca, e um retrato colorido no meio disputaria atenção com eles em vez de
+encerrar a seção.
+
+**Não converta as outras imagens para preto e branco.** A escolha vale para o
+retrato, não para o site: os renders precisam da cor, que é onde está a
+sinalização de segurança e a marca.
+
+**Tratamento separado no script.** `preparar_retrato()` não passa por
+`trocar_fundo()` nem por `preparar_hero()`: aqueles fazem flood fill do fundo a
+partir dos cantos, o que só funciona em render com fundo chapado. Numa
+fotografia o fundo tem gradiente, grão e sombra contínua — o flood fill vaza
+para dentro da imagem e destrói o retrato. Também não leva marca d'água: é
+pessoa, não peça de catálogo.
+
+O corte é 4:5 do peito para cima. A original é vertical de corpo inteiro; em
+coluna estreita, corpo inteiro deixa o rosto pequeno demais, e nessa seção é o
+rosto que faz o trabalho.
+
+---
+
+## Acessibilidade de tocha saiu da seção institucional
+
+**Decisão:** a frase sobre verificação de acessibilidade de tocha passa a
+aparecer também no item 08 das entregas, em `/estudo-de-aplicacao`.
+
+**Por quê:** é o diferencial mais forte da empresa e vivia só na seção
+institucional da home, que pouca gente lê. Precisa aparecer **onde o comprador
+avalia o entregável** — na lista do que ele recebe, não na página sobre quem
+somos.
+
+---
+
+## Política de privacidade — por que a razão social não consta
+
+Os dados do controlador foram completados em 05/08/2026: CNPJ, endereço, prazo
+de retenção de 24 meses e encarregado.
+
+**A razão social foi omitida de propósito.** A alteração do nome empresarial
+para Solvvo está em andamento com o contador, e publicar o nome antigo agora
+significaria trocá-lo em pouco tempo — numa página que existe para dar
+segurança jurídica, nome que muda é ruído. **O CNPJ é o identificador
+juridicamente estável e não muda com a alteração**, então ele sozinho cumpre a
+identificação.
+
+**Revisitar esta linha quando o contrato social novo sair.**
+
+`contato@solvvo.com.br` é o único canal publicado. A ficha cadastral tem outros
+endereços; nenhum deles entra no site.
+
+---
+
 ## Rótulo de link descreve o que acontece ao clicar
 
 Os quatro cards de solução tinham o mesmo "Saiba Mais" apontando para o
