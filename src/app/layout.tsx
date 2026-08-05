@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { SCRIPT_ANTI_FLASH, TEMA_PADRAO } from "@/lib/tema";
@@ -9,9 +9,21 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// A monoespaçada da folha técnica: números, unidades, etiquetas, código de
+// seção, carimbo e rótulo de tabela. NUNCA texto corrido.
+//
+// SUBSTITUI a Geist Mono, que não foi somada a ela. Manter as duas significaria
+// baixar duas famílias e conviver com duas monoespaçadas; e deixar a variável
+// chamada --font-geist-mono apontando para a IBM Plex seria a armadilha de
+// sinônimo da regra 1.5 do brief — o nome dizendo uma coisa e o conteúdo outra.
+//
+// Só os pesos 400 e 500. O brief limita em 500: peso pesado em monoespaçada lê
+// como marketing, que é o oposto do que esta direção quer. A IBM Plex Mono é
+// fonte estática, então os pesos precisam ser declarados um a um.
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 // SEO/compartilhamento: o título e a descrição são o que aparece no Google e
@@ -92,7 +104,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_ANTI_FLASH }} />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-sv-bg text-sv-text`}
+        className={`${geistSans.variable} ${plexMono.variable} antialiased bg-sv-bg text-sv-text`}
       >
         {children}
         {/* O toast é estilizado por variável para acompanhar o tema. A prop

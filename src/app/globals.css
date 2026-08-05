@@ -200,36 +200,23 @@ html {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   CLASSES DE TRANSIÇÃO — Fase 2 troca a COR delas; a Fase 3 remove as três.
+   GRADE DE FOLHA DE DESENHO
 
-   Elas ainda existem porque a Fase 2 é só o sistema de cor: o brief separa
-   "trocar a paleta" de "mudar a linguagem visual", e são commits diferentes.
-   Repontá-las agora evita o meio-termo em que o tema claro herdaria gradiente
-   verde-esmeralda sobre papel bege, que não passaria no teste de contraste da
-   própria Fase 2.
+   Linhas de 1px em --sv-grid, módulo de 32px. Substitui a grade de 60px que
+   cobria a página inteira: agora só o herói e o bloco da plataforma a usam.
+   Grade em toda seção vira textura de fundo e para de significar alguma coisa;
+   restrita a dois blocos, ela lê como a folha em que o desenho é feito.
+
+   As classes .gradient-text, .glow-emerald e .glow-emerald-strong foram
+   REMOVIDAS daqui. Gradiente em texto e brilho colorido são os dois marcadores
+   mais fortes de landing page de startup, e o site vende o contrário disso.
+   Título agora é cor sólida e botão não brilha.
    ───────────────────────────────────────────────────────────────────────── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--sv-text), var(--sv-text-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.glow-emerald {
-  box-shadow: 0 0 20px color-mix(in srgb, var(--sv-accent) 12%, transparent);
-}
-
-.glow-emerald-strong {
-  box-shadow: 0 0 20px color-mix(in srgb, var(--sv-accent) 22%, transparent);
-}
-
-/* Grade técnica. A Fase 3 troca o módulo e restringe às seções do herói e da
-   plataforma; aqui só a cor sai do verde. */
 .grid-pattern {
   background-image:
     linear-gradient(var(--sv-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--sv-grid) 1px, transparent 1px);
-  background-size: 60px 60px;
+  background-size: 32px 32px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

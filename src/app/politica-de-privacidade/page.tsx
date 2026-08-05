@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { Carimbo } from '@/components/carimbo'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ⚠ PENDÊNCIA PARA FELIPE — ESTE TEXTO PRECISA DE REVISÃO JURÍDICA.
@@ -51,7 +52,7 @@ export default function PoliticaDePrivacidade() {
             <img
               src="/logo-solvvo.png"
               alt="Solvvo"
-              className="h-9 sm:h-11 w-auto object-contain drop-shadow-lg"
+              className="h-9 sm:h-11 w-auto object-contain"
             />
           </a>
           <ThemeToggle />
@@ -244,6 +245,7 @@ export default function PoliticaDePrivacidade() {
           <p className="text-xs text-sv-text-3">
             © {new Date().getFullYear()} Solvvo. Todos os direitos reservados.
           </p>
+          <Carimbo />
         </div>
       </footer>
     </div>

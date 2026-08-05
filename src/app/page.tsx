@@ -5,6 +5,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { Carimbo } from '@/components/carimbo'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -169,7 +170,7 @@ function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-sv-bg/90 backdrop-blur-xl border-b border-sv-line shadow-lg'
+          ? 'bg-sv-bg border-b border-sv-line'
           : 'bg-transparent'
       }`}
     >
@@ -179,7 +180,7 @@ function Navbar() {
           <img
             src="/logo-solvvo.png"
             alt="Solvvo"
-            className="h-9 sm:h-11 w-auto object-contain drop-shadow-lg"
+            className="h-9 sm:h-11 w-auto object-contain"
           />
         </a>
 
@@ -224,7 +225,7 @@ function Navbar() {
                 <img
                   src="/logo-solvvo.png"
                   alt="Solvvo"
-                  className="h-8 w-auto object-contain drop-shadow-lg"
+                  className="h-8 w-auto object-contain"
                 />
               </SheetTitle>
             </SheetHeader>
@@ -290,29 +291,10 @@ function HeroSection() {
         <div className="absolute inset-0 grid-pattern" />
       </div>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-sv-text-3 rounded-full opacity-30"
-            // `left`/`top` em MotionStyle: o tipo do framer-motion 12 não
-            // aceita as duas junto com `animate`, então a posição vai por
-            // variável CSS, que é tipada como string e não conflita.
-            style={{ insetInlineStart: `${20 + i * 15}%`, insetBlockStart: `${30 + i * 10}%` }}
-            animate={{
-              y: [-20, 20, -20],
-              x: [-10, 10, -10],
-              opacity: [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-      </div>
+      {/* As cinco partículas flutuantes que ficavam aqui foram removidas em
+          05/08/2026. Ponto luminoso animado sobre a foto da célula é adorno de
+          landing page, não elemento de folha técnica — e ficava por cima
+          justamente do render que o herói existe para mostrar. */}
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center pt-20">
         <motion.div
@@ -327,7 +309,7 @@ function HeroSection() {
             // moldura transparente, então h-52 desenhava só ~48px de logo.
             // Com a moldura cortada, a altura do CSS virou altura REAL —
             // manter h-52 deixaria o logo com 208px e ~760px de largura.
-            className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mx-auto drop-shadow-2xl mb-8"
+            className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mx-auto mb-8"
           />
         </motion.div>
         <motion.div
@@ -335,7 +317,7 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
         >
-          <Badge className="mb-6 px-4 py-1.5 text-sm font-medium bg-sv-surface text-sv-text-2 border-sv-line hover:bg-sv-surface transition-colors">
+          <Badge className="mb-6 px-4 py-1.5 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             <Zap className="w-3.5 h-3.5 mr-1.5" />
             Em breve — plataforma de simulação automática
           </Badge>
@@ -348,7 +330,7 @@ function HeroSection() {
           transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
         >
           O estudo de aplicação{' '}
-          <span className="gradient-text">deixa de levar semanas</span>
+          <span>deixa de levar semanas</span>
           <br />
           e passa a caber numa sessão
         </motion.h1>
@@ -388,7 +370,7 @@ function HeroSection() {
         >
           <Button
             size="lg"
-            className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold text-base px-8 py-6 h-auto glow-emerald-strong hover:glow-emerald-strong transition-all"
+            className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold text-base px-8 py-6 h-auto transition-all"
             onClick={() => {
               document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
             }}
@@ -469,7 +451,7 @@ const services = [
 
 function ServicesSection() {
   return (
-    <section id="servicos" className="relative py-24 sm:py-32 overflow-hidden">
+    <section id="servicos" className="relative py-24 sm:py-32 overflow-hidden border-t border-sv-line">
       {/* Background */}
       <div className="absolute inset-0">
         <img
@@ -478,17 +460,16 @@ function ServicesSection() {
           className="w-full h-full object-cover opacity-10"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/95 to-sv-bg" />
-        <div className="absolute inset-0 grid-pattern" />
+        <div className="absolute inset-0 bg-sv-bg" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
+          <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             O que fazemos
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Nossas <span className="gradient-text">Soluções</span>
+            Nossas <span>Soluções</span>
           </h2>
           <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
             Oferecemos soluções completas em manufatura digital, combinando tecnologia de ponta com expertise industrial para transformar sua operação.
@@ -500,12 +481,12 @@ function ServicesSection() {
             const Icon = service.icon
             return (
               <StaggerItem key={i}>
-                <Card className="group relative bg-sv-surface/80 border-sv-line hover:border-sv-text-3 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl overflow-hidden">
+                <Card className="group relative bg-sv-surface/80 border-sv-line hover:border-sv-text-3 transition-all duration-500 overflow-hidden">
                   {/* Subtle gradient overlay on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-transparent to-transparent group-hover:from-sv-surface group-hover:to-transparent transition-all duration-500" />
                   <CardHeader className="relative pb-2">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-sv-surface border border-sv-line flex items-center justify-center group-hover:bg-sv-surface group-hover:border-sv-text-3 transition-all group-hover:scale-110 duration-300 shrink-0">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-sv-surface border border-sv-line flex items-center justify-center group-hover:bg-sv-surface group-hover:border-sv-text-3 transition-all duration-300 shrink-0">
                         <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-sv-text-2" />
                       </div>
                       <div>
@@ -524,7 +505,7 @@ function ServicesSection() {
                         <Badge
                           key={j}
                           variant="outline"
-                          className="text-xs border-sv-line text-sv-text-3 bg-sv-surface"
+                          className="font-mono text-[10px] font-normal uppercase tracking-[0.09em] border-sv-line text-sv-text-3 bg-transparent"
                         >
                           {f}
                         </Badge>
@@ -552,35 +533,44 @@ function ServicesSection() {
 
 function AboutSection() {
   return (
-    <section id="sobre" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
-      <div className="absolute inset-0 grid-pattern" />
+    <section id="sobre" className="relative py-24 sm:py-32 overflow-hidden border-t border-sv-line">
+      <div className="absolute inset-0 bg-sv-bg" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image */}
+          {/* IMAGEM DO SOBRE — trocada em 05/08/2026.
+              Era about-img.png: stock genérico de IA, com holograma azul néon
+              sobre um tablet. Não mostrava trabalho da empresa e era o oposto
+              da direção de folha técnica.
+              Agora é um render do acervo. Entre os seis disponíveis, o pórtico
+              é o que mostra a CÉLULA INTEIRA no quadro — estrutura, robô, peça,
+              cerca, posto do operador e a figura humana que dá a escala. Os
+              outros ou cortam nas bordas ou deixam a célula pequena demais, e
+              esta é seção institucional, não galeria técnica. */}
           <FadeInSection>
-            <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden glow-emerald">
+            <figure className="relative">
+              <div className="rounded border border-sv-line overflow-hidden bg-sv-surface">
                 <img
-                  src="/about-img.png"
-                  alt="Engenheiro com óculos de proteção analisando um modelo tridimensional em tablet, no chão de fábrica"
-                  className="w-full h-auto object-cover rounded-2xl"
+                  src="/celulas/sw-gan.webp"
+                  alt="Render de célula robotizada em pórtico: robô suspenso na estrutura, peça posicionada no piso, cercas de proteção e posto do operador"
+                  className="w-full h-auto object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-sv-bg/30 to-transparent" />
               </div>
-            </div>
+              <figcaption className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3 mt-3">
+                Arquitetura em pórtico · render do acervo Solvvo
+              </figcaption>
+            </figure>
           </FadeInSection>
 
           {/* Text */}
           <FadeInSection delay={0.2}>
             <div>
-              <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
+              <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
                 Sobre nós
               </Badge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6">
                 Sobre a{' '}
-                <span className="gradient-text">Solvvo</span>
+                <span>Solvvo</span>
               </h2>
               <div className="space-y-4 text-sv-text-2 leading-relaxed">
                 <p>
@@ -700,18 +690,17 @@ const aplicacoes = [
 
 function AplicacoesSection() {
   return (
-    <section id="cases" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
-      <div className="absolute inset-0 grid-pattern" />
+    <section id="cases" className="relative py-24 sm:py-32 overflow-hidden border-t border-sv-line">
+      <div className="absolute inset-0 bg-sv-bg" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
+          <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             Onde atuamos
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Aplicações que{' '}
-            <span className="gradient-text">atendemos</span>
+            <span>atendemos</span>
           </h2>
           <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
             Cada aplicação tem a sua pergunta difícil. O estudo existe para respondê-la
@@ -724,13 +713,13 @@ function AplicacoesSection() {
             const Icon = ap.icon
             return (
               <StaggerItem key={i}>
-                <Card className="group h-full bg-sv-surface/80 border-sv-line hover:border-sv-text-3 transition-all duration-500 hover:shadow-xl overflow-hidden">
+                <Card className="group h-full bg-sv-surface/80 border-sv-line hover:border-sv-text-3 transition-all duration-500 overflow-hidden">
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-10 h-10 rounded-lg bg-sv-surface border border-sv-line flex items-center justify-center group-hover:bg-sv-surface transition-colors">
                         <Icon className="w-5 h-5 text-sv-text-2" />
                       </div>
-                      <Badge variant="outline" className="text-xs border-sv-line text-sv-text-3 bg-sv-surface">
+                      <Badge variant="outline" className="font-mono text-[10px] font-normal uppercase tracking-[0.09em] border-sv-line text-sv-text-3 bg-transparent">
                         {ap.setor}
                       </Badge>
                     </div>
@@ -746,7 +735,7 @@ function AplicacoesSection() {
                       {ap.entregas.map((e, j) => (
                         <span
                           key={j}
-                          className="text-xs px-2.5 py-1 rounded-md bg-sv-surface border border-sv-line text-sv-text-3"
+                          className="font-mono text-[10px] uppercase tracking-[0.09em] px-2.5 py-1 rounded border border-sv-line text-sv-text-3"
                         >
                           {e}
                         </span>
@@ -799,18 +788,18 @@ const numerosAcervo = [
 
 function PlataformaSection() {
   return (
-    <section id="plataforma" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
+    <section id="plataforma" className="relative py-24 sm:py-32 overflow-hidden border-t border-sv-line">
+      <div className="absolute inset-0 bg-sv-bg" />
       <div className="absolute inset-0 grid-pattern" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
+          <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             Em breve · por assinatura
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Simulação automática para{' '}
-            <span className="gradient-text">estudos de aplicação</span>
+            <span>estudos de aplicação</span>
           </h2>
           <p className="text-sv-text-2 text-lg max-w-3xl mx-auto leading-relaxed">
             Hoje o estudo de aplicação é artesanal: semanas de planilha, cada engenheiro
@@ -867,10 +856,19 @@ function PlataformaSection() {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16">
           {numerosAcervo.map((n, i) => (
             <StaggerItem key={i}>
-              <div className="h-full p-6 rounded-xl bg-sv-surface/80 border border-sv-line hover:border-sv-text-3 transition-colors">
-                <div className="text-3xl sm:text-4xl font-bold gradient-text">{n.valor}</div>
-                <div className="text-sm font-semibold text-sv-text mt-2">{n.rotulo}</div>
-                <div className="text-xs text-sv-text-2 mt-2 leading-relaxed">{n.nota}</div>
+              {/* Bloco de número no padrão da folha técnica: valor em
+                  monoespaçada, e logo abaixo o rótulo em 11px descrevendo COM
+                  PRECISÃO o que o número é. O valor não leva peso acima de 500
+                  nem cor de acento — número grande e colorido é placar, e o
+                  argumento aqui é procedência, não tamanho. */}
+              <div className="h-full p-6 rounded bg-sv-surface/80 border border-sv-line">
+                <div className="font-mono text-[22px] font-medium leading-none text-sv-text">
+                  {n.valor}
+                </div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3 mt-2">
+                  {n.rotulo}
+                </div>
+                <div className="text-xs text-sv-text-2 mt-3 leading-relaxed">{n.nota}</div>
               </div>
             </StaggerItem>
           ))}
@@ -908,7 +906,7 @@ function PlataformaSection() {
               </p>
               <Button
                 size="lg"
-                className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold shrink-0 glow-emerald-strong transition-all"
+                className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold shrink-0 transition-all"
                 onClick={() => {
                   document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
                 }}
@@ -939,18 +937,17 @@ const galeriaCelulas = [
 
 function CelulasSection() {
   return (
-    <section id="celulas" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
-      <div className="absolute inset-0 grid-pattern" />
+    <section id="celulas" className="relative py-24 sm:py-32 overflow-hidden border-t border-sv-line">
+      <div className="absolute inset-0 bg-sv-bg" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
+          <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             Acervo
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Arquiteturas de{' '}
-            <span className="gradient-text">célula</span>
+            <span>célula</span>
           </h2>
           <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
             Seis das 23 arquiteturas do nosso acervo, usadas como base de
@@ -962,21 +959,26 @@ function CelulasSection() {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {galeriaCelulas.map((c, i) => (
             <StaggerItem key={i}>
-              <div className="group h-full rounded-xl overflow-hidden bg-sv-surface/80 border border-sv-line hover:border-sv-text-3 transition-all">
-                <div className="relative overflow-hidden bg-sv-surface">
-                  <img
-                    src={c.src}
-                    alt={`Arquitetura de célula robotizada: ${c.nome}`}
-                    loading="lazy"
-                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-sv-bg/60 to-transparent pointer-events-none" />
-                </div>
-                <div className="p-5">
-                  <div className="text-base font-semibold text-sv-text">{c.nome}</div>
+              {/* Moldura de 1px, raio 4px, sem sombra e sem véu por cima do
+                  render. O gradiente que escurecia o pé da imagem e o zoom no
+                  hover saíram: os dois mexiam no desenho para efeito, e o
+                  desenho é o conteúdo. O número da arquitetura entra em
+                  monoespaçada, como índice de prancha. */}
+              <figure className="h-full rounded border border-sv-line overflow-hidden bg-sv-surface/80">
+                <img
+                  src={c.src}
+                  alt={`Arquitetura de célula robotizada: ${c.nome}`}
+                  loading="lazy"
+                  className="w-full h-auto object-cover"
+                />
+                <figcaption className="p-5 border-t border-sv-line">
+                  <div className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3">
+                    {String(i + 1).padStart(2, '0')} · Arquitetura
+                  </div>
+                  <div className="text-base font-semibold text-sv-text mt-1.5">{c.nome}</div>
                   <div className="text-sm text-sv-text-2 mt-1.5 leading-relaxed">{c.desc}</div>
-                </div>
-              </div>
+                </figcaption>
+              </figure>
             </StaggerItem>
           ))}
         </StaggerContainer>
@@ -1073,17 +1075,16 @@ function ContactSection() {
   }
 
   return (
-    <section id="contato" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
-      <div className="absolute inset-0 grid-pattern" />
+    <section id="contato" className="relative py-24 sm:py-32 overflow-hidden border-t border-sv-line">
+      <div className="absolute inset-0 bg-sv-bg" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
+          <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
             Fale conosco
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Entre em <span className="gradient-text">Contato</span>
+            Entre em <span>Contato</span>
           </h2>
           <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
             Estamos prontos para ajudar sua empresa a dar o próximo passo na transformação digital.
@@ -1271,7 +1272,7 @@ function ContactSection() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full mt-6 bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold py-6 text-base glow-emerald-strong transition-all"
+                  className="w-full mt-6 bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold py-6 text-base transition-all"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
@@ -1318,7 +1319,6 @@ function ContactSection() {
 function Footer() {
   return (
     <footer className="relative border-t border-sv-line bg-sv-surface">
-      <div className="absolute inset-0 grid-pattern opacity-50" />
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
@@ -1327,7 +1327,7 @@ function Footer() {
               <img
                 src="/logo-solvvo.png"
                 alt="Solvvo"
-                className="h-8 w-auto object-contain drop-shadow-lg"
+                className="h-8 w-auto object-contain"
               />
             </a>
             <p className="text-sm text-sv-text-2 leading-relaxed max-w-xs">
@@ -1439,6 +1439,8 @@ function Footer() {
             </a>
           </div>
         </div>
+
+        <Carimbo />
       </div>
     </footer>
   )
