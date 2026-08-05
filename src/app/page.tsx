@@ -124,6 +124,24 @@ const CONTATO = {
   cidade: 'Caxias do Sul, RS - Brasil',
 }
 
+// ── SERVIÇOS — uma lista só, para o rodapé e para o formulário ─────────────
+// Antes existiam DUAS listas ("Scan 3D, Digital Twin, Manufatura Aditiva,
+// Automação Industrial"), uma no rodapé e outra no select de contato, ambas
+// vindas do template e nenhuma descrevendo o que a Solvvo vende. Duas listas
+// separadas é como elas divergiram sem ninguém notar.
+// Ordem: a que o cliente compra primeiro.
+const SERVICOS = [
+  'Pré-estudo de viabilidade',
+  'Estudo de aplicação completo',
+  'Especificação de célula',
+  'Engenharia reversa e Scan 3D',
+  'Dispositivos e gabaritos',
+] as const
+
+// O rodapé mostra os quatro principais; o formulário oferece todos mais "Outro".
+const SERVICOS_RODAPE = SERVICOS.slice(0, 4)
+const SERVICOS_FORMULARIO = [...SERVICOS, 'Outro']
+
 // ── REDES SOCIAIS ──────────────────────────────────────────────────────────
 // Antes os três ícones apontavam para href="#": clicar não fazia nada, o que
 // num site institucional passa a impressão de página abandonada. Agora só
@@ -383,29 +401,15 @@ function HeroSection() {
           </Button>
         </motion.div>
 
-        {/* Stats bar */}
-        <motion.div
-          className="mt-16 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-        >
-          {/* Números MEDIDOS no acervo (motor/base-master.db, 30/07/2026).
-              Nada de "500+ projetos / 200+ clientes": número que não se
-              sustenta numa pergunta de engenheiro derruba o argumento
-              inteiro — e o argumento aqui é justamente procedência. */}
-          {[
-            { value: '526', label: 'Projetos de referência medidos' },
-            { value: '6.928', label: 'Componentes de catálogo' },
-            { value: '23', label: 'Arquiteturas de célula' },
-            { value: '72', label: 'Posicionadores catalogados' },
-          ].map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold gradient-text">{stat.value}</div>
-              <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
+        {/* A barra de estatísticas que ficava aqui foi REMOVIDA em 05/08/2026.
+            Eram contagens do banco técnico interno (526 projetos de
+            referência, 6.928 componentes, 23 arquiteturas, 72 posicionadores)
+            apresentadas como currículo, logo abaixo dos CTAs. Um comprador lê
+            "526 projetos" como "526 clientes atendidos" — e a empresa nunca
+            afirmou isso. Numa página cujo argumento central é procedência, um
+            número que se lê errado derruba o argumento inteiro.
+            Os números de acervo que sobreviveram estão na seção Plataforma,
+            sob rótulo explícito de acervo técnico interno. */}
       </div>
 
       {/* Scroll indicator */}
@@ -553,7 +557,7 @@ function AboutSection() {
               <div className="relative rounded-2xl overflow-hidden glow-emerald">
                 <img
                   src="/about-img.png"
-                  alt="Engenheiro analisando modelo digital twin"
+                  alt="Engenheiro com óculos de proteção analisando um modelo tridimensional em tablet, no chão de fábrica"
                   className="w-full h-auto object-cover rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/30 to-transparent" />
@@ -576,16 +580,26 @@ function AboutSection() {
                   A <span className="text-emerald-400 font-medium">Solvvo Solutions</span> faz o{' '}
                   <span className="text-emerald-400 font-medium">estudo de aplicação</span> de
                   células robotizadas e sistemas de automação — soldagem, manipulação,
-                  paletização e movimentação de materiais. Não vendemos equipamento e não
-                  representamos fabricante: nosso produto é a engenharia que diz se vale
-                  robotizar, com qual arranjo e em quanto tempo o investimento volta.
+                  paletização e movimentação de materiais. Não representamos fabricante e
+                  não vendemos equipamento de automação: nosso produto é a engenharia que
+                  diz se vale robotizar, com qual arranjo e em quanto tempo o investimento
+                  volta.
                 </p>
                 <p>
-                  Essa independência é o ponto. Quem estuda a aplicação sem ter robô no
-                  estoque não tem motivo para superdimensionar. O estudo serve à decisão
-                  do cliente, não ao catálogo de ninguém — e é o mesmo documento que ele
-                  usa para cotar com qualquer integrador e comparar propostas no mesmo
-                  critério.
+                  Essa independência é o ponto, e ela é específica: não vendemos nem
+                  representamos <span className="text-emerald-400 font-medium">robô,
+                  posicionador ou periférico de automação</span>. Quem estuda a
+                  aplicação sem ter robô no estoque não tem motivo para
+                  superdimensionar. O estudo serve à decisão do cliente, não ao catálogo
+                  de ninguém — e é o mesmo documento que ele usa para cotar com qualquer
+                  integrador e comparar propostas no mesmo critério.
+                </p>
+                <p>
+                  Berço, gabarito e dispositivo de fixação são outra coisa: são
+                  projetados sob medida para a peça do cliente, não escolhidos num
+                  catálogo de fabricante. Fabricá-los não cria conflito nenhum com a
+                  independência acima — não há marca a favorecer num dispositivo que só
+                  existe para aquela peça.
                 </p>
                 <p>
                   Trabalhamos com um princípio simples e incomum no setor:{' '}
@@ -606,7 +620,7 @@ function AboutSection() {
                 {[
                   { icon: Target, label: 'Missão', text: 'Tornar a decisão de robotizar uma conta, não uma aposta' },
                   { icon: Eye, label: 'Método', text: 'Cada número rastreável até catálogo, norma ou cálculo' },
-                  { icon: Shield, label: 'Independência', text: 'Não vendemos equipamento nem representamos fabricante' },
+                  { icon: Shield, label: 'Independência', text: 'Não vendemos nem representamos robô, posicionador ou periférico' },
                 ].map((v, i) => {
                   const Icon = v.icon
                   return (
@@ -760,8 +774,17 @@ const etapasPlataforma = [
 
 // Números MEDIDOS no acervo em 30/07/2026 (motor/base-master.db).
 // Cada um é conferível — é este o argumento da plataforma.
+//
+// São CONTAGENS DE BANCO TÉCNICO INTERNO, nunca resultado comercial. É por isso
+// que o bloco tem título e nota dizendo isso com todas as letras: sem o rótulo,
+// "6.928 componentes" é lido como volume de trabalho entregue a cliente.
+//
+// O antigo "526 projetos de referência" saiu daqui em 05/08/2026. Era o mais
+// fácil de ler errado ("526 clientes atendidos") e entrava em contradição
+// direta com os números do herói, que falam de 31 projetos em STEP no acervo.
+// Dois inventários do mesmo acervo com ordens de grandeza diferentes na mesma
+// página é o tipo de coisa que o visitante encontra antes de nós.
 const numerosAcervo = [
-  { valor: '526', rotulo: 'projetos de referência', nota: 'peças medidas: 274 de soldagem e 64 de movimentação' },
   { valor: '6.928', rotulo: 'componentes de catálogo', nota: 'SKUs com fabricante, modelo e procedência' },
   { valor: '23', rotulo: 'arquiteturas de célula', nota: 'validadas e prontas para dimensionar' },
   { valor: '72', rotulo: 'posicionadores', nota: 'lidos de catálogo de fabricante, payload por eixo' },
@@ -822,8 +845,19 @@ function PlataformaSection() {
           </div>
         </FadeInSection>
 
-        {/* Números do acervo */}
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+        {/* Números do acervo — com rótulo explícito de acervo técnico interno.
+            Sem este cabeçalho o bloco vira placar de vaidade, que é
+            exatamente o que a remoção da barra do herói corrigiu. */}
+        <FadeInSection className="mb-6">
+          <h3 className="text-lg font-bold text-white">Nosso acervo técnico</h3>
+          <p className="text-sm text-gray-500 mt-1.5 max-w-2xl leading-relaxed">
+            O que a plataforma consulta para dimensionar. São contagens do nosso
+            banco técnico interno — não são clientes atendidos nem projetos
+            entregues.
+          </p>
+        </FadeInSection>
+
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16">
           {numerosAcervo.map((n, i) => (
             <StaggerItem key={i}>
               <div className="h-full p-6 rounded-xl bg-[#111111]/80 border border-[rgba(16,185,129,0.1)] hover:border-emerald-500/30 transition-colors">
@@ -912,8 +946,9 @@ function CelulasSection() {
             <span className="gradient-text">célula</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Seis das 23 arquiteturas que a plataforma dimensiona. A escolha não é estética:
-            ela sai da peça, do processo e do alcance exigido.
+            Seis das 23 arquiteturas do nosso acervo, usadas como base de
+            dimensionamento. A escolha não é estética: ela sai da peça, do
+            processo e do alcance exigido.
           </p>
         </FadeInSection>
 
@@ -1193,22 +1228,19 @@ function ContactSection() {
                       <SelectTrigger className="w-full bg-[#0a0a0a] border-[rgba(16,185,129,0.1)] text-white focus:ring-emerald-500/20 focus:ring-offset-0 [&_svg]:text-gray-500">
                         <SelectValue placeholder="Selecione um serviço" />
                       </SelectTrigger>
+                      {/* O `value` é o texto que vai LITERAL para a mensagem do
+                          WhatsApp ("Interesse: ..."). Antes eram slugs, e quem
+                          recebia lia "Interesse: manufatura-aditiva". */}
                       <SelectContent className="bg-[#111111] border-[rgba(16,185,129,0.15)]">
-                        <SelectItem value="scan3d" className="text-gray-300 focus:text-white focus:bg-emerald-500/10">
-                          Scan 3D
-                        </SelectItem>
-                        <SelectItem value="digital-twin" className="text-gray-300 focus:text-white focus:bg-emerald-500/10">
-                          Digital Twin
-                        </SelectItem>
-                        <SelectItem value="manufatura-aditiva" className="text-gray-300 focus:text-white focus:bg-emerald-500/10">
-                          Manufatura Aditiva
-                        </SelectItem>
-                        <SelectItem value="automacao" className="text-gray-300 focus:text-white focus:bg-emerald-500/10">
-                          Automação Industrial
-                        </SelectItem>
-                        <SelectItem value="outro" className="text-gray-300 focus:text-white focus:bg-emerald-500/10">
-                          Outro
-                        </SelectItem>
+                        {SERVICOS_FORMULARIO.map((s) => (
+                          <SelectItem
+                            key={s}
+                            value={s}
+                            className="text-gray-300 focus:text-white focus:bg-emerald-500/10"
+                          >
+                            {s}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -1321,7 +1353,7 @@ function Footer() {
               Serviços
             </h4>
             <ul className="space-y-2.5">
-              {['Scan 3D', 'Digital Twin', 'Manufatura Aditiva', 'Automação Industrial'].map((link, i) => (
+              {SERVICOS_RODAPE.map((link, i) => (
                 <li key={i}>
                   <a
                     href="#servicos"
@@ -1344,7 +1376,7 @@ function Footer() {
                 { label: 'Sobre Nós', href: '#sobre' },
                 { label: 'Aplicações', href: '#cases' },
                 { label: 'Contato', href: '#contato' },
-                { label: 'Blog', href: '#' },
+                // "Blog" saiu em 05/08/2026: apontava para "#" e não existe blog.
               ].map((link, i) => (
                 <li key={i}>
                   <a
@@ -1386,12 +1418,17 @@ function Footer() {
           <p className="text-xs text-gray-600">
             © {new Date().getFullYear()} Solvvo. Todos os direitos reservados.
           </p>
+          {/* "Termos de Uso" saiu em 05/08/2026: apontava para "#" e não há
+              plataforma, login nem transação que exijam termos. Página vazia
+              só para tapar link é pior que link nenhum. A Política de
+              Privacidade, ao contrário, é obrigação de LGPD — o formulário
+              coleta dado pessoal — e agora tem rota de verdade. */}
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-gray-600 hover:text-emerald-400 transition-colors">
+            <a
+              href="/politica-de-privacidade"
+              className="text-xs text-gray-600 hover:text-emerald-400 transition-colors"
+            >
               Política de Privacidade
-            </a>
-            <a href="#" className="text-xs text-gray-600 hover:text-emerald-400 transition-colors">
-              Termos de Uso
             </a>
           </div>
         </div>

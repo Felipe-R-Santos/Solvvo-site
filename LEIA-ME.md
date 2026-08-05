@@ -43,8 +43,10 @@ Abra com o Bloco de Notas ou o VS Code e procure pelo texto que quer trocar.
 | Frase grande da abertura | `src/app/page.tsx`, procure por `deixa de levar semanas` |
 | Telefone, e-mail, WhatsApp | `src/app/page.tsx`, procure por `const CONTATO` |
 | Links de redes sociais | `src/app/page.tsx`, procure por `const REDES` |
-| Os 4 números do topo | `src/app/page.tsx`, procure por `Projetos de referência medidos` |
+| Os números do acervo | `src/app/page.tsx`, procure por `numerosAcervo` |
 | As 4 soluções | `src/app/page.tsx`, procure por `const services` |
+| A lista de serviços (rodapé e formulário) | `src/app/page.tsx`, procure por `const SERVICOS` |
+| Política de Privacidade | `src/app/politica-de-privacidade/page.tsx` |
 | As 8 etapas da plataforma | `src/app/page.tsx`, procure por `etapasPlataforma` |
 | "Para quem é" (3 perfis) | `src/app/page.tsx`, procure por `Integradoras de robótica` |
 | Aplicações que atendemos | `src/app/page.tsx`, procure por `const aplicacoes` |
@@ -92,10 +94,15 @@ aquelas são layouts gerados para **clientes específicos**.
 
 ## Decisões que valem manter
 
-1. **Todo número no site tem fonte.** Os 526 projetos, 6.928 componentes,
-   23 arquiteturas e 72 posicionadores foram medidos no acervo do CRM. Se um
-   dia entrar um número novo, ele precisa ter de onde veio — é o argumento
-   central do site, e ele cai inteiro se um número não se sustentar.
+1. **Todo número no site tem fonte.** Os 6.928 componentes, 23 arquiteturas e
+   72 posicionadores foram medidos no acervo do CRM. Se um dia entrar um número
+   novo, ele precisa ter de onde veio — é o argumento central do site, e ele cai
+   inteiro se um número não se sustentar.
+
+   **Ter fonte não basta: o número também precisa ser lido do jeito certo.** Em
+   05/08/2026 saiu do site o "526 projetos de referência", que era medido e
+   correto, mas que um comprador lê como "526 clientes atendidos". Número de
+   acervo técnico só aparece sob rótulo que diga que é acervo técnico.
 
 2. **A Solvvo estuda a aplicação; não integra e não vende equipamento.**
    Essa independência é argumento de venda: quem estuda sem ter robô em

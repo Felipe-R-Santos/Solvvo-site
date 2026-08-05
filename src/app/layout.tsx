@@ -59,7 +59,11 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: "Solvvo Solutions",
-    images: [{ url: "/celulas/sw-cc1.webp", width: 1200, height: 900,
+    // A altura declarada era 900 e o arquivo tem 675. Declaração errada faz o
+    // WhatsApp e o LinkedIn reservarem uma área que a imagem não preenche, e o
+    // card sai com faixa vazia ou recorte torto — justamente nos dois canais
+    // por onde a divulgação acontece. Medido: 1200 x 675.
+    images: [{ url: "/celulas/sw-cc1.webp", width: 1200, height: 675,
                alt: "Célula robotizada de soldagem — arquitetura compacta" }],
   },
   twitter: {
