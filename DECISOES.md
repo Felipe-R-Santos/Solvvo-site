@@ -142,6 +142,42 @@ natureza das classes CSS sem consumidor: remoção de código morto, um commit s
 
 ---
 
+## Imagem da seção Sobre — `public/about-img.png`
+
+**Decisão:** substituir por uma das imagens reais de `public/celulas/`, **na
+Fase 3**, junto com o item 3.6 (moldura de 1px e legenda monoespaçada).
+
+**Por quê:** a atual é stock genérico de IA — holograma azul neon sobre um
+tablet. É o oposto da direção de folha de desenho técnico, e não faz sentido
+emoldurar ficção científica. Trabalho próprio vale mais que qualquer imagem
+genérica. **Não buscar nem gerar imagem nova:** as de `public/celulas/` são do
+acervo e já estão no repositório.
+
+---
+
+## Política de Privacidade — campos pendentes
+
+**Decisão:** a página **não vai ao ar** sem os quatro campos abaixo. Ela já está
+linkada no rodapé, então um `git push` a publica — atenção antes de subir.
+
+Pendente de Felipe:
+
+- [ ] razão social completa
+- [ ] CNPJ
+- [ ] endereço completo (hoje só consta a cidade)
+- [ ] prazo de retenção das conversas e dos e-mails
+
+Resolvido:
+
+- [x] **encarregado de dados (DPO): o próprio Felipe**, sem estrutura separada.
+      Falta publicar o contato dele na seção de direitos.
+
+**Atualizar na Fase 2:** quando o botão de tema entrar, ele grava a preferência
+em `localStorage`. A seção "Cookies e armazenamento local" precisa deixar de
+dizer que o site não armazena nada.
+
+---
+
 ## Ordem de execução
 
 ```
