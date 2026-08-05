@@ -169,7 +169,7 @@ function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-[rgba(16,185,129,0.1)] shadow-lg shadow-black/20'
+          ? 'bg-sv-bg/90 backdrop-blur-xl border-b border-sv-line shadow-lg'
           : 'bg-transparent'
       }`}
     >
@@ -189,7 +189,7 @@ function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-emerald-400 rounded-lg hover:bg-white/5 transition-all duration-200"
+              className="px-4 py-2 text-sm font-medium text-sv-text-2 hover:text-sv-text rounded-lg hover:bg-sv-surface transition-all duration-200"
             >
               {link.label}
             </a>
@@ -199,7 +199,7 @@ function Navbar() {
             onClick={() => {
               document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
             }}
-            className="ml-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold"
+            className="ml-3 bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold"
           >
             Orçamento
             <ArrowRight className="w-4 h-4 ml-1" />
@@ -213,12 +213,12 @@ function Navbar() {
           <ThemeToggle />
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-gray-300 hover:text-white hover:bg-white/5">
+            <Button variant="ghost" size="icon" className="text-sv-text-2 hover:text-sv-text hover:bg-sv-surface">
               <Menu className="w-6 h-6" />
               <span className="sr-only">Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="bg-[#0a0a0a] border-[rgba(16,185,129,0.15)] w-80">
+          <SheetContent side="right" className="bg-sv-bg border-sv-line w-80">
             <SheetHeader className="pt-8 pb-4">
               <SheetTitle className="text-left flex items-center gap-2">
                 <img
@@ -233,16 +233,16 @@ function Navbar() {
                 <SheetClose key={link.href} asChild>
                   <a
                     href={link.href}
-                    className="px-4 py-3 text-base font-medium text-gray-300 hover:text-emerald-400 rounded-lg hover:bg-white/5 transition-all"
+                    className="px-4 py-3 text-base font-medium text-sv-text-2 hover:text-sv-text rounded-lg hover:bg-sv-surface transition-all"
                   >
                     {link.label}
                   </a>
                 </SheetClose>
               ))}
-              <Separator className="my-3 bg-[rgba(16,185,129,0.1)]" />
+              <Separator className="my-3 bg-sv-line" />
               <SheetClose asChild>
                 <Button
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold w-full"
+                  className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold w-full"
                   onClick={() => {
                     setTimeout(() => {
                       document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
@@ -286,7 +286,7 @@ function HeroSection() {
         />
         {/* Véu mais leve no topo (deixa a célula aparecer) e sólido embaixo,
             onde ficam a headline e os botões. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/55 via-[#0a0a0a]/78 to-[#0a0a0a]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-sv-bg/55 via-sv-bg/78 to-sv-bg" />
         <div className="absolute inset-0 grid-pattern" />
       </div>
 
@@ -295,7 +295,7 @@ function HeroSection() {
         {[...Array(5)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-emerald-400 rounded-full opacity-30"
+            className="absolute w-1 h-1 bg-sv-text-3 rounded-full opacity-30"
             // `left`/`top` em MotionStyle: o tipo do framer-motion 12 não
             // aceita as duas junto com `animate`, então a posição vai por
             // variável CSS, que é tipada como string e não conflita.
@@ -335,7 +335,7 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
         >
-          <Badge className="mb-6 px-4 py-1.5 text-sm font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/15 transition-colors">
+          <Badge className="mb-6 px-4 py-1.5 text-sm font-medium bg-sv-surface text-sv-text-2 border-sv-line hover:bg-sv-surface transition-colors">
             <Zap className="w-3.5 h-3.5 mr-1.5" />
             Em breve — plataforma de simulação automática
           </Badge>
@@ -354,14 +354,14 @@ function HeroSection() {
         </motion.h1>
 
         <motion.p
-          className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-lg sm:text-xl text-sv-text-2 max-w-2xl mx-auto mb-10 leading-relaxed"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
         >
           Plataforma de simulação automática para quem faz estudo de aplicação toda
-          semana: <span className="text-gray-300">integradoras</span> e{' '}
-          <span className="text-gray-300">indústrias que refazem layout o tempo todo</span>.
+          semana: <span className="text-sv-text-2">integradoras</span> e{' '}
+          <span className="text-sv-text-2">indústrias que refazem layout o tempo todo</span>.
           Robô, posicionador, estrutura, tempo de ciclo, ROI e payback — com a fonte de
           cada número.
         </motion.p>
@@ -372,11 +372,11 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: 'easeOut' }}
         >
-          <blockquote className="relative border-l-2 border-emerald-500/40 pl-4 sm:pl-6">
-            <p className="text-base sm:text-lg italic text-emerald-300/80 leading-relaxed">
+          <blockquote className="relative border-l-2 border-sv-line pl-4 sm:pl-6">
+            <p className="text-base sm:text-lg italic text-sv-text-2 leading-relaxed">
               "Se o número não tem fonte, não é estudo — é chute com planilha bonita."
             </p>
-            <p className="text-sm text-gray-500 mt-2">O princípio de engenharia da Solvvo Solutions</p>
+            <p className="text-sm text-sv-text-3 mt-2">O princípio de engenharia da Solvvo Solutions</p>
           </blockquote>
         </motion.div>
 
@@ -388,7 +388,7 @@ function HeroSection() {
         >
           <Button
             size="lg"
-            className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-base px-8 py-6 h-auto glow-emerald-strong hover:glow-emerald-strong transition-all"
+            className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold text-base px-8 py-6 h-auto glow-emerald-strong hover:glow-emerald-strong transition-all"
             onClick={() => {
               document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
             }}
@@ -399,7 +399,7 @@ function HeroSection() {
           <Button
             size="lg"
             variant="outline"
-            className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300 font-semibold text-base px-8 py-6 h-auto transition-all"
+            className="border-sv-line text-sv-text-2 hover:bg-sv-surface hover:text-sv-text font-semibold text-base px-8 py-6 h-auto transition-all"
             onClick={() => {
               document.getElementById('plataforma')?.scrollIntoView({ behavior: 'smooth' })
             }}
@@ -425,8 +425,8 @@ function HeroSection() {
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <span className="text-xs text-gray-500 uppercase tracking-widest">Scroll</span>
-        <ChevronUp className="w-4 h-4 text-gray-500 rotate-180" />
+        <span className="text-xs text-sv-text-3 uppercase tracking-widest">Scroll</span>
+        <ChevronUp className="w-4 h-4 text-sv-text-3 rotate-180" />
       </motion.div>
     </section>
   )
@@ -478,19 +478,19 @@ function ServicesSection() {
           className="w-full h-full object-cover opacity-10"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/95 to-[#0a0a0a]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/95 to-sv-bg" />
         <div className="absolute inset-0 grid-pattern" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
             O que fazemos
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Nossas <span className="gradient-text">Soluções</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
             Oferecemos soluções completas em manufatura digital, combinando tecnologia de ponta com expertise industrial para transformar sua operação.
           </p>
         </FadeInSection>
@@ -500,23 +500,23 @@ function ServicesSection() {
             const Icon = service.icon
             return (
               <StaggerItem key={i}>
-                <Card className="group relative bg-[#111111]/80 border-[rgba(16,185,129,0.1)] hover:border-emerald-500/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/5 overflow-hidden">
+                <Card className="group relative bg-sv-surface/80 border-sv-line hover:border-sv-text-3 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl overflow-hidden">
                   {/* Subtle gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/5 group-hover:to-transparent transition-all duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-transparent group-hover:from-sv-surface group-hover:to-transparent transition-all duration-500" />
                   <CardHeader className="relative pb-2">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:bg-emerald-500/15 group-hover:border-emerald-500/30 transition-all group-hover:scale-110 duration-300 shrink-0">
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400" />
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-sv-surface border border-sv-line flex items-center justify-center group-hover:bg-sv-surface group-hover:border-sv-text-3 transition-all group-hover:scale-110 duration-300 shrink-0">
+                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-sv-text-2" />
                       </div>
                       <div>
-                        <CardTitle className="text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                        <CardTitle className="text-xl sm:text-2xl font-bold text-sv-text group-hover:text-sv-text transition-colors">
                           {service.title}
                         </CardTitle>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent className="relative">
-                    <p className="text-gray-400 leading-relaxed mb-4">
+                    <p className="text-sv-text-2 leading-relaxed mb-4">
                       {service.description}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
@@ -524,7 +524,7 @@ function ServicesSection() {
                         <Badge
                           key={j}
                           variant="outline"
-                          className="text-xs border-[rgba(16,185,129,0.15)] text-emerald-400/80 bg-emerald-500/5"
+                          className="text-xs border-sv-line text-sv-text-3 bg-sv-surface"
                         >
                           {f}
                         </Badge>
@@ -532,7 +532,7 @@ function ServicesSection() {
                     </div>
                     <a
                       href="#contato"
-                      className="inline-flex items-center gap-1 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors group/link"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-sv-text-2 hover:text-sv-text transition-colors group/link"
                     >
                       Saiba Mais
                       <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -553,7 +553,7 @@ function ServicesSection() {
 function AboutSection() {
   return (
     <section id="sobre" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/98 to-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
       <div className="absolute inset-0 grid-pattern" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -567,7 +567,7 @@ function AboutSection() {
                   alt="Engenheiro com óculos de proteção analisando um modelo tridimensional em tablet, no chão de fábrica"
                   className="w-full h-auto object-cover rounded-2xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-sv-bg/30 to-transparent" />
               </div>
             </div>
           </FadeInSection>
@@ -575,17 +575,17 @@ function AboutSection() {
           {/* Text */}
           <FadeInSection delay={0.2}>
             <div>
-              <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+              <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
                 Sobre nós
               </Badge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6">
                 Sobre a{' '}
                 <span className="gradient-text">Solvvo</span>
               </h2>
-              <div className="space-y-4 text-gray-400 leading-relaxed">
+              <div className="space-y-4 text-sv-text-2 leading-relaxed">
                 <p>
-                  A <span className="text-emerald-400 font-medium">Solvvo Solutions</span> faz o{' '}
-                  <span className="text-emerald-400 font-medium">estudo de aplicação</span> de
+                  A <span className="text-sv-text font-medium">Solvvo Solutions</span> faz o{' '}
+                  <span className="text-sv-text font-medium">estudo de aplicação</span> de
                   células robotizadas e sistemas de automação — soldagem, manipulação,
                   paletização e movimentação de materiais. Não representamos fabricante e
                   não vendemos equipamento de automação: nosso produto é a engenharia que
@@ -594,7 +594,7 @@ function AboutSection() {
                 </p>
                 <p>
                   Essa independência é o ponto, e ela é específica: não vendemos nem
-                  representamos <span className="text-emerald-400 font-medium">robô,
+                  representamos <span className="text-sv-text font-medium">robô,
                   posicionador ou periférico de automação</span>. Quem estuda a
                   aplicação sem ter robô no estoque não tem motivo para
                   superdimensionar. O estudo serve à decisão do cliente, não ao catálogo
@@ -610,7 +610,7 @@ function AboutSection() {
                 </p>
                 <p>
                   Trabalhamos com um princípio simples e incomum no setor:{' '}
-                  <span className="text-emerald-400 font-medium">todo número tem de ter fonte</span>.
+                  <span className="text-sv-text font-medium">todo número tem de ter fonte</span>.
                   Payload e alcance saem do catálogo do fabricante. Estrutura sai de cálculo
                   declarado, com fator de segurança à vista. Ciclo sai do processo medido.
                   Nada de estimativa que não se possa auditar.
@@ -631,11 +631,11 @@ function AboutSection() {
                 ].map((v, i) => {
                   const Icon = v.icon
                   return (
-                    <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-[#111111]/50 border border-[rgba(16,185,129,0.08)]">
-                      <Icon className="w-5 h-5 text-emerald-400 mt-0.5 shrink-0" />
+                    <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-sv-surface/50 border border-sv-line">
+                      <Icon className="w-5 h-5 text-sv-text-2 mt-0.5 shrink-0" />
                       <div>
-                        <div className="text-sm font-semibold text-white">{v.label}</div>
-                        <div className="text-xs text-gray-500 mt-0.5">{v.text}</div>
+                        <div className="text-sm font-semibold text-sv-text">{v.label}</div>
+                        <div className="text-xs text-sv-text-3 mt-0.5">{v.text}</div>
                       </div>
                     </div>
                   )
@@ -701,19 +701,19 @@ const aplicacoes = [
 function AplicacoesSection() {
   return (
     <section id="cases" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/98 to-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
       <div className="absolute inset-0 grid-pattern" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
             Onde atuamos
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Aplicações que{' '}
             <span className="gradient-text">atendemos</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
             Cada aplicação tem a sua pergunta difícil. O estudo existe para respondê-la
             antes de o equipamento ser comprado.
           </p>
@@ -724,29 +724,29 @@ function AplicacoesSection() {
             const Icon = ap.icon
             return (
               <StaggerItem key={i}>
-                <Card className="group h-full bg-[#111111]/80 border-[rgba(16,185,129,0.1)] hover:border-emerald-500/30 transition-all duration-500 hover:shadow-xl hover:shadow-emerald-500/5 overflow-hidden">
+                <Card className="group h-full bg-sv-surface/80 border-sv-line hover:border-sv-text-3 transition-all duration-500 hover:shadow-xl overflow-hidden">
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:bg-emerald-500/15 transition-colors">
-                        <Icon className="w-5 h-5 text-emerald-400" />
+                      <div className="w-10 h-10 rounded-lg bg-sv-surface border border-sv-line flex items-center justify-center group-hover:bg-sv-surface transition-colors">
+                        <Icon className="w-5 h-5 text-sv-text-2" />
                       </div>
-                      <Badge variant="outline" className="text-xs border-[rgba(16,185,129,0.15)] text-emerald-400/80 bg-emerald-500/5">
+                      <Badge variant="outline" className="text-xs border-sv-line text-sv-text-3 bg-sv-surface">
                         {ap.setor}
                       </Badge>
                     </div>
-                    <CardTitle className="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors leading-snug">
+                    <CardTitle className="text-lg font-bold text-sv-text group-hover:text-sv-text transition-colors leading-snug">
                       {ap.titulo}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex flex-col flex-1">
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">
+                    <p className="text-sv-text-2 text-sm leading-relaxed mb-6 flex-1">
                       {ap.descricao}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {ap.entregas.map((e, j) => (
                         <span
                           key={j}
-                          className="text-xs px-2.5 py-1 rounded-md bg-emerald-500/5 border border-[rgba(16,185,129,0.15)] text-emerald-400/90"
+                          className="text-xs px-2.5 py-1 rounded-md bg-sv-surface border border-sv-line text-sv-text-3"
                         >
                           {e}
                         </span>
@@ -800,19 +800,19 @@ const numerosAcervo = [
 function PlataformaSection() {
   return (
     <section id="plataforma" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/98 to-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
       <div className="absolute inset-0 grid-pattern" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
             Em breve · por assinatura
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Simulação automática para{' '}
             <span className="gradient-text">estudos de aplicação</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sv-text-2 text-lg max-w-3xl mx-auto leading-relaxed">
             Hoje o estudo de aplicação é artesanal: semanas de planilha, cada engenheiro
             com o seu método e um resultado que ninguém consegue auditar. Quem faz um
             estudo por ano convive com isso. Quem faz um por semana está perdendo
@@ -843,10 +843,10 @@ function PlataformaSection() {
             ].map((p, i) => (
               <div
                 key={i}
-                className="p-6 rounded-xl bg-[#111111]/60 border border-[rgba(16,185,129,0.1)]"
+                className="p-6 rounded-xl bg-sv-surface/60 border border-sv-line"
               >
-                <div className="text-sm font-semibold text-emerald-400 mb-2">{p.perfil}</div>
-                <div className="text-sm text-gray-500 leading-relaxed">{p.dor}</div>
+                <div className="text-sm font-semibold text-sv-text-2 mb-2">{p.perfil}</div>
+                <div className="text-sm text-sv-text-3 leading-relaxed">{p.dor}</div>
               </div>
             ))}
           </div>
@@ -856,8 +856,8 @@ function PlataformaSection() {
             Sem este cabeçalho o bloco vira placar de vaidade, que é
             exatamente o que a remoção da barra do herói corrigiu. */}
         <FadeInSection className="mb-6">
-          <h3 className="text-lg font-bold text-white">Nosso acervo técnico</h3>
-          <p className="text-sm text-gray-500 mt-1.5 max-w-2xl leading-relaxed">
+          <h3 className="text-lg font-bold text-sv-text">Nosso acervo técnico</h3>
+          <p className="text-sm text-sv-text-3 mt-1.5 max-w-2xl leading-relaxed">
             O que a plataforma consulta para dimensionar. São contagens do nosso
             banco técnico interno — não são clientes atendidos nem projetos
             entregues.
@@ -867,10 +867,10 @@ function PlataformaSection() {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16">
           {numerosAcervo.map((n, i) => (
             <StaggerItem key={i}>
-              <div className="h-full p-6 rounded-xl bg-[#111111]/80 border border-[rgba(16,185,129,0.1)] hover:border-emerald-500/30 transition-colors">
+              <div className="h-full p-6 rounded-xl bg-sv-surface/80 border border-sv-line hover:border-sv-text-3 transition-colors">
                 <div className="text-3xl sm:text-4xl font-bold gradient-text">{n.valor}</div>
-                <div className="text-sm font-semibold text-white mt-2">{n.rotulo}</div>
-                <div className="text-xs text-gray-500 mt-2 leading-relaxed">{n.nota}</div>
+                <div className="text-sm font-semibold text-sv-text mt-2">{n.rotulo}</div>
+                <div className="text-xs text-sv-text-3 mt-2 leading-relaxed">{n.nota}</div>
               </div>
             </StaggerItem>
           ))}
@@ -878,37 +878,37 @@ function PlataformaSection() {
 
         {/* O que ela faz */}
         <FadeInSection>
-          <div className="rounded-2xl bg-[#111111]/60 border border-[rgba(16,185,129,0.08)] p-6 sm:p-10">
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+          <div className="rounded-2xl bg-sv-surface/60 border border-sv-line p-6 sm:p-10">
+            <h3 className="text-xl sm:text-2xl font-bold text-sv-text mb-2">
               Do desenho da peça ao payback, numa passada
             </h3>
-            <p className="text-sm text-gray-500 mb-8">
+            <p className="text-sm text-sv-text-3 mb-8">
               As oito etapas que a plataforma executa — e que hoje viram semanas de planilha.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {etapasPlataforma.map((e, i) => (
-                <div key={i} className="relative pl-4 border-l-2 border-emerald-500/30">
-                  <div className="text-xs font-mono text-emerald-500/70 mb-1">
+                <div key={i} className="relative pl-4 border-l-2 border-sv-line">
+                  <div className="text-xs font-mono text-sv-text-3 mb-1">
                     {String(i + 1).padStart(2, '0')}
                   </div>
-                  <div className="text-sm font-semibold text-white">{e.titulo}</div>
-                  <div className="text-xs text-gray-500 mt-1 leading-relaxed">{e.texto}</div>
+                  <div className="text-sm font-semibold text-sv-text">{e.titulo}</div>
+                  <div className="text-xs text-sv-text-3 mt-1 leading-relaxed">{e.texto}</div>
                 </div>
               ))}
             </div>
 
-            <Separator className="bg-[rgba(16,185,129,0.1)] my-8" />
+            <Separator className="bg-sv-line my-8" />
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-              <p className="text-sm text-gray-400 max-w-xl leading-relaxed">
+              <p className="text-sm text-sv-text-2 max-w-xl leading-relaxed">
                 A plataforma ainda não está no ar e será oferecida por{' '}
-                <span className="text-gray-300">assinatura mensal</span>. Estamos validando
+                <span className="text-sv-text-2">assinatura mensal</span>. Estamos validando
                 com caso real — peça real, ciclo real, payback real. Quem entrar na lista
                 de espera testa antes e ajuda a definir o que entra na primeira versão.
               </p>
               <Button
                 size="lg"
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shrink-0 glow-emerald-strong transition-all"
+                className="bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold shrink-0 glow-emerald-strong transition-all"
                 onClick={() => {
                   document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
                 }}
@@ -940,19 +940,19 @@ const galeriaCelulas = [
 function CelulasSection() {
   return (
     <section id="celulas" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/98 to-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
       <div className="absolute inset-0 grid-pattern" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
             Acervo
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Arquiteturas de{' '}
             <span className="gradient-text">célula</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
             Seis das 23 arquiteturas do nosso acervo, usadas como base de
             dimensionamento. A escolha não é estética: ela sai da peça, do
             processo e do alcance exigido.
@@ -962,19 +962,19 @@ function CelulasSection() {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {galeriaCelulas.map((c, i) => (
             <StaggerItem key={i}>
-              <div className="group h-full rounded-xl overflow-hidden bg-[#111111]/80 border border-[rgba(16,185,129,0.1)] hover:border-emerald-500/30 transition-all">
-                <div className="relative overflow-hidden bg-[#161817]">
+              <div className="group h-full rounded-xl overflow-hidden bg-sv-surface/80 border border-sv-line hover:border-sv-text-3 transition-all">
+                <div className="relative overflow-hidden bg-sv-surface">
                   <img
                     src={c.src}
                     alt={`Arquitetura de célula robotizada: ${c.nome}`}
                     loading="lazy"
                     className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-sv-bg/60 to-transparent pointer-events-none" />
                 </div>
                 <div className="p-5">
-                  <div className="text-base font-semibold text-white">{c.nome}</div>
-                  <div className="text-sm text-gray-500 mt-1.5 leading-relaxed">{c.desc}</div>
+                  <div className="text-base font-semibold text-sv-text">{c.nome}</div>
+                  <div className="text-sm text-sv-text-3 mt-1.5 leading-relaxed">{c.desc}</div>
                 </div>
               </div>
             </StaggerItem>
@@ -982,7 +982,7 @@ function CelulasSection() {
         </StaggerContainer>
 
         <FadeInSection className="mt-10">
-          <p className="text-xs text-gray-600 text-center max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xs text-sv-text-3 text-center max-w-2xl mx-auto leading-relaxed">
             Imagens geradas do nosso acervo de células padrão. Geometria de referência —
             nenhum projeto, peça ou dado de cliente é exibido.
           </p>
@@ -1074,18 +1074,18 @@ function ContactSection() {
 
   return (
     <section id="contato" className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/98 to-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-sv-bg via-sv-bg/98 to-sv-bg" />
       <div className="absolute inset-0 grid-pattern" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInSection className="text-center mb-16">
-          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+          <Badge className="mb-4 px-3 py-1 text-xs font-medium bg-sv-surface text-sv-text-2 border-sv-line">
             Fale conosco
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Entre em <span className="gradient-text">Contato</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-sv-text-2 text-lg max-w-2xl mx-auto">
             Estamos prontos para ajudar sua empresa a dar o próximo passo na transformação digital.
           </p>
         </FadeInSection>
@@ -1095,61 +1095,61 @@ function ContactSection() {
           <FadeInSection className="lg:col-span-2" delay={0.1}>
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-white mb-4">Informações de Contato</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <h3 className="text-xl font-bold text-sv-text mb-4">Informações de Contato</h3>
+                <p className="text-sv-text-2 text-sm leading-relaxed">
                   Entre em contato conosco para discutir como podemos ajudar sua empresa a implementar soluções de manufatura digital.
                 </p>
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-[#111111]/80 border border-[rgba(16,185,129,0.08)] hover:border-emerald-500/20 transition-colors">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5 text-emerald-400" />
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-sv-surface/80 border border-sv-line hover:border-sv-line transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-sv-surface flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5 text-sv-text-2" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-white">E-mail</div>
+                    <div className="text-sm font-medium text-sv-text">E-mail</div>
                     <a
                       href={`mailto:${CONTATO.email}`}
-                      className="text-sm text-gray-400 hover:text-emerald-400 transition-colors"
+                      className="text-sm text-sv-text-2 hover:text-sv-text transition-colors"
                     >
                       {CONTATO.email}
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-[#111111]/80 border border-[rgba(16,185,129,0.08)] hover:border-emerald-500/20 transition-colors">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5 text-emerald-400" />
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-sv-surface/80 border border-sv-line hover:border-sv-line transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-sv-surface flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5 text-sv-text-2" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-white">Telefone</div>
+                    <div className="text-sm font-medium text-sv-text">Telefone</div>
                     <a
                       href={`https://wa.me/${CONTATO.whatsapp}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-gray-400 hover:text-emerald-400 transition-colors"
+                      className="text-sm text-sv-text-2 hover:text-sv-text transition-colors"
                     >
                       {CONTATO.telefoneVisivel} · WhatsApp
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-[#111111]/80 border border-[rgba(16,185,129,0.08)] hover:border-emerald-500/20 transition-colors">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-emerald-400" />
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-sv-surface/80 border border-sv-line hover:border-sv-line transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-sv-surface flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5 text-sv-text-2" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-white">Endereço</div>
-                    <div className="text-sm text-gray-400">Caxias do Sul, RS - Brasil</div>
+                    <div className="text-sm font-medium text-sv-text">Endereço</div>
+                    <div className="text-sm text-sv-text-2">Caxias do Sul, RS - Brasil</div>
                   </div>
                 </div>
               </div>
 
               {REDES.some((r) => r.url) && (
                 <>
-                  <Separator className="bg-[rgba(16,185,129,0.1)]" />
+                  <Separator className="bg-sv-line" />
                   <div>
-                    <div className="text-sm font-medium text-white mb-3">Redes Sociais</div>
+                    <div className="text-sm font-medium text-sv-text mb-3">Redes Sociais</div>
                     <div className="flex gap-3">
                       {REDES.filter((r) => r.url).map((r) => {
                         const Icon = r.nome === 'LinkedIn' ? Linkedin
@@ -1161,7 +1161,7 @@ function ContactSection() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={r.nome}
-                            className="w-10 h-10 rounded-lg bg-[#111111] border border-[rgba(16,185,129,0.1)] flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all"
+                            className="w-10 h-10 rounded-lg bg-sv-surface border border-sv-line flex items-center justify-center text-sv-text-2 hover:text-sv-text hover:border-sv-text-3 hover:bg-sv-surface transition-all"
                           >
                             <Icon className="w-4 h-4" />
                           </a>
@@ -1177,10 +1177,10 @@ function ContactSection() {
           {/* Contact Form */}
           <FadeInSection className="lg:col-span-3" delay={0.2}>
             <form onSubmit={handleSubmit} className="space-y-5">
-              <Card className="bg-[#111111]/80 border-[rgba(16,185,129,0.1)] p-6 sm:p-8">
+              <Card className="bg-sv-surface/80 border-sv-line p-6 sm:p-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <Label htmlFor="name" className="text-sm text-gray-300">
+                    <Label htmlFor="name" className="text-sm text-sv-text-2">
                       Nome completo *
                     </Label>
                     <Input
@@ -1190,12 +1190,12 @@ function ContactSection() {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="bg-[#0a0a0a] border-[rgba(16,185,129,0.1)] text-white placeholder:text-gray-600 focus-visible:border-emerald-500/40 focus-visible:ring-emerald-500/20"
+                      className="bg-sv-bg border-sv-line text-sv-text placeholder:text-sv-text-3 focus-visible:border-sv-accent focus-visible:ring-sv-accent/20"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-sm text-gray-300">
+                    <Label htmlFor="email" className="text-sm text-sv-text-2">
                       E-mail *
                     </Label>
                     <Input
@@ -1205,12 +1205,12 @@ function ContactSection() {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="bg-[#0a0a0a] border-[rgba(16,185,129,0.1)] text-white placeholder:text-gray-600 focus-visible:border-emerald-500/40 focus-visible:ring-emerald-500/20"
+                      className="bg-sv-bg border-sv-line text-sv-text placeholder:text-sv-text-3 focus-visible:border-sv-accent focus-visible:ring-sv-accent/20"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-sm text-gray-300">
+                    <Label htmlFor="phone" className="text-sm text-sv-text-2">
                       Telefone
                     </Label>
                     <Input
@@ -1219,12 +1219,12 @@ function ContactSection() {
                       placeholder="(11) 99999-9999"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="bg-[#0a0a0a] border-[rgba(16,185,129,0.1)] text-white placeholder:text-gray-600 focus-visible:border-emerald-500/40 focus-visible:ring-emerald-500/20"
+                      className="bg-sv-bg border-sv-line text-sv-text placeholder:text-sv-text-3 focus-visible:border-sv-accent focus-visible:ring-sv-accent/20"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="service" className="text-sm text-gray-300">
+                    <Label htmlFor="service" className="text-sm text-sv-text-2">
                       Serviço de interesse *
                     </Label>
                     <Select
@@ -1232,18 +1232,18 @@ function ContactSection() {
                       onValueChange={(value) => setFormData({ ...formData, service: value })}
                       required
                     >
-                      <SelectTrigger className="w-full bg-[#0a0a0a] border-[rgba(16,185,129,0.1)] text-white focus:ring-emerald-500/20 focus:ring-offset-0 [&_svg]:text-gray-500">
+                      <SelectTrigger className="w-full bg-sv-bg border-sv-line text-sv-text focus:ring-sv-accent/20 focus:ring-offset-0 [&_svg]:text-sv-text-3">
                         <SelectValue placeholder="Selecione um serviço" />
                       </SelectTrigger>
                       {/* O `value` é o texto que vai LITERAL para a mensagem do
                           WhatsApp ("Interesse: ..."). Antes eram slugs, e quem
                           recebia lia "Interesse: manufatura-aditiva". */}
-                      <SelectContent className="bg-[#111111] border-[rgba(16,185,129,0.15)]">
+                      <SelectContent className="bg-sv-surface border-sv-line">
                         {SERVICOS_FORMULARIO.map((s) => (
                           <SelectItem
                             key={s}
                             value={s}
-                            className="text-gray-300 focus:text-white focus:bg-emerald-500/10"
+                            className="text-sv-text-2 focus:text-sv-text focus:bg-sv-surface"
                           >
                             {s}
                           </SelectItem>
@@ -1254,7 +1254,7 @@ function ContactSection() {
                 </div>
 
                 <div className="space-y-2 mt-5">
-                  <Label htmlFor="message" className="text-sm text-gray-300">
+                  <Label htmlFor="message" className="text-sm text-sv-text-2">
                     Mensagem *
                   </Label>
                   <Textarea
@@ -1264,19 +1264,19 @@ function ContactSection() {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="bg-[#0a0a0a] border-[rgba(16,185,129,0.1)] text-white placeholder:text-gray-600 focus-visible:border-emerald-500/40 focus-visible:ring-emerald-500/20 resize-none"
+                    className="bg-sv-bg border-sv-line text-sv-text placeholder:text-sv-text-3 focus-visible:border-sv-accent focus-visible:ring-sv-accent/20 resize-none"
                   />
                 </div>
 
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full mt-6 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-6 text-base glow-emerald-strong transition-all"
+                  className="w-full mt-6 bg-sv-accent hover:bg-sv-accent/90 text-sv-accent-ink font-semibold py-6 text-base glow-emerald-strong transition-all"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
                       <motion.div
-                        className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                        className="w-4 h-4 border-2 border-sv-accent-ink/30 border-t-sv-accent-ink rounded-full"
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                       />
@@ -1295,12 +1295,12 @@ function ContactSection() {
                 <button
                   type="button"
                   onClick={enviarPorEmail}
-                  className="w-full mt-3 text-sm text-gray-400 hover:text-emerald-400 underline underline-offset-4 decoration-emerald-500/30 transition-colors"
+                  className="w-full mt-3 text-sm text-sv-text-2 hover:text-sv-text underline underline-offset-4 decoration-sv-line transition-colors"
                 >
                   Prefiro enviar por e-mail
                 </button>
 
-                <p className="text-xs text-gray-600 mt-4 text-center leading-relaxed">
+                <p className="text-xs text-sv-text-3 mt-4 text-center leading-relaxed">
                   Resposta em até 24 horas úteis. Seus dados vão direto para a nossa
                   equipe — não usamos para mais nada.
                 </p>
@@ -1317,7 +1317,7 @@ function ContactSection() {
 
 function Footer() {
   return (
-    <footer className="relative border-t border-[rgba(16,185,129,0.1)] bg-[#050505]">
+    <footer className="relative border-t border-sv-line bg-sv-surface">
       <div className="absolute inset-0 grid-pattern opacity-50" />
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
@@ -1330,7 +1330,7 @@ function Footer() {
                 className="h-8 w-auto object-contain drop-shadow-lg"
               />
             </a>
-            <p className="text-sm text-gray-500 leading-relaxed max-w-xs">
+            <p className="text-sm text-sv-text-3 leading-relaxed max-w-xs">
               Estudo de aplicação para células robotizadas e sistemas de automação.
               Engenharia independente, com procedência em cada número.
             </p>
@@ -1345,7 +1345,7 @@ function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={r.nome}
-                    className="w-8 h-8 rounded-md bg-[#111111] border border-[rgba(16,185,129,0.08)] flex items-center justify-center text-gray-500 hover:text-emerald-400 hover:border-emerald-500/30 transition-all"
+                    className="w-8 h-8 rounded-md bg-sv-surface border border-sv-line flex items-center justify-center text-sv-text-3 hover:text-sv-text hover:border-sv-text-3 transition-all"
                   >
                     <Icon className="w-3.5 h-3.5" />
                   </a>
@@ -1356,7 +1356,7 @@ function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-semibold text-sv-text uppercase tracking-wider mb-4">
               Serviços
             </h4>
             <ul className="space-y-2.5">
@@ -1364,7 +1364,7 @@ function Footer() {
                 <li key={i}>
                   <a
                     href="#servicos"
-                    className="text-sm text-gray-500 hover:text-emerald-400 transition-colors"
+                    className="text-sm text-sv-text-3 hover:text-sv-text transition-colors"
                   >
                     {link}
                   </a>
@@ -1375,7 +1375,7 @@ function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-semibold text-sv-text uppercase tracking-wider mb-4">
               Empresa
             </h4>
             <ul className="space-y-2.5">
@@ -1388,7 +1388,7 @@ function Footer() {
                 <li key={i}>
                   <a
                     href={link.href}
-                    className="text-sm text-gray-500 hover:text-emerald-400 transition-colors"
+                    className="text-sm text-sv-text-3 hover:text-sv-text transition-colors"
                   >
                     {link.label}
                   </a>
@@ -1399,30 +1399,30 @@ function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-semibold text-sv-text uppercase tracking-wider mb-4">
               Contato
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
-                <Mail className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
-                <span className="text-sm text-gray-500">contato@solvvo.com.br</span>
+                <Mail className="w-4 h-4 text-sv-text-3 mt-0.5 shrink-0" />
+                <span className="text-sm text-sv-text-3">contato@solvvo.com.br</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Phone className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
-                <span className="text-sm text-gray-500">(54) 9 8153-5018</span>
+                <Phone className="w-4 h-4 text-sv-text-3 mt-0.5 shrink-0" />
+                <span className="text-sm text-sv-text-3">(54) 9 8153-5018</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
-                <span className="text-sm text-gray-500">Caxias do Sul<br />RS - Brasil</span>
+                <MapPin className="w-4 h-4 text-sv-text-3 mt-0.5 shrink-0" />
+                <span className="text-sm text-sv-text-3">Caxias do Sul<br />RS - Brasil</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <Separator className="my-8 bg-[rgba(16,185,129,0.08)]" />
+        <Separator className="my-8 bg-sv-line" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-sv-text-3">
             © {new Date().getFullYear()} Solvvo. Todos os direitos reservados.
           </p>
           {/* "Termos de Uso" saiu em 05/08/2026: apontava para "#" e não há
@@ -1433,7 +1433,7 @@ function Footer() {
           <div className="flex gap-6">
             <a
               href="/politica-de-privacidade"
-              className="text-xs text-gray-600 hover:text-emerald-400 transition-colors"
+              className="text-xs text-sv-text-3 hover:text-sv-text transition-colors"
             >
               Política de Privacidade
             </a>
@@ -1448,11 +1448,13 @@ function Footer() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
-      {/* Degradê da marca (verde -> laranja) atravessando a página inteira.
-          Fica acima dos fundos de seção e abaixo do conteúdo — ver a regra
-          .brand-ambient em globals.css, que explica o porquê do z-index. */}
-      <div className="brand-ambient" aria-hidden="true" />
+    <div className="min-h-screen flex flex-col bg-sv-bg">
+      {/* O degradê ambiente da marca que ficava aqui foi removido em
+          05/08/2026. Ele cobria a tela inteira em mix-blend-mode: screen, o
+          que clareava e tingia TODA imagem da página — inclusive os renders de
+          célula e o desenho técnico, que são o melhor ativo visual da empresa e
+          o que a nova direção existe para valorizar. A assinatura da marca
+          continua, reduzida à faixa de 3px abaixo. */}
       {/* Faixa de assinatura no topo, como no rodapé das peças de post. */}
       <div className="brand-bar fixed top-0 left-0 right-0 z-50" aria-hidden="true" />
       <Navbar />

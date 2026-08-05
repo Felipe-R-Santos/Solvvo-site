@@ -21,10 +21,6 @@ import { ThemeToggle } from '@/components/theme-toggle'
 //     [x] encarregado de dados (DPO) — é o próprio Felipe, sem estrutura
 //         separada. Falta só publicar o contato dele na seção de direitos.
 // Nada disso foi inventado nem preenchido com exemplo plausível.
-//
-// ⚠ ATUALIZAR NA FASE 2: o botão de tema vai gravar a preferência do visitante
-// em localStorage. É dado técnico armazenado no aparelho dele, e a seção
-// "Cookies e armazenamento local" precisa passar a mencioná-lo.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
@@ -38,18 +34,18 @@ const ATUALIZADO_EM = '5 de agosto de 2026'
 function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
     <section className="mt-10">
-      <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">{titulo}</h2>
-      <div className="space-y-3 text-gray-400 leading-relaxed">{children}</div>
+      <h2 className="text-xl sm:text-2xl font-bold text-sv-text mb-3">{titulo}</h2>
+      <div className="space-y-3 text-sv-text-2 leading-relaxed">{children}</div>
     </section>
   )
 }
 
 export default function PoliticaDePrivacidade() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
+    <div className="min-h-screen flex flex-col bg-sv-bg">
       <div className="brand-bar fixed top-0 left-0 right-0 z-50" aria-hidden="true" />
 
-      <header className="border-b border-[rgba(16,185,129,0.1)]">
+      <header className="border-b border-sv-line">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2">
             <img
@@ -64,14 +60,14 @@ export default function PoliticaDePrivacidade() {
 
       <main className="flex-1">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-sv-text">
             Política de Privacidade
           </h1>
-          <p className="text-sm text-gray-500 mt-3">
+          <p className="text-sm text-sv-text-3 mt-3">
             Última atualização: {ATUALIZADO_EM}
           </p>
 
-          <p className="text-gray-400 leading-relaxed mt-8">
+          <p className="text-sv-text-2 leading-relaxed mt-8">
             Esta política explica quais dados pessoais a Solvvo Solutions recebe
             através do site solvvo.com.br, o que fazemos com eles e como você
             pode exercer os direitos que a Lei Geral de Proteção de Dados
@@ -80,7 +76,7 @@ export default function PoliticaDePrivacidade() {
 
           <Secao titulo="Quem é o controlador dos dados">
             <p>
-              <span className="text-emerald-400 font-medium">Solvvo Solutions</span>,
+              <span className="text-sv-text font-medium">Solvvo Solutions</span>,
               sediada em Caxias do Sul, Rio Grande do Sul, Brasil.
             </p>
             <p>
@@ -88,7 +84,7 @@ export default function PoliticaDePrivacidade() {
               conosco pelo e-mail{' '}
               <a
                 href="mailto:contato@solvvo.com.br"
-                className="text-emerald-400 hover:text-emerald-300 transition-colors"
+                className="text-sv-text-2 hover:text-sv-text transition-colors"
               >
                 contato@solvvo.com.br
               </a>{' '}
@@ -119,7 +115,7 @@ export default function PoliticaDePrivacidade() {
           <Secao titulo="Como esses dados são enviados">
             <p>
               Este ponto é incomum e vale a explicação: o site{' '}
-              <span className="text-emerald-400 font-medium">
+              <span className="text-sv-text font-medium">
                 não tem servidor próprio, banco de dados nem sistema de
                 cadastro
               </span>
@@ -165,11 +161,20 @@ export default function PoliticaDePrivacidade() {
           <Secao titulo="Cookies e armazenamento local">
             <p>
               O site{' '}
-              <span className="text-emerald-400 font-medium">
+              <span className="text-sv-text font-medium">
                 não usa cookies próprios
               </span>
               , não tem ferramenta de análise de audiência, não tem pixel de
               rede social e não tem chat de rastreamento.
+            </p>
+            <p>
+              Uma única informação fica guardada no seu aparelho: se você usar o
+              botão que alterna entre o tema claro e o escuro, a sua escolha é
+              gravada no armazenamento local do navegador para que a página abra
+              do mesmo jeito na próxima visita. É uma preferência de exibição,
+              não identifica você, e não sai do seu aparelho — nós não temos
+              acesso a ela. Limpar os dados do site no navegador apaga essa
+              preferência.
             </p>
             <p>
               As fontes tipográficas são servidas pelo próprio site, e não
@@ -206,7 +211,7 @@ export default function PoliticaDePrivacidade() {
               Para exercer qualquer um deles, escreva para{' '}
               <a
                 href="mailto:contato@solvvo.com.br"
-                className="text-emerald-400 hover:text-emerald-300 transition-colors"
+                className="text-sv-text-2 hover:text-sv-text transition-colors"
               >
                 contato@solvvo.com.br
               </a>
@@ -223,10 +228,10 @@ export default function PoliticaDePrivacidade() {
             </p>
           </Secao>
 
-          <div className="mt-16 pt-8 border-t border-[rgba(16,185,129,0.1)]">
+          <div className="mt-16 pt-8 border-t border-sv-line">
             <a
               href="/"
-              className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="text-sm text-sv-text-2 hover:text-sv-text transition-colors"
             >
               ← Voltar para a página inicial
             </a>
@@ -234,9 +239,9 @@ export default function PoliticaDePrivacidade() {
         </div>
       </main>
 
-      <footer className="border-t border-[rgba(16,185,129,0.1)] bg-[#050505]">
+      <footer className="border-t border-sv-line bg-sv-surface">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8">
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-sv-text-3">
             © {new Date().getFullYear()} Solvvo. Todos os direitos reservados.
           </p>
         </div>
