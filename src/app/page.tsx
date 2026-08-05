@@ -4,6 +4,7 @@ import { useState, useRef, FormEvent } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -193,6 +194,7 @@ function Navbar() {
               {link.label}
             </a>
           ))}
+          <ThemeToggle className="ml-2" />
           <Button
             onClick={() => {
               document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
@@ -204,9 +206,13 @@ function Navbar() {
           </Button>
         </div>
 
-        {/* Mobile hamburger */}
+        {/* Mobile: tema + hambúrguer. O botão de tema fica FORA do menu para
+            não exigir dois toques — trocar o tema é a primeira coisa que se
+            faz ao abrir o site com a luz errada. */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
         <Sheet>
-          <SheetTrigger asChild className="md:hidden">
+          <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="text-gray-300 hover:text-white hover:bg-white/5">
               <Menu className="w-6 h-6" />
               <span className="sr-only">Menu</span>
@@ -250,6 +256,7 @@ function Navbar() {
             </div>
           </SheetContent>
         </Sheet>
+        </div>
       </nav>
     </header>
   )

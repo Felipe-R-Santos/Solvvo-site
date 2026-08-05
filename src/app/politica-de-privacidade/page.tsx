@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ⚠ PENDÊNCIA PARA FELIPE — ESTE TEXTO PRECISA DE REVISÃO JURÍDICA.
@@ -49,7 +50,7 @@ export default function PoliticaDePrivacidade() {
       <div className="brand-bar fixed top-0 left-0 right-0 z-50" aria-hidden="true" />
 
       <header className="border-b border-[rgba(16,185,129,0.1)]">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2">
             <img
               src="/logo-solvvo.png"
@@ -57,6 +58,7 @@ export default function PoliticaDePrivacidade() {
               className="h-9 sm:h-11 w-auto object-contain drop-shadow-lg"
             />
           </a>
+          <ThemeToggle />
         </div>
       </header>
 

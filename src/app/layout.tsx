@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { SCRIPT_ANTI_FLASH, TEMA_PADRAO } from "@/lib/tema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -81,20 +82,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="dark" suppressHydrationWarning>
+    // `data-theme` já vem escrito do servidor com o padrão, para o site abrir
+    // legível mesmo com JavaScript desligado. O script abaixo corrige para a
+    // preferência real antes da primeira pintura.
+    // `suppressHydrationWarning` é obrigatório: o script mexe neste atributo
+    // antes de o React hidratar, e sem isto o React acusa divergência.
+    <html lang="pt-BR" data-theme={TEMA_PADRAO} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_ANTI_FLASH }} />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0a0a0a] text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-sv-bg text-sv-text`}
       >
         {children}
+        {/* O toast é estilizado por variável para acompanhar o tema. A prop
+            `theme` do sonner só define os padrões internos dele; o que aparece
+            na tela é o que está aqui. */}
         <Toaster
           position="top-right"
           richColors
-          theme="dark"
           toastOptions={{
             style: {
-              background: '#111111',
-              border: '1px solid rgba(16, 185, 129, 0.2)',
-              color: '#f0fdf4',
+              background: 'var(--sv-surface)',
+              border: '1px solid var(--sv-line)',
+              color: 'var(--sv-text)',
             },
           }}
         />

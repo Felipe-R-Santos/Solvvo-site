@@ -1,82 +1,146 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* ─────────────────────────────────────────────────────────────────────────────
+   A variante `dark:` do Tailwind segue o MESMO atributo que a paleta.
 
+   Antes ela seguia a classe `.dark` no <html>, que era fixa — o site não tinha
+   como ser claro. Agora quem manda é `data-theme`, escrito pelo script
+   anti-flash e pelo botão de tema. Sem isto teríamos dois interruptores para a
+   mesma luz: as variáveis mudariam com data-theme e os `dark:` dos primitivos
+   do shadcn (button, input, select, textarea, badge) continuariam presos à
+   classe, aplicando estilo de tema escuro sobre o tema claro.
+   ───────────────────────────────────────────────────────────────────────── */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   `@theme inline` expõe as variáveis como classes utilitárias do Tailwind
+   (bg-sv-bg, text-sv-text-2, border-sv-line...).
+
+   O `inline` é obrigatório aqui: ele faz a classe emitir `var(--sv-bg)` em vez
+   de gravar o valor. É o que permite trocar o tema em tempo de execução, só
+   mudando o atributo no <html>, sem recarregar e sem recompilar CSS.
+   ───────────────────────────────────────────────────────────────────────── */
 @theme inline {
+  /* Paleta institucional */
+  --color-sv-bg: var(--sv-bg);
+  --color-sv-surface: var(--sv-surface);
+  --color-sv-line: var(--sv-line);
+  --color-sv-grid: var(--sv-grid);
+  --color-sv-text: var(--sv-text);
+  --color-sv-text-2: var(--sv-text-2);
+  --color-sv-text-3: var(--sv-text-3);
+  --color-sv-accent: var(--sv-accent);
+  --color-sv-accent-ink: var(--sv-accent-ink);
+
+  /* Tokens semânticos do shadcn. Os nove primitivos em components/ui/ não têm
+     cor literal nenhuma: consomem só estes nomes. Mantê-los apontando para a
+     paleta acima é o que faz botão, input, select e sheet trocarem de tema
+     sozinhos, sem editar um arquivo sequer dentro de ui/. */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-mono);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-emerald-glow: #10b981;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   PALETA — TEMA ESCURO ("carvão"), o padrão.
+
+   O fundo é o carvão institucional #1A1A1A, não o quase-preto #0a0a0a que
+   estava aqui antes. A diferença parece pequena escrita, mas é ela que separa
+   "folha de desenho técnico" de "landing page de startup": preto absoluto pede
+   brilho e gradiente para não parecer buraco, e é justamente isso que a nova
+   direção não quer.
+
+   O acento é UM só, laranja de sinalização industrial, e tem três usos
+   permitidos: CTA primário, um número de destaque por bloco e estado de foco.
+   Nunca em texto corrido, nunca em área grande, nunca dois na mesma tela.
+   ───────────────────────────────────────────────────────────────────────── */
 :root {
+  color-scheme: dark;
+
+  --sv-bg: #1A1A1A;
+  --sv-surface: #232321;
+  --sv-line: #35342F;
+  --sv-grid: #262523;
+  --sv-text: #F0EEE8;
+  --sv-text-2: #A5A199;
+  --sv-text-3: #6E6B64;
+  --sv-accent: #FF6B35;
+  --sv-accent-ink: #1A1A1A;
+
   --radius: 0.625rem;
-  --background: #0a0a0a;
-  --foreground: #f0fdf4;
-  --card: #111111;
-  --card-foreground: #f0fdf4;
-  --popover: #111111;
-  --popover-foreground: #f0fdf4;
-  --primary: #10b981;
-  --primary-foreground: #0a0a0a;
-  --secondary: #1a1a2e;
-  --secondary-foreground: #f0fdf4;
-  --muted: #1a1a1a;
-  --muted-foreground: #a3a3a3;
-  --accent: #1a1a2e;
-  --accent-foreground: #f0fdf4;
-  --destructive: #ef4444;
-  --border: rgba(16, 185, 129, 0.15);
-  --input: rgba(16, 185, 129, 0.15);
-  --ring: #10b981;
-  --chart-1: #10b981;
-  --chart-2: #34d399;
-  --chart-3: #059669;
-  --chart-4: #6ee7b7;
-  --chart-5: #047857;
-  --sidebar: #111111;
-  --sidebar-foreground: #f0fdf4;
-  --sidebar-primary: #10b981;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: #1a1a2e;
-  --sidebar-accent-foreground: #f0fdf4;
-  --sidebar-border: rgba(16, 185, 129, 0.15);
-  --sidebar-ring: #10b981;
+
+  /* ── Tokens do shadcn, derivados da paleta ──────────────────────────────
+     CUIDADO COM O NOME `--accent`: no vocabulário do shadcn ele é a cor de
+     FUNDO DE HOVER de item de menu, não o acento da marca. São dois sentidos
+     para a mesma palavra. O acento institucional é `--sv-accent`, e no shadcn
+     ele entra como `--primary`. Apontar `--accent` para o laranja encheria a
+     tela de hover laranja em todo item de select. */
+  --background: var(--sv-bg);
+  --foreground: var(--sv-text);
+  --card: var(--sv-surface);
+  --card-foreground: var(--sv-text);
+  --popover: var(--sv-surface);
+  --popover-foreground: var(--sv-text);
+  --primary: var(--sv-accent);
+  --primary-foreground: var(--sv-accent-ink);
+  --secondary: var(--sv-surface);
+  --secondary-foreground: var(--sv-text);
+  --muted: var(--sv-surface);
+  --muted-foreground: var(--sv-text-3);
+  --accent: var(--sv-surface);
+  --accent-foreground: var(--sv-text);
+  --border: var(--sv-line);
+  --input: var(--sv-line);
+  --ring: var(--sv-accent);
+
+  /* Cor de ESTADO DE ERRO, fora da paleta institucional de propósito: sinal de
+     erro precisa ler como erro nos dois temas, e vermelho é a convenção. Usada
+     só pelos estados aria-invalid dos primitivos do shadcn. */
+  --destructive: #DC2626;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PALETA — TEMA CLARO ("papel").
+
+   Só a paleta é redeclarada. Os tokens do shadcn acima apontam para ela com
+   var(), então herdam a troca sozinhos — não se repete nada.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --sv-bg: #F4F2ED;
+  --sv-surface: #FAF9F6;
+  --sv-line: #D8D4C9;
+  --sv-grid: #E4E0D5;
+  --sv-text: #1A1A1A;
+  --sv-text-2: #5A5852;
+  --sv-text-3: #8A8880;
+  --sv-accent: #C2410C;
+  --sv-accent-ink: #FAF9F6;
 }
 
 html {
@@ -92,42 +156,92 @@ html {
   }
 }
 
-/* Custom scrollbar */
+/* ─────────────────────────────────────────────────────────────────────────────
+   BOTÃO DE TEMA — qual ícone aparece.
+
+   Feito em CSS, e não em estado do React, porque o tema é decidido antes de o
+   React existir (script anti-flash). Ver o comentário em
+   components/theme-toggle.tsx.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="dark"] .sv-tema-lua {
+  display: none;
+}
+
+[data-theme="light"] .sv-tema-sol {
+  display: none;
+}
+
+/* Barra de rolagem */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--sv-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.3);
+  background: var(--sv-line);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.5);
+  background: var(--sv-text-3);
 }
 
-/* Glow effects */
-.glow-emerald {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 40px rgba(16, 185, 129, 0.05);
-}
+/* ─────────────────────────────────────────────────────────────────────────────
+   CLASSES DE TRANSIÇÃO — Fase 2 troca a COR delas; a Fase 3 remove as três.
 
-.glow-emerald-strong {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 60px rgba(16, 185, 129, 0.1);
-}
-
-/* Gradient text */
+   Elas ainda existem porque a Fase 2 é só o sistema de cor: o brief separa
+   "trocar a paleta" de "mudar a linguagem visual", e são commits diferentes.
+   Repontá-las agora evita o meio-termo em que o tema claro herdaria gradiente
+   verde-esmeralda sobre papel bege, que não passaria no teste de contraste da
+   própria Fase 2.
+   ───────────────────────────────────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #10b981, #34d399, #6ee7b7);
+  background: linear-gradient(135deg, var(--sv-text), var(--sv-text-2));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Animated gradient border */
+.glow-emerald {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--sv-accent) 12%, transparent);
+}
+
+.glow-emerald-strong {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--sv-accent) 22%, transparent);
+}
+
+/* Grade técnica. A Fase 3 troca o módulo e restringe às seções do herói e da
+   plataforma; aqui só a cor sai do verde. */
+.grid-pattern {
+  background-image:
+    linear-gradient(var(--sv-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--sv-grid) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FAIXA DE ASSINATURA DA MARCA — 3px no topo, verde -> laranja.
+
+   É o ÚNICO lugar do site onde o verde #34F000 aparece, e é literal de
+   propósito: são as cores amostradas do deck oficial, não tokens de tema. Elas
+   não mudam com o tema porque a assinatura da marca não muda com o tema.
+
+   O degradê ambiente que existia junto com esta faixa foi removido: ele cobria
+   a tela inteira em mix-blend-mode e tingia toda foto de célula e todo desenho
+   técnico da página — o ativo que a nova direção existe para valorizar.
+   ───────────────────────────────────────────────────────────────────────── */
+.brand-bar {
+  height: 3px;
+  background: linear-gradient(90deg, #FF6B35 0%, #34F000 100%);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CLASSES SEM NENHUM CONSUMIDOR — a Fase 3 apaga, junto com use-mobile.ts.
+   Ficam aqui só para não misturar remoção de código morto com troca de paleta.
+   ───────────────────────────────────────────────────────────────────────── */
 .gradient-border {
   position: relative;
 }
@@ -138,7 +252,7 @@ html {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(52, 211, 153, 0.2), rgba(16, 185, 129, 0.5));
+  background: linear-gradient(135deg, var(--sv-line), var(--sv-grid), var(--sv-line));
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
@@ -146,68 +260,6 @@ html {
   pointer-events: none;
 }
 
-/* Grid pattern overlay */
-.grid-pattern {
-  background-image: 
-    linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-/* ───────────────────────────────────────────────────────────────────────────
-   DEGRADÊ DA MARCA NO FUNDO DO SITE  (30/07/2026)
-
-   É o mesmo degradê das peças de post: verde #34F000 -> laranja #FF6B35
-   difusos sobre o cinza escuro. Cores amostradas do deck oficial, não
-   escolhidas no olho.
-
-   POR QUE UM OVERLAY FIXO E NÃO `background` no body:
-   cada <section> do site desenha o próprio fundo OPACO
-   (`absolute inset-0 bg-gradient-to-b from-[#0a0a0a] ...`). Um degradê no
-   body ficaria atrás desses fundos e não apareceria em lugar nenhum.
-   Este overlay é `fixed` com z-index 5: acima dos fundos de seção (z auto)
-   e abaixo do conteúdo (que é `relative z-10`). Assim o degradê atravessa
-   a página inteira, sem precisar mexer em nenhuma seção.
-
-   `mix-blend-mode: screen` faz ele CLAREAR o que está atrás em vez de
-   cobrir — é o que dá o ar de luz ambiente em vez de mancha colorida.
-   `pointer-events: none` para nunca roubar clique.
-
-   Alphas baixos de propósito (0.10–0.14): o site é escuro e o texto é
-   branco; passar disso lava a leitura, que foi o erro da 1ª versão da peça.
-   ─────────────────────────────────────────────────────────────────────── */
-.brand-ambient {
-  position: fixed;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  background:
-    /* laranja: canto inferior direito */
-    radial-gradient(55rem 38rem at 88% 84%, rgba(255, 107, 53, 0.14), transparent 62%),
-    /* verde da marca: canto inferior esquerdo */
-    radial-gradient(48rem 32rem at 10% 90%, rgba(52, 240, 0, 0.11), transparent 60%),
-    /* verde-esmeralda do site: brilho de topo, amarra com o accent atual */
-    radial-gradient(64rem 40rem at 52% -8%, rgba(16, 185, 129, 0.08), transparent 66%);
-}
-
-/* Em tela pequena o degradê fica desproporcional (os raios são fixos em rem):
-   encolhe e clareia menos, senão vira mancha no meio do texto no celular. */
-@media (max-width: 640px) {
-  .brand-ambient {
-    background:
-      radial-gradient(26rem 20rem at 92% 88%, rgba(255, 107, 53, 0.12), transparent 62%),
-      radial-gradient(24rem 18rem at 6% 92%, rgba(52, 240, 0, 0.09), transparent 60%);
-  }
-}
-
-/* Faixa de assinatura verde -> laranja, a mesma do rodapé das peças. */
-.brand-bar {
-  height: 3px;
-  background: linear-gradient(90deg, #ff6b35 0%, #34f000 100%);
-}
-
-/* Noise texture overlay */
 .noise-overlay::after {
   content: '';
   position: absolute;
@@ -217,15 +269,14 @@ html {
   pointer-events: none;
 }
 
-/* Pulse animation for icons */
 @keyframes pulse-emerald {
   0%, 100% {
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--sv-accent) 40%, transparent);
   }
   50% {
     opacity: 0.8;
-    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    box-shadow: 0 0 0 8px transparent;
   }
 }
 
@@ -233,7 +284,6 @@ html {
   animation: pulse-emerald 2s ease-in-out infinite;
 }
 
-/* Floating animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
