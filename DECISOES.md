@@ -465,6 +465,11 @@ identificação.
 `contato@solvvo.com.br` é o único canal publicado. A ficha cadastral tem outros
 endereços; nenhum deles entra no site.
 
+**O endereço vai sem o complemento.** A sala 464 saiu logo depois da primeira
+publicação: a sede é endereço residencial, e o número da sala aponta para a
+unidade onde a pessoa mora. Rua, número, bairro, cidade e CEP identificam a
+empresa para efeito de LGPD sem publicar isso. **Não reponha o complemento.**
+
 ---
 
 ## Rótulo de link descreve o que acontece ao clicar

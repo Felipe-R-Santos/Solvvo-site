@@ -22,6 +22,11 @@ import { Carimbo } from '@/components/carimbo'
 //
 // E-MAIL: `contato@` é o único canal publicado. A ficha cadastral tem outros
 // endereços; nenhum deles entra aqui.
+//
+// ENDEREÇO SEM O COMPLEMENTO: a sala 464 saiu em 05/08/2026. A sede é um
+// endereço residencial, e o número da sala aponta para a unidade onde a pessoa
+// mora. Rua, número, bairro, cidade e CEP identificam a empresa para efeito de
+// LGPD sem publicar isso. Não reponha o complemento.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
@@ -90,7 +95,7 @@ export default function PoliticaDePrivacidade() {
             <p>
               <span className="text-sv-text font-medium">Solvvo Solutions</span>,
               inscrita no CNPJ 45.939.613/0001-27, com sede na Rua Madre Bárbara,
-              806, sala 464, Bairro Diamantino, Caxias do Sul/RS, CEP 95055-041.
+              806, Bairro Diamantino, Caxias do Sul/RS, CEP 95055-041.
             </p>
             <p>
               O encarregado pelo tratamento de dados pessoais é{' '}
