@@ -409,6 +409,27 @@ A exceção vale para **espaçamento**, não para redesenhar a seção.
 
 ---
 
+## Rótulo de link descreve o que acontece ao clicar
+
+Os quatro cards de solução tinham o mesmo "Saiba Mais" apontando para o
+formulário genérico. Ao corrigir isso, mandei dois deles para seções que
+tratavam de **outro** assunto e citavam o serviço de passagem — Scan 3D para
+`#cases`, Dispositivos para `#sobre`.
+
+**Felipe recusou, com razão.** Isso frustra mais que o formulário genérico:
+promete informação que não está lá. Quem clica em "Saiba mais" espera
+profundidade sobre aquele serviço.
+
+**Regra:** o rótulo do link descreve o que acontece ao clicar.
+
+- Serviço **com** página → "Saiba mais" → a página.
+- Serviço **sem** página → "Falar sobre isso" → `#contato`.
+
+Não existe página para Engenharia Reversa nem para Dispositivos. Melhor assumir
+isso que fingir profundidade.
+
+---
+
 ## Critério de agrupamento de commit
 
 O brief manda commits pequenos, um por fase, e proíbe misturar fase de conteúdo

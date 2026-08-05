@@ -540,11 +540,18 @@ function PreEstudoSection() {
 
 // Ordenado pelo que o cliente compra primeiro: o estudo abre a porta,
 // a célula é a entrega, o resto sustenta.
+//
+// O RÓTULO DO LINK DESCREVE O QUE ACONTECE AO CLICAR. Só dois destes serviços
+// têm página; os outros dois levam ao formulário e por isso dizem "Falar sobre
+// isso", não "Saiba mais". Mandar quem clicou em "Saiba mais" para uma seção
+// que trata de outro assunto, citando o serviço de passagem, frustra mais que
+// o formulário genérico — promete informação que não está lá.
 const services = [
   {
     icon: Layers,
     title: 'Estudo de Aplicação',
     href: '/estudo-de-aplicacao',
+    cta: 'Saiba mais',
     description:
       'A conta que decide se vale robotizar: robô e posicionador por payload e alcance, estrutura dimensionada, tempo de ciclo, produtividade, ROI e payback — com a fonte de cada número.',
     features: ['Tempo de Ciclo', 'ROI e Payback', 'Procedência'],
@@ -555,6 +562,7 @@ const services = [
     // A tabela de níveis é o único lugar do site que descreve o que este
     // serviço entrega.
     href: '/estudo-de-aplicacao#niveis',
+    cta: 'Saiba mais',
     description:
       'A definição técnica que vai para o fornecedor: robô, posicionador, berço, estrutura, proteções e segurança — dimensionados e justificados. Você compra sabendo exatamente o que pediu e por quê.',
     features: ['Memorial técnico', 'Escopo para cotação', 'Critério de aceite'],
@@ -562,9 +570,8 @@ const services = [
   {
     icon: ScanLine,
     title: 'Engenharia Reversa e Scan 3D',
-    // O card de aplicações "Levantamento de peça e de planta sem desenho" é
-    // onde este serviço está explicado.
-    href: '#cases',
+    href: '#contato',
+    cta: 'Falar sobre isso',
     description:
       'Digitalização tridimensional da peça e do galpão para levantar a geometria real quando não existe desenho — a base de qualquer estudo que se sustente.',
     features: ['Peça sem Desenho', 'Inspeção Dimensional', 'Modelo 3D'],
@@ -572,9 +579,8 @@ const services = [
   {
     icon: Printer,
     title: 'Dispositivos e Fabricação',
-    // O parágrafo do Sobre é onde se explica por que berço e gabarito não
-    // conflitam com a independência.
-    href: '#sobre',
+    href: '#contato',
+    cta: 'Falar sobre isso',
     description:
       'Berços, gabaritos e dispositivos de fixação dimensionados para a peça, com fabricação e prototipagem rápida quando o prazo aperta.',
     features: ['Berços e Gabaritos', 'Dispositivos', 'Prototipagem'],
@@ -647,7 +653,7 @@ function ServicesSection() {
                       href={service.href}
                       className="inline-flex items-center gap-1 text-sm font-medium text-sv-text-2 hover:text-sv-text transition-colors group/link"
                     >
-                      Saiba Mais
+                      {service.cta}
                       <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                     </a>
                   </CardContent>
