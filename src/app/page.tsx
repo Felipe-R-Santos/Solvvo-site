@@ -8,6 +8,7 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { Carimbo } from '@/components/carimbo'
 import { CONTATO } from '@/lib/contato'
 import { PRAZO_PRE_ESTUDO, PRECO_PRE_ESTUDO } from '@/lib/valores'
+import { ENTREGAS } from '@/lib/entregas'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -104,13 +105,17 @@ function StaggerItem({ children, className = '' }: { children: React.ReactNode; 
 
 /* ─────────── Navigation ─────────── */
 
+// A ordem do menu SEGUE A ORDEM DA PÁGINA. Menu que lista as seções fora de
+// ordem faz o visitante rolar para trás procurando o que já passou.
+// "Pré-estudo" é o único que sai da página: leva para a rota nova.
 const navLinks = [
   { label: 'Início', href: '#inicio' },
-  { label: 'Plataforma', href: '#plataforma' },
+  { label: 'Pré-estudo', href: '/estudo-de-aplicacao' },
   { label: 'Soluções', href: '#servicos' },
   { label: 'Células', href: '#celulas' },
   { label: 'Aplicações', href: '#cases' },
   { label: 'Sobre', href: '#sobre' },
+  { label: 'Plataforma', href: '#plataforma' },
   { label: 'Contato', href: '#contato' },
 ]
 
@@ -453,6 +458,84 @@ function HeroSection() {
   )
 }
 
+/* ─────────── O Pré-estudo (resumo na home) ─────────── */
+
+// Segundo bloco da página, logo abaixo do herói: é o produto que a empresa
+// vende hoje, e antes ele aparecia enterrado como um card entre quatro.
+//
+// O id="pre-estudo" é o destino do CTA secundário do herói. Não renomeie sem
+// trocar lá também — âncora quebrada não dá erro, só não faz nada.
+function PreEstudoSection() {
+  return (
+    <section id="pre-estudo" className="relative py-24 sm:py-32 overflow-hidden border-t border-sv-line">
+      <div className="absolute inset-0 bg-sv-bg" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeInSection className="max-w-3xl">
+          <Badge className="mb-4 px-3 py-1 font-mono text-[11px] font-normal uppercase tracking-[0.09em] bg-transparent text-sv-text-3 border-sv-line">
+            O pré-estudo
+          </Badge>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-6 text-sv-text">
+            Escopo fechado, prazo fechado, preço fechado
+          </h2>
+          <p className="text-sv-text-2 text-lg leading-relaxed">
+            Seu cliente pediu um número e a resposta leva um mês. O pré-estudo devolve
+            arquitetura de célula, tempo de ciclo estimado e faixa de investimento no
+            prazo combinado — e você continua dono da venda e da execução.
+          </p>
+        </FadeInSection>
+
+        {/* Prazo e preço em bloco de número, padrão 3.5 */}
+        <FadeInSection className="mt-10">
+          <div className="pt-8 border-t border-sv-line grid grid-cols-2 gap-8 max-w-md">
+            <div>
+              <div className="font-mono text-[22px] font-medium leading-none text-sv-text">
+                {PRAZO_PRE_ESTUDO} dias
+              </div>
+              <div className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3 mt-2">
+                úteis, do aceite à entrega
+              </div>
+            </div>
+            <div>
+              <div className="font-mono text-[22px] font-medium leading-none text-sv-text">
+                {PRECO_PRE_ESTUDO}
+              </div>
+              <div className="font-mono text-[11px] uppercase tracking-[0.09em] text-sv-text-3 mt-2">
+                escopo fechado, por estudo
+              </div>
+            </div>
+          </div>
+        </FadeInSection>
+
+        {/* Os NOVE títulos, não uma seleção: escolher "os principais" seria
+            decidir no lugar de quem lê qual entrega importa. */}
+        <StaggerContainer className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5">
+          {ENTREGAS.map((e, i) => (
+            <StaggerItem key={i}>
+              <div className="grid grid-cols-[auto_1fr] gap-3 items-baseline">
+                <span className="font-mono text-[11px] text-sv-text-3 tabular-nums">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="text-sv-text-2 leading-relaxed">{e.titulo}</span>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        <FadeInSection className="mt-12">
+          <a
+            href="/estudo-de-aplicacao"
+            className="inline-flex items-center gap-2 rounded px-8 py-4 bg-sv-accent text-sv-accent-ink font-medium hover:bg-sv-accent/90 transition-colors"
+          >
+            Ver o pré-estudo completo
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </FadeInSection>
+      </div>
+    </section>
+  )
+}
+
 /* ─────────── Services Section ─────────── */
 
 // Ordenado pelo que o cliente compra primeiro: o estudo abre a porta,
@@ -461,6 +544,7 @@ const services = [
   {
     icon: Layers,
     title: 'Estudo de Aplicação',
+    href: '/estudo-de-aplicacao',
     description:
       'A conta que decide se vale robotizar: robô e posicionador por payload e alcance, estrutura dimensionada, tempo de ciclo, produtividade, ROI e payback — com a fonte de cada número.',
     features: ['Tempo de Ciclo', 'ROI e Payback', 'Procedência'],
@@ -468,6 +552,9 @@ const services = [
   {
     icon: Cpu,
     title: 'Especificação da Célula',
+    // A tabela de níveis é o único lugar do site que descreve o que este
+    // serviço entrega.
+    href: '/estudo-de-aplicacao#niveis',
     description:
       'A definição técnica que vai para o fornecedor: robô, posicionador, berço, estrutura, proteções e segurança — dimensionados e justificados. Você compra sabendo exatamente o que pediu e por quê.',
     features: ['Memorial técnico', 'Escopo para cotação', 'Critério de aceite'],
@@ -475,6 +562,9 @@ const services = [
   {
     icon: ScanLine,
     title: 'Engenharia Reversa e Scan 3D',
+    // O card de aplicações "Levantamento de peça e de planta sem desenho" é
+    // onde este serviço está explicado.
+    href: '#cases',
     description:
       'Digitalização tridimensional da peça e do galpão para levantar a geometria real quando não existe desenho — a base de qualquer estudo que se sustente.',
     features: ['Peça sem Desenho', 'Inspeção Dimensional', 'Modelo 3D'],
@@ -482,6 +572,9 @@ const services = [
   {
     icon: Printer,
     title: 'Dispositivos e Fabricação',
+    // O parágrafo do Sobre é onde se explica por que berço e gabarito não
+    // conflitam com a independência.
+    href: '#sobre',
     description:
       'Berços, gabaritos e dispositivos de fixação dimensionados para a peça, com fabricação e prototipagem rápida quando o prazo aperta.',
     features: ['Berços e Gabaritos', 'Dispositivos', 'Prototipagem'],
@@ -551,7 +644,7 @@ function ServicesSection() {
                       ))}
                     </div>
                     <a
-                      href="#contato"
+                      href={service.href}
                       className="inline-flex items-center gap-1 text-sm font-medium text-sv-text-2 hover:text-sv-text transition-colors group/link"
                     >
                       Saiba Mais
@@ -1500,12 +1593,18 @@ export default function Home() {
       <div className="brand-bar fixed top-0 left-0 right-0 z-50" aria-hidden="true" />
       <Navbar />
       <main className="flex-1">
+        {/* ORDEM DA PÁGINA, definida na Fase 6 do brief.
+            O pré-estudo sobe para logo abaixo do herói: é o que a empresa
+            vende hoje. A plataforma desce para depois do Sobre — continua na
+            página, como captação de lista de espera, e não como manchete de
+            um produto que ainda não está no ar. */}
         <HeroSection />
-        <PlataformaSection />
+        <PreEstudoSection />
         <ServicesSection />
         <CelulasSection />
         <AplicacoesSection />
         <AboutSection />
+        <PlataformaSection />
         <ContactSection />
       </main>
       <Footer />
