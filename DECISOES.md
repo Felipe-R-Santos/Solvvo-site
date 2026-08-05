@@ -161,13 +161,30 @@ A WCAG AA exige 4,5:1 para texto abaixo de 24px. Dos 75 casos, 63 estavam entre
 critério de aceite exigia "os dois temas passam em contraste, inclusive nos
 números pequenos". Não havia como cumprir as duas.
 
-Os valores novos são o **menor ajuste** que satisfaz 4,5:1 nos dois fundos de
-cada tema, preservando o matiz quente da paleta — não uma cor escolhida no olho:
+### Os valores em vigor têm folga deliberada
 
-| Tema | Novo | Sobre `--sv-bg` | Sobre `--sv-surface` |
+A primeira correção usou o **menor ajuste** que satisfaz 4,5:1 (`#8D8980` e
+`#706E68`). Isso deixava o pior caso em 4,52:1 — margem de 1,00× o mínimo, ou
+seja, nenhuma.
+
+**Margem zero não sobrevive a mudança de layout**, e a Fase 3 é uma mudança de
+layout: ela cria texto pequeno que hoje não existe (carimbo do rodapé, legenda
+de imagem, rótulo de unidade nos blocos de número) e molduras de 1px que
+introduzem fundos intermediários que o cálculo original não previa. Um valor
+calculado no limite reprova no primeiro fundo novo.
+
+Os valores em vigor miram **5,0:1 no fundo mais difícil de cada tema**,
+preservando o matiz quente da paleta:
+
+| Tema | Em vigor | Sobre `--sv-bg` | Sobre `--sv-surface` |
 |---|---|---|---|
-| escuro | `#8D8980` | 5,00:1 | 4,52:1 |
-| claro | `#706E68` | 4,54:1 | 4,82:1 |
+| escuro | **`#959187`** | 5,53:1 | 5,01:1 |
+| claro | **`#696761`** | 5,03:1 | 5,34:1 |
+
+Note que o fundo que aperta troca de lado conforme o tema: no escuro é o
+`--sv-surface` (mais claro que o fundo da página), no claro é o `--sv-bg` (mais
+escuro que a superfície). Quem for recalcular precisa checar os dois, não supor
+qual é o pior.
 
 ### Correção junto: mapear por papel, não por classe de origem
 
@@ -243,6 +260,26 @@ Resolvido:
 **Atualizar na Fase 2:** quando o botão de tema entrar, ele grava a preferência
 em `localStorage`. A seção "Cookies e armazenamento local" precisa deixar de
 dizer que o site não armazena nada.
+
+---
+
+## Critério de agrupamento de commit
+
+O brief manda commits pequenos, um por fase, e proíbe misturar fase de conteúdo
+com fase visual. Vale. Mas a regra existe para servir à **rastreabilidade**, e há
+um caso em que separar piora exatamente o que ela protege:
+
+**Quando o texto de um documento é a justificativa de um diff de código, os dois
+vão no mesmo commit.** Separá-los produz um commit que altera a paleta sem
+explicação e outro que explica uma paleta que já mudou — quem fizer `git log`
+depois encontra a mudança antes do motivo, ou pior, encontra só a mudança.
+
+Não vale como brecha para juntar fases: conteúdo e identidade visual continuam
+em commits separados. Vale para documento que **explica aquele diff específico**
+— `DECISOES.md` e `BRIEF.txt` quando a alteração deles é a razão de ser do
+código que muda junto.
+
+Decisão de Felipe, 05/08/2026.
 
 ---
 

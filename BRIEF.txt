@@ -223,7 +223,7 @@ temas, e qualquer ajuste vira caça ao longo do arquivo.
       --sv-grid        #262523   grade técnica de fundo
       --sv-text        #F0EEE8   texto principal
       --sv-text-2      #A5A199   texto secundário
-      --sv-text-3      #8D8980   legenda, carimbo, unidade   (era #6E6B64)
+      --sv-text-3      #959187   legenda, carimbo, unidade   (era #6E6B64)
       --sv-accent      #FF6B35   acento único (laranja do deck oficial)
       --sv-accent-ink  #1A1A1A   texto sobre o acento
 
@@ -234,7 +234,7 @@ temas, e qualquer ajuste vira caça ao longo do arquivo.
       --sv-grid        #E4E0D5
       --sv-text        #1A1A1A
       --sv-text-2      #5A5852
-      --sv-text-3      #706E68                               (era #8A8880)
+      --sv-text-3      #696761                               (era #8A8880)
       --sv-accent      #C2410C   mesmo matiz, escurecido para contraste
       --sv-accent-ink  #FAF9F6
 
@@ -250,6 +250,12 @@ temas, e qualquer ajuste vira caça ao longo do arquivo.
     fixos, não negociáveis" e o critério de aceite exigia contraste aprovado nos
     dois temas: as duas cláusulas não podiam ser cumpridas juntas. Decisão de
     Felipe em 05/08/2026, com a medição e o cálculo em DECISOES.md.
+
+    Os valores em vigor miram 5,0:1 no fundo mais difícil de cada tema, e NÃO o
+    mínimo de 4,5:1. O mínimo teórico não sobrevive a mudança de layout: cada
+    moldura, carimbo ou bloco novo cria um fundo intermediário que o cálculo
+    anterior não previa, e a Fase 3 é justamente uma mudança de layout que
+    introduz texto pequeno novo.
 
     --sv-text-3 É NÍVEL DE LEGENDA, não de leitura. Vale para legenda, carimbo,
     unidade, rótulo de campo e dado de contato. Texto descritivo que o visitante

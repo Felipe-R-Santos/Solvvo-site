@@ -87,11 +87,14 @@
   --sv-grid: #262523;
   --sv-text: #F0EEE8;
   --sv-text-2: #A5A199;
-  /* Era #6E6B64 no brief. Medido: 3,27:1 sobre --sv-bg e 2,96:1 sobre
-     --sv-surface, abaixo dos 4,5:1 que a WCAG AA exige para texto com menos de
-     24px. Este é o menor clareamento que passa nos dois fundos preservando o
-     matiz quente — 5,00:1 e 4,52:1. Ver DECISOES.md. */
-  --sv-text-3: #8D8980;
+  /* Era #6E6B64 no brief, e reprovava em contraste: 3,27:1 sobre --sv-bg e
+     2,96:1 sobre --sv-surface, contra os 4,5:1 da WCAG AA para texto abaixo de
+     24px.
+     Este valor mira 5,0:1 no fundo mais difícil (--sv-surface), e não o mínimo
+     de 4,5 — dá 5,53:1 e 5,01:1. A folga é deliberada: o mínimo teórico não
+     sobrevive a mudança de layout, e cada moldura ou bloco novo introduz um
+     fundo intermediário que o cálculo anterior não previa. Ver DECISOES.md. */
+  --sv-text-3: #959187;
   --sv-accent: #FF6B35;
   --sv-accent-ink: #1A1A1A;
 
@@ -142,9 +145,10 @@
   --sv-grid: #E4E0D5;
   --sv-text: #1A1A1A;
   --sv-text-2: #5A5852;
-  /* Era #8A8880 no brief. Medido: 3,17:1 e 3,37:1, mesma reprovação do tema
-     escuro. Escurecido o mínimo para passar nos dois fundos — 4,54:1 e 4,82:1. */
-  --sv-text-3: #706E68;
+  /* Era #8A8880 no brief: 3,17:1 e 3,37:1, mesma reprovação do tema escuro.
+     Mesma folga de 5,0:1 no fundo mais difícil (aqui é --sv-bg, porque no tema
+     claro o fundo mais escuro é que aperta) — 5,03:1 e 5,34:1. */
+  --sv-text-3: #696761;
   --sv-accent: #C2410C;
   --sv-accent-ink: #FAF9F6;
 }
