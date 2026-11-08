@@ -7,7 +7,7 @@ import { ChevronRight, ShoppingCart } from "lucide-react";
 import { useLoja } from "@/lib/estado";
 import { reais } from "@/lib/formato";
 import { porSlug } from "@/dados/categorias";
-import { DesenhoPeca } from "@/componentes/DesenhoPeca";
+import { FotoProduto } from "@/componentes/FotoProduto";
 import { SeletorQuantidade } from "@/componentes/SeletorQuantidade";
 import { SeloEstoque } from "@/componentes/SeloEstoque";
 import { CartaoProduto } from "@/componentes/CartaoProduto";
@@ -76,17 +76,22 @@ export function Detalhe({ slug }: { slug: string }) {
       </nav>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-2">
-        {/* `self-start` e proporção fixa: sem isso a moldura estica até a altura
-            da coluna da ficha técnica e o desenho fica perdido num vazio. */}
-        <div className="relative grid aspect-[4/3] place-items-center self-start rounded-lg border border-borda-escura bg-black/30 p-10">
+        {/* Moldura branca e quadrada, como no cartão: a mesma foto de estúdio
+            em cima do mesmo branco, para a página não contradizer a listagem. */}
+        <div className="relative self-start overflow-hidden rounded-lg bg-white">
           {produto.maisVendido && (
-            <span className="absolute left-4 top-4 rounded bg-laranja-escuro px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white">
+            <span className="absolute left-4 top-4 z-10 rounded bg-laranja-escuro px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white">
               Mais vendido
             </span>
           )}
-          <DesenhoPeca desenho={produto.desenho} className="max-h-full w-full text-cinza-claro/85" />
-          <p className="absolute bottom-3 right-4 text-[11px] text-cinza-claro/75">
-            Desenho ilustrativo, fora de escala
+          <FotoProduto
+            produto={produto}
+            tamanho="pagina"
+            prioridade
+            className="aspect-square w-full object-cover"
+          />
+          <p className="absolute bottom-3 right-4 text-[11px] text-quase-negro/70">
+            Imagem ilustrativa (render)
           </p>
         </div>
 

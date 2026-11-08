@@ -6,7 +6,7 @@ import { useLoja } from "@/lib/estado";
 import { usarPainel } from "@/lib/usar-painel";
 import { resumir, maisVistos, type Resumo } from "@/lib/painel";
 import { reais, desde } from "@/lib/formato";
-import { DesenhoPeca } from "@/componentes/DesenhoPeca";
+import { FotoProduto } from "@/componentes/FotoProduto";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // VISÃO GERAL.
@@ -92,8 +92,8 @@ export default function VisaoGeral() {
           <ul className="mt-3 space-y-2.5">
             {vistos.map(({ codigo, vezes, produto }) => (
               <li key={codigo} className="flex items-center gap-3">
-                <div className="grid size-10 shrink-0 place-items-center rounded bg-cartao-escuro">
-                  <DesenhoPeca desenho={produto!.desenho} className="size-7 text-cinza-claro/80" />
+                <div className="size-10 shrink-0 overflow-hidden rounded bg-white">
+                  <FotoProduto produto={produto!} tamanho="miniatura" className="size-full object-cover" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline justify-between gap-3">

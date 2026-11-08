@@ -1,0 +1,11 @@
+{
+  "_papel": "Registro de toda imagem de terceiro usada nesta loja: arquivo, origem, autor, licenca e data do download.",
+  "_estado": "VAZIO DE PROPOSITO, em 08/11/2026.",
+  "_por_que": [
+    "Nenhuma imagem de banco foi usada. As 25 fotos de produto sao render proprio, feito no Blender a partir das medidas do catalogo (ver scripts/render_produtos.py), e por isso nao pedem credito nem licenca.",
+    "O banner tambem e composicao propria, em SVG.",
+    "Logo e icones vem do Brand Kit da Control ARC, entregues pelo cliente."
+  ],
+  "_quando_preencher": "Ao usar foto de Unsplash, Pexels ou Wikimedia Commons. So licenca que permite uso comercial: Unsplash License, Pexels License, CC0, CC BY ou CC BY-SA. Se a licenca exigir credito, ele entra no rodape, em letra pequena.",
+  "imagens": []
+}

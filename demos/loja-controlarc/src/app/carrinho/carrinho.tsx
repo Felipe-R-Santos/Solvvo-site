@@ -6,7 +6,7 @@ import { useLoja } from "@/lib/estado";
 import { montarLinhas, totalCarrinho } from "@/lib/carrinho";
 import { PEDIDO_MINIMO } from "@/dados/produtos";
 import { reais } from "@/lib/formato";
-import { DesenhoPeca } from "@/componentes/DesenhoPeca";
+import { FotoProduto } from "@/componentes/FotoProduto";
 import { SeletorQuantidade } from "@/componentes/SeletorQuantidade";
 import { SeloEstoque } from "@/componentes/SeloEstoque";
 
@@ -68,8 +68,8 @@ export function PaginaCarrinho() {
           <ul className="divide-y divide-borda-escura rounded-lg border border-borda-escura bg-cartao-escuro">
             {linhas.map((l) => (
               <li key={l.produto.codigo} className="flex flex-col gap-4 p-4 sm:flex-row">
-                <div className="grid size-20 shrink-0 place-items-center rounded bg-black/30">
-                  <DesenhoPeca desenho={l.produto.desenho} className="size-14 text-cinza-claro/80" />
+                <div className="size-20 shrink-0 overflow-hidden rounded bg-white">
+                  <FotoProduto produto={l.produto} tamanho="miniatura" className="size-full object-cover" />
                 </div>
 
                 <div className="min-w-0 flex-1">

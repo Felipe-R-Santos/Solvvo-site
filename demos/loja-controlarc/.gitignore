@@ -8,3 +8,5 @@ next-env.d.ts
 
 # Pacote estático gerado por LOJA_ESTATICA=1 npm run build
 /out
+
+.vercel

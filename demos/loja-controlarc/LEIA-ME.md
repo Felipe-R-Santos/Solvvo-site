@@ -89,10 +89,39 @@ public/marca/     logo, ícones e a imagem de compartilhamento
 
 ## Decisões que valem saber
 
-**Os desenhos das peças são desenhos, não fotos.** Não existe foto dos produtos
-da Control disponível, e foto de banco de imagens mostraria peça de outro
-fabricante com a marca dele à vista. São oito figuras em SVG, feitas aqui,
-declaradas na tela como «desenho ilustrativo, fora de escala».
+**As fotos de produto são render, não fotografia.** Não existe foto dos
+produtos da Control disponível, e banco de imagens mostraria peça de outro
+fabricante com a marca dele à vista. As 25 peças foram modeladas por medida —
+as mesmas de `src/dados/produtos.ts` — e fotografadas numa cena de estúdio
+única no Blender: fundo branco, mesma luz e **o mesmo ângulo em todas**. A
+página do produto declara «Imagem ilustrativa (render)».
+
+As **silhuetas em linha** continuam, mas só onde representam **categoria** —
+os cartões da página inicial e o filtro do catálogo. Elas também são o reserva:
+produto sem render cai na silhueta em vez de mostrar quadrado vazio.
+
+### Refazer as imagens
+
+```bash
+python scripts/extrair_catalogo.py                       # catálogo → JSON
+"C:\Program Files\Blender Foundation\Blender 5.2lender.exe" -b     --python scripts/render_produtos.py -- --saida _provas/render
+python scripts/converter_imagens.py                      # PNG → WEBP 1200 e 600
+```
+
+Para renderizar só algumas peças, acrescente `--so CA-BC-M8-12,CA-BO-CN-16`.
+
+### Trocar por foto de verdade, quando a Control tirar
+
+Grave o arquivo com **o mesmo nome**, em `public/produtos/`:
+
+- `public/produtos/<código>.webp` — 1200 × 1200, para a página do produto;
+- `public/produtos/<código>-600.webp` — 600 × 600, para os cartões.
+
+Foto de celular serve, desde que siga o mesmo padrão das outras: **fundo
+branco**, luz difusa (perto de uma janela, sem flash direto), peça centralizada
+ocupando uns 70 % do quadro e nada de marca à vista. Mantenha o arquivo abaixo
+de 250 KB. Não precisa mexer em código: a loja passa a servir a foto nova
+sozinha.
 
 **O banner é composição própria, não quadro de vídeo.** Os doze quadros
 extraídos dos vídeos de marketing foram olhados um a um e nenhum serviu: dois

@@ -7,7 +7,7 @@ import { useLoja } from "@/lib/estado";
 import { montarLinhas, totalCarrinho } from "@/lib/carrinho";
 import { PEDIDO_MINIMO } from "@/dados/produtos";
 import { reais } from "@/lib/formato";
-import { DesenhoPeca } from "./DesenhoPeca";
+import { FotoProduto } from "./FotoProduto";
 import { SeletorQuantidade } from "./SeletorQuantidade";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -97,8 +97,8 @@ export function GavetaCarrinho() {
             <ul className="flex-1 divide-y divide-borda-escura overflow-y-auto">
               {linhas.map((l) => (
                 <li key={l.produto.codigo} className="flex gap-3 p-4">
-                  <div className="grid size-16 shrink-0 place-items-center rounded bg-black/30">
-                    <DesenhoPeca desenho={l.produto.desenho} className="size-12 text-cinza-claro/80" />
+                  <div className="size-16 shrink-0 overflow-hidden rounded bg-white">
+                    <FotoProduto produto={l.produto} tamanho="miniatura" className="size-full object-cover" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-mono text-[11px] text-cinza-claro/60">{l.produto.codigo}</p>

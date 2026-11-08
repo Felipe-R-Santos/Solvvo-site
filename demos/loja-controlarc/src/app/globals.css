@@ -44,6 +44,17 @@
   --color-estoque-consulta: #F59E0B;
   --color-estoque-fora: #D8E0E9;
 
+  /* OS MESMOS ESTADOS, PARA FUNDO CLARO. Desde 08/11/2026 o cartão de produto
+     é branco, e os tons acima — clareados de propósito para o fundo escuro —
+     somem sobre branco. Estes três são os valores originais do comando, que
+     foram escolhidos justamente para texto sobre claro — mas um degrau mais
+     escuros: medidos sobre o véu de 10% que o selo usa, os originais davam
+     4,38:1 e 4,39:1, logo abaixo do mínimo. Estes dão 6,07:1 e 6,12:1. Cada
+     tela usa o par que combina com o fundo DELA; nunca misture. */
+  --color-estoque-ok-claro: #166534;
+  --color-estoque-consulta-claro: #92400E;
+  --color-estoque-fora-claro: #44403C;
+
   --font-sans: var(--fonte-montserrat), Arial, sans-serif;
 }
 
