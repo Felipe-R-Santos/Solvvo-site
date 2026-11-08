@@ -31,17 +31,8 @@ const FAISCAS = [
 export function Banner() {
   return (
     <section className="relative overflow-hidden border-b border-borda-escura bg-cabecalho">
-      {/* Malha técnica de fundo, bem apagada: dá textura sem competir com o texto. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.06]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #D8E0E9 1px, transparent 1px), linear-gradient(to bottom, #D8E0E9 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
-
+      {/* Sem malha quadriculada no fundo: ela foi tirada em 08/11/2026 a pedido
+          do Felipe. O fundo do banner é liso, e quem dá textura é o desenho. */}
       <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-20">
         <div>
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-laranja-texto">
