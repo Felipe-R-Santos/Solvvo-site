@@ -131,16 +131,33 @@ com os números, em `src/app/globals.css`.
 
 ---
 
-## Publicar na Vercel
+## Onde está no ar
 
-Projeto **separado** do outro que vive neste repositório:
+**https://loja-controlarc.vercel.app**
 
-1. Vercel → **Add New → Project** → importar este repositório.
-2. Em **Root Directory**, escolher `demos/loja-controlarc`.
-3. Framework: Next.js (detectado). Build e install: os padrões.
-4. Em **Git → Production Branch**, apontar para `loja-controlarc-demo`.
-5. Opcional: `NEXT_PUBLIC_LOJA_URL` com o endereço final, para o cartão de
-   compartilhamento apontar certo.
+Publicado em 08/11/2026, projeto `loja-controlarc`, plano gratuito.
 
-A loja já sai **fora do índice de busca**: `robots.txt` nega tudo e as páginas
-levam `noindex`. É demonstração com link, não site público.
+A loja sai **fora do índice de busca**: `robots.txt` nega tudo e as páginas
+levam `noindex`. O endereço não é linkado de lugar nenhum — quem tem o link
+abre, quem não tem não encontra. Não há senha: se o link for repassado, a outra
+pessoa também abre.
+
+### Como republicar
+
+O projeto foi criado pela linha de comando e **não está ligado ao Git**: push no
+repositório não republica sozinho. Para subir uma versão nova:
+
+```bash
+cd demos/loja-controlarc
+vercel deploy --prod
+```
+
+Para passar a publicar a cada push, ligue o repositório em
+**Project Settings → Git**, com Root Directory em `demos/loja-controlarc` e
+Production Branch em `loja-controlarc-demo`.
+
+### Se quiser pôr senha
+
+Dá para fechar com senha de graça, por middleware no próprio app, com a senha
+em variável de ambiente — nunca escrita em arquivo. O *Password Protection* da
+própria Vercel é pago (não existe no plano gratuito) e não é necessário.
