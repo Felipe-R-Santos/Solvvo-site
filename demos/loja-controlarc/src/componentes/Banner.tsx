@@ -31,8 +31,31 @@ const FAISCAS = [
 export function Banner() {
   return (
     <section className="relative overflow-hidden border-b border-borda-escura bg-cabecalho">
-      {/* Sem malha quadriculada no fundo: ela foi tirada em 08/11/2026 a pedido
-          do Felipe. O fundo do banner é liso, e quem dá textura é o desenho. */}
+      {/* O FUNDO: degradê de preto para laranja, em vez da malha quadriculada
+          que havia aqui até 08/11/2026.
+
+          São três camadas, e a ordem importa — no CSS a primeira fica por cima:
+            1. um brilho quente atrás do desenho, à DIREITA;
+            2. uma faixa diagonal fraca, que tira o ar de fundo chapado;
+            3. a base escura, de #191919 a #121212, na diagonal.
+
+          ⚠ O BRILHO FICA DO LADO DO DESENHO, NÃO DO TEXTO. O título e o
+          parágrafo são brancos sobre o canto escuro: laranja embaixo de texto
+          branco derruba o contraste abaixo do mínimo da WCAG, e a auditoria
+          reprova. Quem mexer nestas porcentagens, rode `node
+          _provas/auditoria.mjs` depois. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: [
+            "radial-gradient(70% 95% at 76% 56%, rgba(223, 83, 24, 0.52) 0%, rgba(190, 64, 16, 0.30) 30%, rgba(173, 50, 6, 0.12) 54%, rgba(18, 18, 18, 0) 78%)",
+            "linear-gradient(118deg, rgba(223, 83, 24, 0) 36%, rgba(223, 83, 24, 0.10) 58%, rgba(223, 83, 24, 0) 78%)",
+            "linear-gradient(118deg, #121212 0%, #171412 44%, #1D1512 72%, #241711 100%)",
+          ].join(", "),
+        }}
+      />
+
       <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-20">
         <div>
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-laranja-texto">
@@ -63,17 +86,20 @@ export function Banner() {
             </Link>
           </div>
 
+          {/* Os rótulos vão em /90, não no /60 do resto: no celular eles caem
+              sobre a parte clara do brilho e, medidos contra o pixel de trás,
+              ficavam em 3,2:1 e 3,8:1 — abaixo dos 4,5:1 exigidos. */}
           <dl className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-borda-escura pt-6">
             <div>
-              <dt className="text-xs uppercase tracking-wide text-cinza-claro/60">Pedido</dt>
+              <dt className="text-xs uppercase tracking-wide text-cinza-claro/90">Pedido</dt>
               <dd className="mt-1 text-sm font-bold text-white">Pelo CNPJ</dd>
             </div>
             <div>
-              <dt className="text-xs uppercase tracking-wide text-cinza-claro/60">Pagamento</dt>
+              <dt className="text-xs uppercase tracking-wide text-cinza-claro/90">Pagamento</dt>
               <dd className="mt-1 text-sm font-bold text-white">Boleto</dd>
             </div>
             <div>
-              <dt className="text-xs uppercase tracking-wide text-cinza-claro/60">Catálogo</dt>
+              <dt className="text-xs uppercase tracking-wide text-cinza-claro/90">Catálogo</dt>
               <dd className="mt-1 text-sm font-bold text-white">7 categorias</dd>
             </div>
           </dl>
