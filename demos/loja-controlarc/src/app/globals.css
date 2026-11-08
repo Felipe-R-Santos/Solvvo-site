@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PALETA OFICIAL DA CONTROL ARC — Brand Kit.
+   Nenhuma cor fora desta tabela, e nenhuma cor do outro projeto deste
+   repositório.
+
+   O fundo da página é #191919, o valor de fundo escuro do Brand Kit, que também
+   cai dentro da faixa pedida no comando (#121212 a #1A1A1A).
+
+   O CABEÇALHO é mais escuro, #121212, e isso é deliberado: na logo de fundo
+   escuro o miolo das letras O, R e A é PRETO SÓLIDO (#000000), não
+   transparente. Quanto mais perto de preto for o fundo atrás dela, menos esses
+   miolos aparecem como «furos». Ajusta-se o fundo, nunca a logo.
+   ───────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-laranja: #DF5318;
+  --color-laranja-escuro: #BE4010;
+  --color-marrom: #AD3206;
+  --color-cinza-claro: #D8E0E9;
+  --color-quase-negro: #373435;
+
+  --color-fundo: #191919;
+  --color-cabecalho: #121212;
+  --color-cartao-escuro: #232323;
+  --color-borda-escura: #2E2E2E;
+
+  /* O LARANJA SÓ PARA TEXTO MIÚDO SOBRE FUNDO ESCURO.
+     Medido: #DF5318 sobre o cartão #232323 dá 4,03:1 — reprova no mínimo de
+     4,5:1 da WCAG AA para texto abaixo de 18,66 px. Sobre #191919 dá 4,51:1,
+     que passa por 0,01 e não sobrevive a nenhuma mudança de fundo. Este tom é
+     o mesmo laranja clareado o suficiente para dar 5,04:1 no cartão e 5,64:1
+     na página. O Laranja Institucional continua inteiro em barra, ícone,
+     borda e régua, onde a exigência é 3:1. */
+  --color-laranja-texto: #EE6A2E;
+
+  /* ESTADOS DE ESTOQUE — OS TRÊS SAÍRAM DOS VALORES DO COMANDO, e por medição:
+     aqueles tons foram escolhidos para texto sobre BRANCO e aqui o fundo é
+     escuro. Sobre o cartão com véu de 20%, #15803D dava 2,60:1, #B45309 dava
+     2,60:1 e #57534E dava 1,81:1 — os três reprovavam. Os de baixo medem
+     4,79:1, 4,96:1 e 6,80:1 na mesma composição, mantendo verde, âmbar e
+     neutro. «Indisponível» usa o Cinza Claro do Brand Kit. */
+  --color-estoque-ok: #22C55E;
+  --color-estoque-consulta: #F59E0B;
+  --color-estoque-fora: #D8E0E9;
+
+  --font-sans: var(--fonte-montserrat), Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-fundo);
+  color: #FFFFFF;
+}
+
+/* Faíscas do banner: pontos em laranja que sobem devagar. Feito em CSS para
+   não depender de imagem nem de biblioteca de animação. */
+@keyframes faisca {
+  0%   { transform: translateY(0) scale(1);    opacity: 0; }
+  12%  { opacity: 1; }
+  100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+}
+
+.faisca {
+  animation: faisca linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faisca { animation: none; opacity: 0.35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Foco visível em tudo que recebe teclado — exigência da seção 9.8 */
+:focus-visible {
+  outline: 2px solid var(--color-laranja);
+  outline-offset: 2px;
+}
