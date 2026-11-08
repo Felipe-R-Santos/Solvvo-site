@@ -3,3 +3,8 @@ node_modules
 _provas
 *.log
 next-env.d.ts
+
+.vercel
+
+# Pacote estático gerado por LOJA_ESTATICA=1 npm run build
+/out
