@@ -14,7 +14,7 @@ export function Rodape() {
               alt="Control ARC"
               width={1800}
               height={739}
-              className="h-9 w-auto"
+              className="h-11 w-auto"
             />
             <p className="mt-4 text-sm text-cinza-claro/70 leading-relaxed">
               Consumíveis e peças para soldagem robótica, para quem já opera
