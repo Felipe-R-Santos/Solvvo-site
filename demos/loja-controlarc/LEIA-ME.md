@@ -104,11 +104,18 @@ produto sem render cai na silhueta em vez de mostrar quadrado vazio.
 
 ```bash
 python scripts/extrair_catalogo.py                       # catálogo → JSON
+python scripts/gerar_rotulos.py                          # a arte dos rótulos
 "C:\Program Files\Blender Foundation\Blender 5.2lender.exe" -b     --python scripts/render_produtos.py -- --saida _provas/render
 python scripts/converter_imagens.py                      # PNG → WEBP 1200 e 600
 ```
 
 Para renderizar só algumas peças, acrescente `--so CA-BC-M8-12,CA-BO-CN-16`.
+Se a placa de vídeo estiver ocupada (jogo aberto, navegador pesado), acrescente
+`--cpu`: é mais lento e não depende dela.
+
+Só o antirrespingo tem embalagem com rótulo, e ele sai escrito — marca,
+nome do produto, composição e volume, tudo lido de `produtos.ts`. Rótulo em
+branco entrega que a imagem é render.
 
 ### Trocar por foto de verdade, quando a Control tirar
 

@@ -29,14 +29,13 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 CATALOGO = RAIZ / "scripts" / "_catalogo.json"
+ROTULOS = RAIZ / "scripts" / "_rotulos"
 
 # Quanto do quadro a peça ocupa. O comando pede ≈ 70 %.
 OCUPACAO = 0.70
 LADO = 1200
 AMOSTRAS = 128
 
-
-# ── utilidades ──────────────────────────────────────────────────────────────
 
 def limpar():
     bpy.ops.object.select_all(action="SELECT")
@@ -76,6 +75,111 @@ MATERIAIS = {
     "plastico_claro": lambda: material("plastico_claro", (0.86, 0.86, 0.87), 0.0, 0.35),
     "borracha":     lambda: material("borracha", (0.09, 0.09, 0.10), 0.0, 0.62),
 }
+
+
+def material_rotulo(codigo):
+    """O rótulo impresso da embalagem, gerado por `scripts/gerar_rotulos.py`.
+
+    ⚠ RÓTULO EM BRANCO ENTREGA O RENDER. Uma embalagem com uma mancha branca
+    lisa parece peça desenhada em CAD, não produto de prateleira — foi o que o
+    Felipe apontou. A arte traz a marca da Control ARC, o nome do produto, a
+    composição e o volume, tudo lido de `produtos.ts`.
+
+    A imagem cobre a plaqueta inteira, de canto a canto: as proporções em
+    `gerar_rotulos.py` têm de bater com as da plaqueta aqui, senão a marca sai
+    esticada."""
+    nome = f"rotulo_{codigo}"
+    m = bpy.data.materials.get(nome)
+    if m:
+        return m
+    arte = ROTULOS / f"{codigo}.png"
+    if not arte.exists():
+        raise SystemExit(f"falta a arte do rótulo: {arte} — rode scripts/gerar_rotulos.py")
+
+    m = bpy.data.materials.new(nome)
+    m.use_nodes = True
+    nos, ligar = m.node_tree.nodes, m.node_tree.links
+    bsdf = nos["Principled BSDF"]
+    bsdf.inputs["Metallic"].default_value = 0.0
+    bsdf.inputs["Roughness"].default_value = 0.42
+
+    img = bpy.data.images.get(arte.name) or bpy.data.images.load(str(arte))
+    tex = nos.new("ShaderNodeTexImage")
+    tex.image = img
+    tex.extension = "EXTEND"
+    coord = nos.new("ShaderNodeTexCoord")
+    ligar.new(coord.outputs["UV"], tex.inputs["Vector"])
+    ligar.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+    return m
+
+
+def rotulo(largura, altura, centro, angulo, codigo, raio=None):
+    """Uma plaqueta de rótulo, em pé, virada para fora no ângulo dado.
+
+    Com `raio`, o rótulo vira uma tira CURVA que acompanha o cilindro — é o
+    caso do frasco: etiqueta colada em garrafa segue a curvatura dela, e uma
+    plaqueta plana encostada num corpo redondo salta aos olhos. Sem `raio`,
+    sai plana, que é o certo para a face chata do galão.
+
+    ⚠ OS VÉRTICES SÃO POSTOS DIRETAMENTE EM COORDENADA DE MUNDO, sem
+    `primitive_plane_add`, sem `scale` e sem `rotation_euler`. A primeira
+    versão usava os três: o `transform_apply` da escala embaralhou posição e
+    giro, e as plaquetas foram parar no chão, ao lado do galão.
+
+    ⚠ O UV SAI DA POSIÇÃO DO VÉRTICE, nunca da ordem em que ele foi criado.
+
+    `angulo` é a direção para onde o rótulo olha, no plano XY. Com `raio`,
+    `largura` é comprimento de ARCO e `centro` dá só a altura (z); o eixo da
+    curva é o eixo Z da cena.
+    """
+    cx, cy, cz = centro
+    meia_a = altura / 2
+    me = bpy.data.meshes.new("rotulo")
+    obj = bpy.data.objects.new("rotulo", me)
+    bpy.context.collection.objects.link(obj)
+    bm = bmesh.new()
+    camada = bm.loops.layers.uv.new("UVMap")
+
+    if raio:
+        gomos = 28
+        abertura = largura / raio          # ângulo total do arco, em radianos
+        baixo, cima = [], []
+        for i in range(gomos + 1):
+            a = angulo + (i / gomos - 0.5) * abertura
+            x, y = math.cos(a) * raio, math.sin(a) * raio
+            baixo.append(bm.verts.new((x, y, cz - meia_a)))
+            cima.append(bm.verts.new((x, y, cz + meia_a)))
+        for i in range(gomos):
+            f = bm.faces.new((baixo[i], baixo[i + 1], cima[i + 1], cima[i]))
+            for laco in f.loops:
+                v = laco.vert.co
+                ang = math.atan2(v.y, v.x) - angulo
+                ang = (ang + math.pi) % (2 * math.pi) - math.pi   # normaliza
+                laco[camada].uv = (ang / abertura + 0.5,
+                                   (v.z - cz) / altura + 0.5)
+    else:
+        dx, dy = math.cos(angulo), math.sin(angulo)
+        hx, hy = -dy, dx               # horizontal do rótulo, no plano XY
+        meia_l = largura / 2
+        cantos = [
+            (cx - hx * meia_l, cy - hy * meia_l, cz - meia_a),
+            (cx + hx * meia_l, cy + hy * meia_l, cz - meia_a),
+            (cx + hx * meia_l, cy + hy * meia_l, cz + meia_a),
+            (cx - hx * meia_l, cy - hy * meia_l, cz + meia_a),
+        ]
+        vs = [bm.verts.new(c) for c in cantos]
+        face = bm.faces.new(vs)
+        for laco in face.loops:
+            v = laco.vert.co
+            laco[camada].uv = (
+                ((v.x - cx) * hx + (v.y - cy) * hy) / largura + 0.5,
+                (v.z - cz) / altura + 0.5,
+            )
+
+    bm.to_mesh(me)
+    bm.free()
+    me.materials.append(material_rotulo(codigo))
+    return obj
 
 
 def pintar(obj, chave):
@@ -337,7 +441,7 @@ def p_roldana(canal_mm):
     return [peca, cubo]
 
 
-def p_antirrespingo(litros):
+def p_antirrespingo(codigo, litros):
     """Galão de 5 L ou frasco de 1 L, plástico, rótulo liso e sem texto."""
     if litros >= 5:
         bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 0, 62.0))
@@ -350,11 +454,10 @@ def p_antirrespingo(litros):
         pintar(gargalo, "plastico")
         tampa = tornear([(0, 136.0), (13.5, 136.0), (13.5, 148.0), (0, 148.0)])
         pintar(tampa, "plastico_claro")
-        bpy.ops.mesh.primitive_cube_add(size=1, location=(0, -36.3, 60.0))
-        etiqueta = bpy.context.object
-        etiqueta.scale = (78.0, 0.9, 68.0)
-        bpy.ops.object.transform_apply(scale=True)
-        pintar(etiqueta, "plastico_claro")
+        # Nas DUAS faces visíveis: a câmera vê o galão de quina, e rótulo só
+        # numa delas deixaria metade do produto em branco.
+        etiqueta = rotulo(78.0, 60.0, (0, -36.4, 58.0), math.radians(-90), codigo)
+        etiqueta2 = rotulo(60.0, 46.2, (46.4, 0, 58.0), 0.0, codigo)
     else:
         corpo = tornear([
             (0, 0.0), (32.0, 0.0), (32.0, 104.0), (22.0, 118.0),
@@ -367,9 +470,16 @@ def p_antirrespingo(litros):
         pintar(tampa, "plastico_claro")
         # Faixa de rótulo com espessura de verdade: o perfil anterior tinha os
         # quatro pontos no mesmo raio e gerava superfície degenerada.
-        etiqueta = tornear([(32.1, 24.0), (33.0, 24.0), (33.0, 84.0), (32.1, 84.0)])
+        etiqueta = tornear([(32.1, 24.0), (32.9, 24.0), (32.9, 84.0), (32.1, 84.0)])
         pintar(etiqueta, "plastico_claro")
-    return [corpo, gargalo, tampa, etiqueta]
+        # A plaqueta com a marca fica de frente para a câmera (azimute 35°),
+        # levemente saliente sobre a faixa branca — que é como etiqueta colada
+        # se comporta de verdade.
+        a = math.radians(-35)
+        etiqueta2 = rotulo(
+            64.0, 34.0, (0, 0, 54.0), a, codigo, raio=33.2,
+        )
+    return [corpo, gargalo, tampa, etiqueta, etiqueta2]
 
 
 def _tubo_curvo(graus, raio_tubo, comp_reto, comp_curva, material_chave):
@@ -648,7 +758,7 @@ def construir(prod):
         return p_fresa(mm(medida, 16.0))
 
     if cod.startswith("CA-LT-AR-"):
-        return p_antirrespingo(5 if "5 L" in medida else 1)
+        return p_antirrespingo(cod, 5 if "5 L" in medida else 1)
 
     if cod.startswith("CA-TO-PC-"):
         return p_pescoco(45 if "45" in medida else 22)
@@ -691,7 +801,18 @@ def main():
         destino = saida / f"{prod['codigo']}.png"
         bpy.context.scene.render.filepath = str(destino)
         print(f"[{i}/{len(produtos)}] {prod['codigo']}  {prod['nome']} {prod['medida']}")
-        bpy.ops.render.render(write_still=True)
+        try:
+            bpy.ops.render.render(write_still=True)
+        except RuntimeError as erro:
+            # ⚠ A PLACA É DIVIDIDA COM O RESTO DA MÁQUINA. Navegador aberto,
+            # servidor de desenvolvimento e o próprio aplicativo comem VRAM, e
+            # o render morre com «Out of memory in CUDA queue» — deixando a
+            # imagem ANTIGA no disco, que é o pior dos mundos: parece que
+            # funcionou. Aqui ele refaz na CPU, que é mais lenta e não depende
+            # de ninguém.
+            print(f"    GPU falhou ({erro}); refazendo na CPU")
+            bpy.context.scene.cycles.device = "CPU"
+            bpy.ops.render.render(write_still=True)
 
     print("FIM", len(produtos), "pecas")
 
