@@ -41,30 +41,26 @@ export function Cabecalho() {
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-borda-escura bg-cabecalho/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8 h-16 lg:h-20">
+        <div className="mx-auto flex h-24 max-w-7xl items-center gap-3 px-4 sm:px-6 sm:h-28 lg:px-8">
           <Link href="/" className="flex h-11 shrink-0 items-center" aria-label="Control ARC — página inicial">
-            {/* ⚠ AQUI VAI A MARCA SOZINHA, SEM O TAGLINE — e isso é escolha,
-                não descuido. Medido: o «AUTOMATION EXPERT» ocupa 8,7 % da
-                altura do logo completo. No cabeçalho, com 48 px, isso dá uma
-                linha de 4,2 px: ilegível em qualquer resolução, porque o
-                problema é de aritmética, não de arquivo. Para caber legível
-                ele precisaria de um cabeçalho de 180 px.
+            {/* ⚠ A ALTURA DA LOGO AQUI É REQUISITO, NÃO ESTÉTICA. O tagline
+                «AUTOMATION EXPERT» ocupa 8,7 % da altura do logo, e abaixo de
+                64 px ele vira borrão — não por falta de resolução, mas porque
+                sobram 4 px de altura para a linha. Renderizei a marca em 48,
+                64, 80, 96 e 120 px e OLHEI: lê com clareza a partir de 80.
 
-                O Brand Kit prevê exatamente isso: a marca sozinha tem
-                proporção 2,7481, e este arquivo mede 2,7481. O lockup completo
-                continua onde há espaço para ele — no rótulo das embalagens,
-                onde o tagline sai com 27 px.
-
-                O sólido do FreeCAD também não resolveria: o próprio
-                `ControlARC.logo.json` declara que ele é «a MARCA SOZINHA, sem
-                o tagline». */}
+                Por isso o cabeçalho é mais alto que o costume. Se alguém
+                encolher o cabeçalho, o tagline some primeiro — e ele é
+                pedido. O arquivo é o lockup oficial completo; a marca sozinha,
+                sem tagline, está em `logo-marca-fundo-escuro.png` para quando
+                faltar espaço de verdade. */}
             <Image
-              src="/marca/logo-marca-fundo-escuro.png"
-              alt="Control ARC"
+              src="/marca/logo-fundo-escuro.png"
+              alt="Control ARC — Automation Expert"
               width={1800}
-              height={655}
+              height={739}
               priority
-              className="h-9 w-auto sm:h-11"
+              className="h-16 w-auto sm:h-20"
             />
           </Link>
 
