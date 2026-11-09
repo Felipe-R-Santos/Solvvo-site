@@ -9,12 +9,14 @@ export function Rodape() {
       <div className="mx-auto max-w-7xl px-4 pb-28 pt-10 sm:px-6 lg:px-8 md:pb-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
+            {/* Marca sozinha, pelo mesmo motivo do cabeçalho: a 44 px o
+                tagline sairia com 3,8 px. */}
             <Image
-              src="/marca/logo-fundo-escuro.png"
+              src="/marca/logo-marca-fundo-escuro.png"
               alt="Control ARC"
               width={1800}
-              height={739}
-              className="h-11 w-auto"
+              height={655}
+              className="h-10 w-auto"
             />
             <p className="mt-4 text-sm text-cinza-claro/70 leading-relaxed">
               Consumíveis e peças para soldagem robótica, para quem já opera

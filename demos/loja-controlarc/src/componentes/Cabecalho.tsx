@@ -43,20 +43,28 @@ export function Cabecalho() {
       <header className="sticky top-0 z-40 border-b border-borda-escura bg-cabecalho/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8 h-16 lg:h-20">
           <Link href="/" className="flex h-11 shrink-0 items-center" aria-label="Control ARC — página inicial">
-            {/* ⚠ TAMANHO, NÃO RESOLUÇÃO. O logo parecia borrado no cabeçalho e
-                a primeira suspeita foi arquivo pequeno — não era: a 2× ele sai
-                nítido. O problema é que a marca leva o tagline «AUTOMATION
-                EXPERT» em letra fina, e com 40 px de altura ela vira mancha.
-                Não existe versão em vetor na pasta da marca (os SVG de lá só
-                embutem imagem), e o arquivo maior de 3691 px é o de fundo
-                CLARO — no cabeçalho escuro sairia com letra preta. */}
+            {/* ⚠ AQUI VAI A MARCA SOZINHA, SEM O TAGLINE — e isso é escolha,
+                não descuido. Medido: o «AUTOMATION EXPERT» ocupa 8,7 % da
+                altura do logo completo. No cabeçalho, com 48 px, isso dá uma
+                linha de 4,2 px: ilegível em qualquer resolução, porque o
+                problema é de aritmética, não de arquivo. Para caber legível
+                ele precisaria de um cabeçalho de 180 px.
+
+                O Brand Kit prevê exatamente isso: a marca sozinha tem
+                proporção 2,7481, e este arquivo mede 2,7481. O lockup completo
+                continua onde há espaço para ele — no rótulo das embalagens,
+                onde o tagline sai com 27 px.
+
+                O sólido do FreeCAD também não resolveria: o próprio
+                `ControlARC.logo.json` declara que ele é «a MARCA SOZINHA, sem
+                o tagline». */}
             <Image
-              src="/marca/logo-fundo-escuro.png"
+              src="/marca/logo-marca-fundo-escuro.png"
               alt="Control ARC"
               width={1800}
-              height={739}
+              height={655}
               priority
-              className="h-10 w-auto sm:h-12"
+              className="h-9 w-auto sm:h-11"
             />
           </Link>
 
